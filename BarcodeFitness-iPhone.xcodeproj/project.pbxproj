@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A97293FE197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
+		A9729400197DDB4300495470 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FF197DDB4300495470 /* CoreGraphics.framework */; };
+		A9729402197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
+		A9729408197DDB4300495470 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9729406197DDB4300495470 /* InfoPlist.strings */; };
+		A972940A197DDB4300495470 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9729409197DDB4300495470 /* main.m */; };
+		A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A972940D197DDB4300495470 /* BFAppDelegate.m */; };
+		A9729411197DDB4300495470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A972940F197DDB4300495470 /* Main.storyboard */; };
+		A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9729413197DDB4300495470 /* BFWelcomeViewController.m */; };
+		A9729416197DDB4300495470 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9729415197DDB4300495470 /* Images.xcassets */; };
+		A972941D197DDB4300495470 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A972941C197DDB4300495470 /* XCTest.framework */; };
+		A972941E197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
+		A972941F197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
+		A9729427197DDB4300495470 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A9729425197DDB4300495470 /* InfoPlist.strings */; };
+		A9729429197DDB4300495470 /* BarcodeFitness_iPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9729428197DDB4300495470 /* BarcodeFitness_iPhoneTests.m */; };
+		A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */; };
+		A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */; };
+		A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */; };
+		A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3B197F397000156ED8 /* BFWorkout.m */; };
+		A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A9729420197DDB4300495470 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A97293F2197DDB4300495470 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A97293F9197DDB4300495470;
+			remoteInfo = "BarcodeFitness-iPhone";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeFitness-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A97293FD197DDB4300495470 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A97293FF197DDB4300495470 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A9729401197DDB4300495470 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A9729405197DDB4300495470 /* BarcodeFitness-iPhone-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BarcodeFitness-iPhone-Info.plist"; sourceTree = "<group>"; };
+		A9729407197DDB4300495470 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A9729409197DDB4300495470 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A972940B197DDB4300495470 /* BarcodeFitness-iPhone-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BarcodeFitness-iPhone-Prefix.pch"; sourceTree = "<group>"; };
+		A972940C197DDB4300495470 /* BFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFAppDelegate.h; sourceTree = "<group>"; };
+		A972940D197DDB4300495470 /* BFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFAppDelegate.m; sourceTree = "<group>"; };
+		A9729410197DDB4300495470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9729412197DDB4300495470 /* BFWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWelcomeViewController.h; sourceTree = "<group>"; };
+		A9729413197DDB4300495470 /* BFWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFWelcomeViewController.m; sourceTree = "<group>"; };
+		A9729415197DDB4300495470 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A972941B197DDB4300495470 /* BarcodeFitness-iPhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeFitness-iPhoneTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A972941C197DDB4300495470 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A9729424197DDB4300495470 /* BarcodeFitness-iPhoneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BarcodeFitness-iPhoneTests-Info.plist"; sourceTree = "<group>"; };
+		A9729426197DDB4300495470 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A9729428197DDB4300495470 /* BarcodeFitness_iPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeFitness_iPhoneTests.m; sourceTree = "<group>"; };
+		A972DC2E197F2C3000156ED8 /* BFChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewController.h; sourceTree = "<group>"; };
+		A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewController.m; sourceTree = "<group>"; };
+		A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseViewController.h; sourceTree = "<group>"; };
+		A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewController.m; sourceTree = "<group>"; };
+		A972DC32197F2C3000156ED8 /* BFWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkoutViewController.h; sourceTree = "<group>"; };
+		A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkoutViewController.m; sourceTree = "<group>"; };
+		A972DC3A197F397000156ED8 /* BFWorkout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkout.h; sourceTree = "<group>"; };
+		A972DC3B197F397000156ED8 /* BFWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkout.m; sourceTree = "<group>"; };
+		A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddWorkoutViewController.h; sourceTree = "<group>"; };
+		A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddWorkoutViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A97293F7197DDB4300495470 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9729400197DDB4300495470 /* CoreGraphics.framework in Frameworks */,
+				A9729402197DDB4300495470 /* UIKit.framework in Frameworks */,
+				A97293FE197DDB4300495470 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9729418197DDB4300495470 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A972941D197DDB4300495470 /* XCTest.framework in Frameworks */,
+				A972941F197DDB4300495470 /* UIKit.framework in Frameworks */,
+				A972941E197DDB4300495470 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A97293F1197DDB4300495470 = {
+			isa = PBXGroup;
+			children = (
+				A9729403197DDB4300495470 /* BarcodeFitness-iPhone */,
+				A9729422197DDB4300495470 /* BarcodeFitness-iPhoneTests */,
+				A97293FC197DDB4300495470 /* Frameworks */,
+				A97293FB197DDB4300495470 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A97293FB197DDB4300495470 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */,
+				A972941B197DDB4300495470 /* BarcodeFitness-iPhoneTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A97293FC197DDB4300495470 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A97293FD197DDB4300495470 /* Foundation.framework */,
+				A97293FF197DDB4300495470 /* CoreGraphics.framework */,
+				A9729401197DDB4300495470 /* UIKit.framework */,
+				A972941C197DDB4300495470 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9729403197DDB4300495470 /* BarcodeFitness-iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				A972940C197DDB4300495470 /* BFAppDelegate.h */,
+				A972940D197DDB4300495470 /* BFAppDelegate.m */,
+				A972940F197DDB4300495470 /* Main.storyboard */,
+				A9729412197DDB4300495470 /* BFWelcomeViewController.h */,
+				A9729413197DDB4300495470 /* BFWelcomeViewController.m */,
+				A972DC2E197F2C3000156ED8 /* BFChooseViewController.h */,
+				A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */,
+				A972DC32197F2C3000156ED8 /* BFWorkoutViewController.h */,
+				A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */,
+				A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */,
+				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
+				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
+				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
+				A9729415197DDB4300495470 /* Images.xcassets */,
+				A972DC3A197F397000156ED8 /* BFWorkout.h */,
+				A972DC3B197F397000156ED8 /* BFWorkout.m */,
+				A9729404197DDB4300495470 /* Supporting Files */,
+			);
+			path = "BarcodeFitness-iPhone";
+			sourceTree = "<group>";
+		};
+		A9729404197DDB4300495470 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9729405197DDB4300495470 /* BarcodeFitness-iPhone-Info.plist */,
+				A9729406197DDB4300495470 /* InfoPlist.strings */,
+				A9729409197DDB4300495470 /* main.m */,
+				A972940B197DDB4300495470 /* BarcodeFitness-iPhone-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9729422197DDB4300495470 /* BarcodeFitness-iPhoneTests */ = {
+			isa = PBXGroup;
+			children = (
+				A9729428197DDB4300495470 /* BarcodeFitness_iPhoneTests.m */,
+				A9729423197DDB4300495470 /* Supporting Files */,
+			);
+			path = "BarcodeFitness-iPhoneTests";
+			sourceTree = "<group>";
+		};
+		A9729423197DDB4300495470 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A9729424197DDB4300495470 /* BarcodeFitness-iPhoneTests-Info.plist */,
+				A9729425197DDB4300495470 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A97293F9197DDB4300495470 /* BarcodeFitness-iPhone */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A972942C197DDB4300495470 /* Build configuration list for PBXNativeTarget "BarcodeFitness-iPhone" */;
+			buildPhases = (
+				A97293F6197DDB4300495470 /* Sources */,
+				A97293F7197DDB4300495470 /* Frameworks */,
+				A97293F8197DDB4300495470 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BarcodeFitness-iPhone";
+			productName = "BarcodeFitness-iPhone";
+			productReference = A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A972941A197DDB4300495470 /* BarcodeFitness-iPhoneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A972942F197DDB4300495470 /* Build configuration list for PBXNativeTarget "BarcodeFitness-iPhoneTests" */;
+			buildPhases = (
+				A9729417197DDB4300495470 /* Sources */,
+				A9729418197DDB4300495470 /* Frameworks */,
+				A9729419197DDB4300495470 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9729421197DDB4300495470 /* PBXTargetDependency */,
+			);
+			name = "BarcodeFitness-iPhoneTests";
+			productName = "BarcodeFitness-iPhoneTests";
+			productReference = A972941B197DDB4300495470 /* BarcodeFitness-iPhoneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A97293F2197DDB4300495470 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = BF;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = FrienchFriesApps;
+				TargetAttributes = {
+					A972941A197DDB4300495470 = {
+						TestTargetID = A97293F9197DDB4300495470;
+					};
+				};
+			};
+			buildConfigurationList = A97293F5197DDB4300495470 /* Build configuration list for PBXProject "BarcodeFitness-iPhone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A97293F1197DDB4300495470;
+			productRefGroup = A97293FB197DDB4300495470 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A97293F9197DDB4300495470 /* BarcodeFitness-iPhone */,
+				A972941A197DDB4300495470 /* BarcodeFitness-iPhoneTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A97293F8197DDB4300495470 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9729416197DDB4300495470 /* Images.xcassets in Resources */,
+				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
+				A9729411197DDB4300495470 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9729419197DDB4300495470 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9729427197DDB4300495470 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A97293F6197DDB4300495470 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
+				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
+				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
+				A972940A197DDB4300495470 /* main.m in Sources */,
+				A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */,
+				A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */,
+				A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */,
+				A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9729417197DDB4300495470 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9729429197DDB4300495470 /* BarcodeFitness_iPhoneTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A9729421197DDB4300495470 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A97293F9197DDB4300495470 /* BarcodeFitness-iPhone */;
+			targetProxy = A9729420197DDB4300495470 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A9729406197DDB4300495470 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9729407197DDB4300495470 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A972940F197DDB4300495470 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9729410197DDB4300495470 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9729425197DDB4300495470 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9729426197DDB4300495470 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A972942A197DDB4300495470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A972942B197DDB4300495470 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A972942D197DDB4300495470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Prefix.pch";
+				INFOPLIST_FILE = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A972942E197DDB4300495470 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Prefix.pch";
+				INFOPLIST_FILE = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A9729430197DDB4300495470 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BarcodeFitness-iPhone.app/BarcodeFitness-iPhone";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "BarcodeFitness-iPhoneTests/BarcodeFitness-iPhoneTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		A9729431197DDB4300495470 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BarcodeFitness-iPhone.app/BarcodeFitness-iPhone";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BarcodeFitness-iPhone/BarcodeFitness-iPhone-Prefix.pch";
+				INFOPLIST_FILE = "BarcodeFitness-iPhoneTests/BarcodeFitness-iPhoneTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A97293F5197DDB4300495470 /* Build configuration list for PBXProject "BarcodeFitness-iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A972942A197DDB4300495470 /* Debug */,
+				A972942B197DDB4300495470 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A972942C197DDB4300495470 /* Build configuration list for PBXNativeTarget "BarcodeFitness-iPhone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A972942D197DDB4300495470 /* Debug */,
+				A972942E197DDB4300495470 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A972942F197DDB4300495470 /* Build configuration list for PBXNativeTarget "BarcodeFitness-iPhoneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9729430197DDB4300495470 /* Debug */,
+				A9729431197DDB4300495470 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A97293F2197DDB4300495470 /* Project object */;
+}
