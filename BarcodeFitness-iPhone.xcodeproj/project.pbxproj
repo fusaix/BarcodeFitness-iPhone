@@ -26,6 +26,7 @@
 		A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */; };
 		A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3B197F397000156ED8 /* BFWorkout.m */; };
 		A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */; };
+		A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC431980595F00156ED8 /* BFChooseViewController2.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		A972DC3B197F397000156ED8 /* BFWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkout.m; sourceTree = "<group>"; };
 		A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddWorkoutViewController.h; sourceTree = "<group>"; };
 		A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddWorkoutViewController.m; sourceTree = "<group>"; };
+		A972DC421980595F00156ED8 /* BFChooseViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewController2.h; sourceTree = "<group>"; };
+		A972DC431980595F00156ED8 /* BFChooseViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewController2.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				A9729422197DDB4300495470 /* BarcodeFitness-iPhoneTests */,
 				A97293FC197DDB4300495470 /* Frameworks */,
 				A97293FB197DDB4300495470 /* Products */,
+				A972DC421980595F00156ED8 /* BFChooseViewController2.h */,
+				A972DC431980595F00156ED8 /* BFChooseViewController2.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */,
 				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,

@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @class BFChooseViewController;
+@class BFWorkout;
 
-@interface BFAddWorkoutViewController : UITableViewController
+@interface BFAddWorkoutViewController : UITableViewController <UITextFieldDelegate>
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;
+@property (nonatomic, strong) BFWorkout * workout;
+@property (nonatomic, strong) NSString * segueIdentifier;
+@property (nonatomic) int renameRow;
+
 
 @end

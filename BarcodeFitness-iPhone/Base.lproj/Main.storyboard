@@ -38,7 +38,7 @@
             </objects>
             <point key="canvasLocation" x="854" y="-2"/>
         </scene>
-        <!--Choose View Controller - Workout-->
+        <!--Choose View Controller - Launcher-->
         <scene sceneID="Fjg-1Q-Ykt">
             <objects>
                 <viewController id="Z7G-C9-dzB" customClass="BFChooseViewController" sceneMemberID="viewController">
@@ -74,8 +74,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h9O-Hq-UxH">
-                                                    <rect key="frame" x="15" y="25" width="32" height="15"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Yesterday, Volume: 30 lb/s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h9O-Hq-UxH">
+                                                    <rect key="frame" x="15" y="25" width="147" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -94,7 +94,11 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="edit" id="m2w-CM-BC8"/>
+                                    <barButtonItem systemItem="edit" id="m2w-CM-BC8">
+                                        <connections>
+                                            <action selector="editButtonPressed:" destination="Z7G-C9-dzB" id="Lh5-pD-ZfJ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="vdg-ka-Ew0"/>
                                     <barButtonItem systemItem="add" id="oqG-Tw-PRs">
                                         <connections>
@@ -108,23 +112,23 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Workout" id="fej-AQ-3CS">
+                    <navigationItem key="navigationItem" title="Launcher" id="fej-AQ-3CS">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="sNN-f3-Xdi"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="15m-Ff-8x1" id="IRH-lL-xC7"/>
                         <segue destination="6Sl-k7-D0m" kind="push" identifier="startWorkout" id="Nrq-Mk-mHr"/>
                         <segue destination="URo-ya-Wop" kind="modal" identifier="addWorkout" id="DpS-pR-1XA"/>
+                        <segue destination="URo-ya-Wop" kind="modal" identifier="editWorkout" id="5p9-0v-QRq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bUj-qw-JSX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1275" y="-2"/>
         </scene>
-        <!--Add Workout View Controller - Add workout-->
+        <!--Add Workout View Controller-->
         <scene sceneID="B74-Q0-Lnx">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eon-Qb-4lH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="aPQ-Lv-LyM" customClass="BFAddWorkoutViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="MTA-wj-rYD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -145,6 +149,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="aPQ-Lv-LyM" id="vKW-BP-7hK"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -192,7 +199,7 @@
                             <outlet property="delegate" destination="aPQ-Lv-LyM" id="9qN-ch-bjC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add workout" id="AsU-rx-63T">
+                    <navigationItem key="navigationItem" id="AsU-rx-63T">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="d2g-qW-I8r">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="aPQ-Lv-LyM" id="jEa-wi-0Vj"/>
@@ -208,6 +215,7 @@
                         <outlet property="nameField" destination="ApU-YI-5S7" id="2FN-KQ-UaE"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eon-Qb-4lH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1894" y="697"/>
         </scene>
@@ -321,15 +329,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 1: 10 x 80lbs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgz-QN-JBk">
-                                                    <rect key="frame" x="46" y="13" width="116" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 1: 10 x 80 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgz-QN-JBk">
+                                                    <rect key="frame" x="46" y="13" width="112" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80lbs" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vDc-YL-xFG">
-                                                    <rect key="frame" x="214" y="13" width="91" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80 lb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vDc-YL-xFG">
+                                                    <rect key="frame" x="218" y="13" width="87" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -350,15 +358,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 2: 20 x 80lbs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FBx-9O-DON">
-                                                    <rect key="frame" x="46" y="13" width="116" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 2: 20 x 80 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FBx-9O-DON">
+                                                    <rect key="frame" x="46" y="13" width="112" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80lbs" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tdV-ry-cn6">
-                                                    <rect key="frame" x="214" y="13" width="91" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80 lb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tdV-ry-cn6">
+                                                    <rect key="frame" x="218" y="13" width="87" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -399,7 +407,6 @@
         <!--Navigation Controller-->
         <scene sceneID="y77-nN-z9e">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QMl-6P-1RC" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="URo-ya-Wop" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VF4-gM-aG8">
@@ -411,6 +418,7 @@
                         <segue destination="aPQ-Lv-LyM" kind="relationship" relationship="rootViewController" id="Kft-Qd-AMx"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QMl-6P-1RC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1450" y="697"/>
         </scene>
@@ -424,4 +432,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="5p9-0v-QRq"/>
+    </inferredMetricsTieBreakers>
 </document>
