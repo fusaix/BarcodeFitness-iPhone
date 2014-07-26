@@ -7,16 +7,18 @@
 //
 
 #import "BFChooseViewController.h"
+#import "BFWorkoutList.h"
 #import "BFWorkout.h"
 #import "BFAddWorkoutViewController.h"
 
 @interface BFChooseViewController ()
 @property (nonatomic, strong) NSIndexPath * renameIndexPath;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
 @implementation BFChooseViewController
-@synthesize workouts = _workouts;
+@synthesize workoutTemplates = _workoutTemplates;
 @synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -31,17 +33,23 @@
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
 
-
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.workouts = [[NSMutableArray alloc] init];
-    BFWorkout * firstWorkout = [[BFWorkout alloc] initWithName:@"First workout"];
-    [self.workouts addObject:firstWorkout];
+    
+    // Init the BFWorkoutList _workoutTemplates
+    // we get _workoutTemplates from the stored representation, translation is performed by BFWorkoutList class
+    if (!_workoutTemplates) {
+        _workoutTemplates = [[NSMutableArray alloc] initWithArray:[BFWorkoutList getWorkoutTemplates]];
+    }
+    
 
 }
 
@@ -66,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.workouts.count;
+    return self.workoutTemplates.count;
 }
 
 
@@ -75,7 +83,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"workoutCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    BFWorkout * currentWorkout = [self.workouts objectAtIndex:indexPath.row];
+    BFWorkout * currentWorkout = [self.workoutTemplates objectAtIndex:indexPath.row];
     cell.textLabel.text = currentWorkout.name;
 //    NSLog(@"%@", currentWorkout.name);
     
@@ -98,9 +106,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [self.workouts removeObjectAtIndex:indexPath.row];
+        // Delete the row from the data source workoutTemplates
+        [self.workoutTemplates removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        // Delete to workoutTemplatesRepresentation
+        [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -110,9 +120,14 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    BFWorkout * movedWorkout = [_workouts objectAtIndex:fromIndexPath.row];
-    [_workouts removeObjectAtIndex:fromIndexPath.row];
-    [_workouts insertObject:movedWorkout atIndex:toIndexPath.row]; 
+    // exchange in workoutTemplates
+    BFWorkout * movedWorkout = [_workoutTemplates objectAtIndex:fromIndexPath.row];
+    [_workoutTemplates removeObjectAtIndex:fromIndexPath.row];
+    [_workoutTemplates insertObject:movedWorkout atIndex:toIndexPath.row];
+    // exchange in workoutTemplatesRepresentation
+    [BFWorkoutList removeObjectAtIndex: (int) fromIndexPath.row];
+    [BFWorkoutList insertObject:movedWorkout atIndex: (int) toIndexPath.row];
+    
 }
 
 
@@ -167,8 +182,8 @@
     } else if ([segue.identifier isEqualToString:@"editWorkout"]) { // BFAddWorkoutViewController is also used for editing an workout (rename or change image) 
         UINavigationController * navCon = (UINavigationController *)[segue destinationViewController];
         BFAddWorkoutViewController * addWorkoutViewController = (BFAddWorkoutViewController *)navCon.childViewControllers.firstObject; // IMPORTANT cast and childViewController method.
-        addWorkoutViewController.workout = [_workouts objectAtIndex:self.renameIndexPath.row]; // self.tableView.indexPathForSelectedRow.row does not apply
-        addWorkoutViewController.renameRow = self.renameIndexPath.row; // for the automatic name suggestion
+        addWorkoutViewController.workout = [_workoutTemplates objectAtIndex:self.renameIndexPath.row]; // self.tableView.indexPathForSelectedRow.row does not apply
+        addWorkoutViewController.renameRow = (int) self.renameIndexPath.row; // for the automatic name suggestion
         addWorkoutViewController.segueIdentifier = @"editWorkout";
     }
     

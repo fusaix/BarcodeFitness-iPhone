@@ -8,6 +8,7 @@
 
 #import "BFAddWorkoutViewController.h"
 #import "BFChooseViewController.h"
+#import "BFWorkoutList.h"
 #import "BFWorkout.h"
 
 @interface BFAddWorkoutViewController ()
@@ -29,20 +30,40 @@
 }
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
+
+    
     // save
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
+        // save to workoutTemplates
         BFWorkout *newWorkout = [[BFWorkout alloc] initWithName:self.nameField.text];
-        [self.workoutListViewController.workouts addObject:newWorkout];
+        [self.workoutListViewController.workoutTemplates addObject:newWorkout];
+        // save to workoutTemplatesRepresentation
+        [BFWorkoutList addObject:newWorkout];
+
+        
+//        NSString * newKey = [[NSDate date] description];
+        // set BFWorkout in BFWorkoutList
+//        [BFWorkoutList setWorkout:newWorkout forKey:newKey];
+        // set key
+//        [BFWorkoutList setCurrentKey:newKey];
+        // now workoutTemplates will only hold keys, so we will call is workoutListKeys
+//        [self.workoutListViewController.workoutTemplates addObject:newKey];
+        
     } else {
+        // set changes to the workout in workoutTemplates
         _workout.name = self.nameField.text;
         //_workout.image = ...
+        
+        // set changes to the workout in workoutTemplatesRepresentation
+        [BFWorkoutList setWorkoutName: self.nameField.text atIndex: _renameRow];
+        //[BFWorkoutList setWorkoutImage: self.... atIndex: _renameRow];
+        
     }
     
     // dismiss
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
-
 
 
 #pragma mark - Begin
@@ -56,7 +77,6 @@
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -68,7 +88,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     _nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    int number = (int) _workoutListViewController.workouts.count; //number of existing workouts
+    int number = (int) _workoutListViewController.workoutTemplates.count; //number of existing workouts
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
         self.navigationItem.title = @"Add workout";
         self.nameField.text = [NSString stringWithFormat: @"Workout #%i", number+1];

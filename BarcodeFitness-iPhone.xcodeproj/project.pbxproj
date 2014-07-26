@@ -27,6 +27,10 @@
 		A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3B197F397000156ED8 /* BFWorkout.m */; };
 		A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */; };
 		A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC431980595F00156ED8 /* BFChooseViewController2.m */; };
+		A972DC4A1981BE0800156ED8 /* BFWorkoutList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC491981BE0800156ED8 /* BFWorkoutList.m */; };
+		A972DC4E1981C10800156ED8 /* BFExercise.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC4D1981C10800156ED8 /* BFExercise.m */; };
+		A972DC511981C12500156ED8 /* BFSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC501981C12500156ED8 /* BFSet.m */; };
+		A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC5B1982C69200156ED8 /* BFLogList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +75,14 @@
 		A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddWorkoutViewController.m; sourceTree = "<group>"; };
 		A972DC421980595F00156ED8 /* BFChooseViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewController2.h; sourceTree = "<group>"; };
 		A972DC431980595F00156ED8 /* BFChooseViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewController2.m; sourceTree = "<group>"; };
+		A972DC481981BE0800156ED8 /* BFWorkoutList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkoutList.h; sourceTree = "<group>"; };
+		A972DC491981BE0800156ED8 /* BFWorkoutList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkoutList.m; sourceTree = "<group>"; };
+		A972DC4C1981C10800156ED8 /* BFExercise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExercise.h; sourceTree = "<group>"; };
+		A972DC4D1981C10800156ED8 /* BFExercise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExercise.m; sourceTree = "<group>"; };
+		A972DC4F1981C12500156ED8 /* BFSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSet.h; sourceTree = "<group>"; };
+		A972DC501981C12500156ED8 /* BFSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSet.m; sourceTree = "<group>"; };
+		A972DC5A1982C69200156ED8 /* BFLogList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFLogList.h; sourceTree = "<group>"; };
+		A972DC5B1982C69200156ED8 /* BFLogList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFLogList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +144,7 @@
 		A9729403197DDB4300495470 /* BarcodeFitness-iPhone */ = {
 			isa = PBXGroup;
 			children = (
+				A972DC4B1981BE2A00156ED8 /* DataModels */,
 				A972940C197DDB4300495470 /* BFAppDelegate.h */,
 				A972940D197DDB4300495470 /* BFAppDelegate.m */,
 				A972940F197DDB4300495470 /* Main.storyboard */,
@@ -146,8 +159,6 @@
 				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
 				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
 				A9729415197DDB4300495470 /* Images.xcassets */,
-				A972DC3A197F397000156ED8 /* BFWorkout.h */,
-				A972DC3B197F397000156ED8 /* BFWorkout.m */,
 				A9729404197DDB4300495470 /* Supporting Files */,
 			);
 			path = "BarcodeFitness-iPhone";
@@ -180,6 +191,31 @@
 				A9729425197DDB4300495470 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A972DC4B1981BE2A00156ED8 /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				A972DC591982C4B100156ED8 /* LogLists */,
+				A972DC481981BE0800156ED8 /* BFWorkoutList.h */,
+				A972DC491981BE0800156ED8 /* BFWorkoutList.m */,
+				A972DC3A197F397000156ED8 /* BFWorkout.h */,
+				A972DC3B197F397000156ED8 /* BFWorkout.m */,
+				A972DC4C1981C10800156ED8 /* BFExercise.h */,
+				A972DC4D1981C10800156ED8 /* BFExercise.m */,
+				A972DC4F1981C12500156ED8 /* BFSet.h */,
+				A972DC501981C12500156ED8 /* BFSet.m */,
+			);
+			name = DataModels;
+			sourceTree = "<group>";
+		};
+		A972DC591982C4B100156ED8 /* LogLists */ = {
+			isa = PBXGroup;
+			children = (
+				A972DC5A1982C69200156ED8 /* BFLogList.h */,
+				A972DC5B1982C69200156ED8 /* BFLogList.m */,
+			);
+			name = LogLists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +322,11 @@
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
 				A972940A197DDB4300495470 /* main.m in Sources */,
 				A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */,
+				A972DC511981C12500156ED8 /* BFSet.m in Sources */,
 				A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */,
+				A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */,
+				A972DC4E1981C10800156ED8 /* BFExercise.m in Sources */,
+				A972DC4A1981BE0800156ED8 /* BFWorkoutList.m in Sources */,
 				A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */,
 				A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */,
 			);

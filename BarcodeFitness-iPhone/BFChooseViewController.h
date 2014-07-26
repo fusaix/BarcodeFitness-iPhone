@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+//#define kWorkoutTemplates @"workoutTemplates"
 
 @interface BFChooseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray * workouts;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-
+@property (nonatomic, strong) NSMutableArray * workoutTemplates; // corresponds to _objects in a master detail template. Here it is public to let BFAddWorkoutViewController do the job. 
 
 @end

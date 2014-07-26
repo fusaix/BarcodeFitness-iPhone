@@ -74,8 +74,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Yesterday, Volume: 30 lb/s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h9O-Hq-UxH">
-                                                    <rect key="frame" x="15" y="25" width="147" height="15"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Today, Duration: 40 min, Density: 30 lb/s" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h9O-Hq-UxH">
+                                                    <rect key="frame" x="15" y="25" width="225" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -116,7 +116,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" id="sNN-f3-Xdi"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="15m-Ff-8x1" id="IRH-lL-xC7"/>
+                        <outlet property="tableView" destination="15m-Ff-8x1" id="TnK-cz-caD"/>
                         <segue destination="6Sl-k7-D0m" kind="push" identifier="startWorkout" id="Nrq-Mk-mHr"/>
                         <segue destination="URo-ya-Wop" kind="modal" identifier="addWorkout" id="DpS-pR-1XA"/>
                         <segue destination="URo-ya-Wop" kind="modal" identifier="editWorkout" id="5p9-0v-QRq"/>
@@ -135,7 +135,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Name" footerTitle="Tipe a name for your new workout" id="ro4-VP-448">
+                            <tableViewSection headerTitle="Name" footerTitle="Tipe a name for your workout" id="ro4-VP-448">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="wOU-hk-rLe">
                                         <rect key="frame" x="0.0" y="119" width="320" height="44"/>
@@ -158,7 +158,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Image" footerTitle="Choose an image for your new workout" id="M32-ba-a6B">
+                            <tableViewSection headerTitle="Image" footerTitle="Choose an image for your workout" id="M32-ba-a6B">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="180" id="Cf0-7j-P5P">
                                         <rect key="frame" x="0.0" y="238" width="320" height="180"/>

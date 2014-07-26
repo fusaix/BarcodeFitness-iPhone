@@ -7,12 +7,17 @@
 //
 
 #import "BFAppDelegate.h"
+#import "BFWorkoutList.h"
+
 
 @implementation BFAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    // Import data models 
+//    [BFWorkoutList getWorkoutList];
+    
     return YES;
 }
 							
