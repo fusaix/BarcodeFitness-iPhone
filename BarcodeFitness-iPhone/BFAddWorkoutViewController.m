@@ -58,6 +58,7 @@
         [BFWorkoutList setWorkoutName: self.nameField.text atIndex: _renameRow];
         //[BFWorkoutList setWorkoutImage: self.... atIndex: _renameRow];
         
+        
     }
     
     // dismiss

@@ -7,12 +7,16 @@
 //
 
 #import "BFWorkoutViewController.h"
+#import "BFWorkout.h"
+
 
 @interface BFWorkoutViewController ()
 
 @end
 
 @implementation BFWorkoutViewController
+@synthesize workout = _workout;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

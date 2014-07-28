@@ -11,6 +11,12 @@
 @interface BFWorkout : NSObject
 @property (nonatomic, strong) NSString *name;
 //@property (nonatomic, strong) image
+@property (nonatomic, strong) NSString *description; // subtitle of cells in Launcher
+@property (nonatomic, strong) NSDate *lastDate;
+@property (nonatomic) int duration;
+@property (nonatomic) float density;
+@property (nonatomic) int row; 
+
 
 - (id) initWithName: (NSString*) name; 
 

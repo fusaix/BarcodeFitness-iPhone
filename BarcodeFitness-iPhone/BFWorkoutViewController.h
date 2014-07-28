@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class BFWorkout;
 
 @interface BFWorkoutViewController : UIViewController
+@property (nonatomic, strong) BFWorkout * workout;
 
 @end

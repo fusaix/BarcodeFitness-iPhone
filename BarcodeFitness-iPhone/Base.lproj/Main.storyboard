@@ -54,10 +54,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableHeaderView" contentMode="redraw" id="rZS-TV-oqu">
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="bCl-9S-mcc">
                                     <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="Z7G-C9-dzB" id="TvB-T2-yRx"/>
+                                    </connections>
                                 </searchBar>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="workoutCell" textLabel="uEV-Ws-ujU" detailTextLabel="h9O-Hq-UxH" style="IBUITableViewCellStyleSubtitle" id="vhL-oj-JKA">
@@ -116,13 +119,23 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" id="sNN-f3-Xdi"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="15m-Ff-8x1" id="TnK-cz-caD"/>
+                        <outlet property="searchDisplayController" destination="Ava-o3-RvU" id="6uI-ot-shg"/>
+                        <outlet property="tableView" destination="15m-Ff-8x1" id="sFP-Ik-RYH"/>
                         <segue destination="6Sl-k7-D0m" kind="push" identifier="startWorkout" id="Nrq-Mk-mHr"/>
                         <segue destination="URo-ya-Wop" kind="modal" identifier="addWorkout" id="DpS-pR-1XA"/>
                         <segue destination="URo-ya-Wop" kind="modal" identifier="editWorkout" id="5p9-0v-QRq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bUj-qw-JSX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="Ava-o3-RvU">
+                    <connections>
+                        <outlet property="delegate" destination="Z7G-C9-dzB" id="pz5-M2-P7y"/>
+                        <outlet property="searchBar" destination="bCl-9S-mcc" id="KgI-IB-k1e"/>
+                        <outlet property="searchContentsController" destination="Z7G-C9-dzB" id="o3r-XQ-fXV"/>
+                        <outlet property="searchResultsDataSource" destination="Z7G-C9-dzB" id="CYH-8D-Y4c"/>
+                        <outlet property="searchResultsDelegate" destination="Z7G-C9-dzB" id="8vx-oz-aAt"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1275" y="-2"/>
         </scene>
@@ -433,6 +446,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5p9-0v-QRq"/>
+        <segue reference="DpS-pR-1XA"/>
     </inferredMetricsTieBreakers>
 </document>

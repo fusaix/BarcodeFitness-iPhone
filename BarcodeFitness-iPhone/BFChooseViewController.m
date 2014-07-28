@@ -10,16 +10,21 @@
 #import "BFWorkoutList.h"
 #import "BFWorkout.h"
 #import "BFAddWorkoutViewController.h"
+#import "BFWorkoutViewController.h"
+
 
 @interface BFChooseViewController ()
-@property (nonatomic, strong) NSIndexPath * renameIndexPath;
+@property (nonatomic) int renameRow;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+//@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+//@property (nonatomic, strong) UISearchDisplayController* searchDisplayController;
+@property (nonatomic, strong) NSMutableArray *filteredWorkoutTemplates;
 
 @end
 
 @implementation BFChooseViewController
 @synthesize workoutTemplates = _workoutTemplates;
-@synthesize tableView = _tableView;
+//@synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,13 +35,35 @@
     return self;
 }
 
+-(NSMutableArray *)filteredWorkoutTemplates
+{
+    if (!_filteredWorkoutTemplates) {
+        _filteredWorkoutTemplates = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _filteredWorkoutTemplates;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
-
+    // refresh search result table
+    self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-
+    // hide search bar
+    if (!self.searchDisplayController.active) {
+        [UIView animateWithDuration:0.5
+                              delay:1.0
+                            options:(UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction)
+                         animations:^(void) {
+                             [self hideSearchBar];
+                         }
+                         completion:nil];
+    }
+//completion:^(BOOL finished) {
+//    if (finished) {
+//    }
+//}];
 }
 
 - (void)viewDidLoad
@@ -50,8 +77,11 @@
         _workoutTemplates = [[NSMutableArray alloc] initWithArray:[BFWorkoutList getWorkoutTemplates]];
     }
     
+    // hide search bar
+    [self hideSearchBar];
 
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -74,21 +104,98 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.workoutTemplates.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return self.filteredWorkoutTemplates.count;
+    } else {
+        return self.workoutTemplates.count;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"workoutCell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"workoutCell";
+    UITableViewCell *cell;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    } else {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    }
+    
+    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"workoutCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    BFWorkout * currentWorkout = [self.workoutTemplates objectAtIndex:indexPath.row];
+    BFWorkout * currentWorkout;
+    if (tableView == self.searchDisplayController.searchResultsTableView) { // if research mode
+        currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
+    } else { // else default mode
+        currentWorkout = [self.workoutTemplates objectAtIndex:indexPath.row];
+        // Update workout.row for research mode
+        currentWorkout.row = indexPath.row;
+    }
     cell.textLabel.text = currentWorkout.name;
+    cell.detailTextLabel.text = currentWorkout.description;
+
 //    NSLog(@"%@", currentWorkout.name);
+//    NSLog(@"1- %@", _workoutTemplates);
+//    NSLog(@"2- %@", _filteredWorkoutTemplates);
     
     return cell;
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 50;
+//}
+
+
+#pragma mark - UISearchDisplayController Delegate Methods
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    // Tells the table data source to reload when text changes
+    [self filterContentForSearchText:searchString];
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchDisplayController.searchBar.text = @"";
+    [searchBar resignFirstResponder];
+//    [self hideSearchBar];
+}
+
+#pragma mark - Content Filtering and Search bar methods
+
+-(void)filterContentForSearchText:(NSString*)searchText {
+    
+    // Update the filtered array based on the search text and scope.
+    // Remove all objects from the filtered search array
+    [self.filteredWorkoutTemplates removeAllObjects];
+    
+    for (BFWorkout *workout in _workoutTemplates) {
+//        if ([workout.name rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound ||
+//            [workout.description rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound) {
+//            [self.filteredWorkoutTemplates addObject:workout];
+//        }
+        if ([workout.name rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [self.filteredWorkoutTemplates addObject:workout];
+        }
+    }
+}
+
+- (void) hideSearchBar {
+    CGRect newBounds = self.tableView.bounds;
+    newBounds.origin.y = newBounds.origin.y + self.searchDisplayController.searchBar.bounds.size.height;
+    self.tableView.bounds = newBounds;
+
+}
+
+
 
 #pragma mark - Edit modes
 
@@ -101,16 +208,34 @@
 }
 */
 
-
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source workoutTemplates
-        [self.workoutTemplates removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        // Delete to workoutTemplatesRepresentation
-        [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
+        if (self.searchDisplayController.active) { // research mode
+            // Get the currentWorkout to find the original row through workout.row
+            BFWorkout *currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
+//            NSLog(@"a. %@ - %i", indexPath, indexPath.row);
+//            NSLog(@"b. %@ - %i", currentWorkout, currentWorkout.row);
+            // Delete the row from the data source workoutTemplates
+            [self.workoutTemplates removeObjectAtIndex:currentWorkout.row];
+            self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
+            [self.tableView reloadData];
+            // Delete to workoutTemplatesRepresentation
+            [BFWorkoutList removeObjectAtIndex: currentWorkout.row];
+        } else {
+            CGRect newBounds = self.tableView.bounds;
+            // Delete the row from the data source workoutTemplates
+            [self.workoutTemplates removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            // Delete to workoutTemplatesRepresentation
+            [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
+            // reload data KILLS animations !!!!!!!!!!!!!!! so we'll use a trick to udate the rows
+            for (BFWorkout *workout in self.workoutTemplates) {
+                workout.row = indexPath.row;
+            }
+            self.tableView.bounds = newBounds;
+        }
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -146,8 +271,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView swipeAccessoryButtonPushedForRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.renameIndexPath = indexPath;
+    if (self.searchDisplayController.active) { // research mode
+        // Get the currentWorkout to find the original row through workout.row
+        BFWorkout *currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
+        self.renameRow = currentWorkout.row;
+    } else {
+        self.renameRow = indexPath.row;
+    }
     [self performSegueWithIdentifier:@"editWorkout" sender:tableView];
+    
 }
 
 #pragma mark - Navigation
@@ -156,12 +288,6 @@
     // Perform segue to candy detail
     [self performSegueWithIdentifier:@"startWorkout" sender:tableView];
     
-}
-
-#pragma mark - IBActions
-
-- (IBAction)addWorkout:(UIBarButtonItem *)sender {
-    [self performSegueWithIdentifier:@"addWorkout" sender:self];
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -179,14 +305,30 @@
         //        @catch (NSException *exception) {
         //            NSLog(@"Exception %@",[exception callStackSymbols]);
         //        }
-    } else if ([segue.identifier isEqualToString:@"editWorkout"]) { // BFAddWorkoutViewController is also used for editing an workout (rename or change image) 
+    } else if ([segue.identifier isEqualToString:@"editWorkout"]) { // BFAddWorkoutViewController is also used for editing an workout (rename or change image)
         UINavigationController * navCon = (UINavigationController *)[segue destinationViewController];
         BFAddWorkoutViewController * addWorkoutViewController = (BFAddWorkoutViewController *)navCon.childViewControllers.firstObject; // IMPORTANT cast and childViewController method.
-        addWorkoutViewController.workout = [_workoutTemplates objectAtIndex:self.renameIndexPath.row]; // self.tableView.indexPathForSelectedRow.row does not apply
-        addWorkoutViewController.renameRow = (int) self.renameIndexPath.row; // for the automatic name suggestion
+        addWorkoutViewController.workout = [_workoutTemplates objectAtIndex:self.renameRow]; // self.tableView.indexPathForSelectedRow.row does not apply
+        addWorkoutViewController.renameRow = self.renameRow; // for the automatic name suggestion
         addWorkoutViewController.segueIdentifier = @"editWorkout";
+    } else if ([segue.identifier isEqualToString:@"startWorkout"]) {
+        NSIndexPath *indexPath = [sender indexPathForSelectedRow];
+        BFWorkout *workout = nil;
+        if (self.searchDisplayController.active) {
+            workout = [_filteredWorkoutTemplates objectAtIndex:indexPath.row];
+        } else {
+            workout = [_workoutTemplates objectAtIndex:indexPath.row];
+        }
+        BFWorkoutViewController *destViewController = segue.destinationViewController;
+        destViewController.workout = workout;
     }
     
+}
+
+#pragma mark - IBActions
+
+- (IBAction)addWorkout:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"addWorkout" sender:self];
 }
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
