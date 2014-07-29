@@ -11,6 +11,8 @@
 
 
 @interface BFWorkoutViewController ()
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
 
 @end
 
@@ -27,10 +29,21 @@
     return self;
 }
 
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//    
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    // Configure navigation bar
+    self.title = _workout.name;
+    // configure back button
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Rest" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,5 +62,22 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - IBActions
+
+- (IBAction)addWorkout:(UIBarButtonItem *)sender {
+    [self performSegueWithIdentifier:@"addExercise" sender:self];
+}
+
+- (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
+    self.tableView.editing = !self.tableView.editing; // not a tableViewController so use the "self.tableView.editing" in stead of "self.editing"
+    if (self.tableView.editing) {
+        sender.tintColor = [UIColor redColor];
+    } else {
+        sender.tintColor = [self.navigationController.navigationBar tintColor];
+    }
+}
+
+
 
 @end

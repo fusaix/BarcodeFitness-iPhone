@@ -79,6 +79,9 @@
     
     // hide search bar
     [self hideSearchBar];
+    
+    // configure back button 
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:nil action:nil];
 
 }
 
@@ -132,7 +135,7 @@
     } else { // else default mode
         currentWorkout = [self.workoutTemplates objectAtIndex:indexPath.row];
         // Update workout.row for research mode
-        currentWorkout.row = indexPath.row;
+        currentWorkout.row = (int) indexPath.row;
     }
     cell.textLabel.text = currentWorkout.name;
     cell.detailTextLabel.text = currentWorkout.description;
@@ -232,7 +235,7 @@
             [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
             // reload data KILLS animations !!!!!!!!!!!!!!! so we'll use a trick to udate the rows
             for (BFWorkout *workout in self.workoutTemplates) {
-                workout.row = indexPath.row;
+                workout.row = (int) indexPath.row;
             }
             self.tableView.bounds = newBounds;
         }
@@ -276,7 +279,7 @@
         BFWorkout *currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
         self.renameRow = currentWorkout.row;
     } else {
-        self.renameRow = indexPath.row;
+        self.renameRow = (int) indexPath.row;
     }
     [self performSegueWithIdentifier:@"editWorkout" sender:tableView];
     

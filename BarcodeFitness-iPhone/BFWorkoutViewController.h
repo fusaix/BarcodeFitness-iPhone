@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class BFWorkout;
 
-@interface BFWorkoutViewController : UIViewController
+@interface BFWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) BFWorkout * workout;
 
 @end

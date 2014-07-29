@@ -15,7 +15,6 @@
 		A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A972940D197DDB4300495470 /* BFAppDelegate.m */; };
 		A9729411197DDB4300495470 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A972940F197DDB4300495470 /* Main.storyboard */; };
 		A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9729413197DDB4300495470 /* BFWelcomeViewController.m */; };
-		A9729416197DDB4300495470 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9729415197DDB4300495470 /* Images.xcassets */; };
 		A972941D197DDB4300495470 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A972941C197DDB4300495470 /* XCTest.framework */; };
 		A972941E197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
 		A972941F197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
@@ -31,6 +30,8 @@
 		A972DC4E1981C10800156ED8 /* BFExercise.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC4D1981C10800156ED8 /* BFExercise.m */; };
 		A972DC511981C12500156ED8 /* BFSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC501981C12500156ED8 /* BFSet.m */; };
 		A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC5B1982C69200156ED8 /* BFLogList.m */; };
+		A972DC6319885A4300156ED8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A972DC6219885A4300156ED8 /* Images.xcassets */; };
+		A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC6519885BD400156ED8 /* BFScanViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +58,6 @@
 		A9729410197DDB4300495470 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9729412197DDB4300495470 /* BFWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BFWelcomeViewController.h; sourceTree = "<group>"; };
 		A9729413197DDB4300495470 /* BFWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BFWelcomeViewController.m; sourceTree = "<group>"; };
-		A9729415197DDB4300495470 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A972941B197DDB4300495470 /* BarcodeFitness-iPhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BarcodeFitness-iPhoneTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A972941C197DDB4300495470 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A9729424197DDB4300495470 /* BarcodeFitness-iPhoneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BarcodeFitness-iPhoneTests-Info.plist"; sourceTree = "<group>"; };
@@ -83,6 +83,9 @@
 		A972DC501981C12500156ED8 /* BFSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSet.m; sourceTree = "<group>"; };
 		A972DC5A1982C69200156ED8 /* BFLogList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFLogList.h; sourceTree = "<group>"; };
 		A972DC5B1982C69200156ED8 /* BFLogList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFLogList.m; sourceTree = "<group>"; };
+		A972DC6219885A4300156ED8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A972DC6419885BD400156ED8 /* BFScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFScanViewController.h; sourceTree = "<group>"; };
+		A972DC6519885BD400156ED8 /* BFScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFScanViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +161,9 @@
 				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
 				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
 				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
-				A9729415197DDB4300495470 /* Images.xcassets */,
+				A972DC6419885BD400156ED8 /* BFScanViewController.h */,
+				A972DC6519885BD400156ED8 /* BFScanViewController.m */,
+				A972DC6219885A4300156ED8 /* Images.xcassets */,
 				A9729404197DDB4300495470 /* Supporting Files */,
 			);
 			path = "BarcodeFitness-iPhone";
@@ -295,7 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9729416197DDB4300495470 /* Images.xcassets in Resources */,
+				A972DC6319885A4300156ED8 /* Images.xcassets in Resources */,
 				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
 				A9729411197DDB4300495470 /* Main.storyboard in Resources */,
 			);
@@ -317,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */,
+				A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */,
 				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
