@@ -16,15 +16,12 @@
 @interface BFChooseViewController ()
 @property (nonatomic) int renameRow;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-//@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-//@property (nonatomic, strong) UISearchDisplayController* searchDisplayController;
 @property (nonatomic, strong) NSMutableArray *filteredWorkoutTemplates;
 
 @end
 
 @implementation BFChooseViewController
 @synthesize workoutTemplates = _workoutTemplates;
-//@synthesize tableView = _tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

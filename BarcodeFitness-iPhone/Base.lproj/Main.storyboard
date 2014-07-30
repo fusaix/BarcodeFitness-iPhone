@@ -488,6 +488,7 @@
         <!--Scan View Controller-->
         <scene sceneID="Ap2-jf-mbv">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gQR-hO-IpM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="5c7-AC-O0K" customClass="BFScanViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bst-aG-iXY"/>
@@ -505,8 +506,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="viewPreview" destination="QlB-he-AAO" id="Ab4-wC-WtW"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gQR-hO-IpM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2774" y="705"/>
         </scene>

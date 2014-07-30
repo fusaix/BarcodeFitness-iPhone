@@ -8,7 +8,9 @@
 
 #import "BFScanViewController.h"
 
+
 @interface BFScanViewController ()
+@property (strong, nonatomic) IBOutlet UIView *viewPreview;
 
 @end
 
@@ -27,6 +29,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,6 +48,40 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Scanning
+
+//-(void) setUpCamera
+//{
+//    _highlightView = [[UIView alloc] init];
+//    _highlightView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
+//    _highlightView.layer.borderColor = [UIColor greenColor].CGColor;
+//    _highlightView.layer.borderWidth = 3;
+//    [self.view addSubview:_highlightView];
+//    
+//    _session = [[AVCaptureSession alloc] init];
+//    _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+//    NSError *error = nil;
+//    
+//    _input = [AVCaptureDeviceInput deviceInputWithDevice:_device error:&error];
+//    if (_input) {
+//        [_session addInput:_input];
+//    } else {
+//        NSLog(@"Error: %@", error);
+//    }
+//    
+//    _output = [[AVCaptureMetadataOutput alloc] init];
+//    [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+//    [_session addOutput:_output];
+//    
+//    _output.metadataObjectTypes = [_output availableMetadataObjectTypes];
+//    
+//    _prevLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+//    _prevLayer.frame = CGRectMake(75, 150, 200, 200);
+//    _prevLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+//    
+//}
+
 
 #pragma mark - IBActions
 
