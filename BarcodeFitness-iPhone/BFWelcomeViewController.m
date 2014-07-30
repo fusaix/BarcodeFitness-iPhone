@@ -20,11 +20,24 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    // configure back button
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:nil action:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = NO;
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {

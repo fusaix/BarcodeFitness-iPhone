@@ -112,6 +112,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A9374E6E19897A1A00174C5E /* 1.WorkoutsManagement */ = {
+			isa = PBXGroup;
+			children = (
+				A972DC2E197F2C3000156ED8 /* BFChooseViewController.h */,
+				A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */,
+				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
+				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
+			);
+			name = 1.WorkoutsManagement;
+			sourceTree = "<group>";
+		};
+		A9374E6F19897AA100174C5E /* 2.ExercisesManagment */ = {
+			isa = PBXGroup;
+			children = (
+				A972DC32197F2C3000156ED8 /* BFWorkoutViewController.h */,
+				A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */,
+				A972DC6419885BD400156ED8 /* BFScanViewController.h */,
+				A972DC6519885BD400156ED8 /* BFScanViewController.m */,
+			);
+			name = 2.ExercisesManagment;
+			sourceTree = "<group>";
+		};
+		A9374E7019897AF000174C5E /* 3.SetsManagement */ = {
+			isa = PBXGroup;
+			children = (
+				A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */,
+				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
+			);
+			name = 3.SetsManagement;
+			sourceTree = "<group>";
+		};
 		A97293F1197DDB4300495470 = {
 			isa = PBXGroup;
 			children = (
@@ -147,22 +178,15 @@
 		A9729403197DDB4300495470 /* BarcodeFitness-iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				A972DC4B1981BE2A00156ED8 /* DataModels */,
 				A972940C197DDB4300495470 /* BFAppDelegate.h */,
 				A972940D197DDB4300495470 /* BFAppDelegate.m */,
 				A972940F197DDB4300495470 /* Main.storyboard */,
 				A9729412197DDB4300495470 /* BFWelcomeViewController.h */,
 				A9729413197DDB4300495470 /* BFWelcomeViewController.m */,
-				A972DC2E197F2C3000156ED8 /* BFChooseViewController.h */,
-				A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */,
-				A972DC32197F2C3000156ED8 /* BFWorkoutViewController.h */,
-				A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */,
-				A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */,
-				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
-				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
-				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
-				A972DC6419885BD400156ED8 /* BFScanViewController.h */,
-				A972DC6519885BD400156ED8 /* BFScanViewController.m */,
+				A9374E6E19897A1A00174C5E /* 1.WorkoutsManagement */,
+				A9374E6F19897AA100174C5E /* 2.ExercisesManagment */,
+				A9374E7019897AF000174C5E /* 3.SetsManagement */,
+				A972DC4B1981BE2A00156ED8 /* DataModels */,
 				A972DC6219885A4300156ED8 /* Images.xcassets */,
 				A9729404197DDB4300495470 /* Supporting Files */,
 			);
@@ -201,7 +225,6 @@
 		A972DC4B1981BE2A00156ED8 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				A972DC591982C4B100156ED8 /* LogLists */,
 				A972DC481981BE0800156ED8 /* BFWorkoutList.h */,
 				A972DC491981BE0800156ED8 /* BFWorkoutList.m */,
 				A972DC3A197F397000156ED8 /* BFWorkout.h */,
@@ -210,6 +233,7 @@
 				A972DC4D1981C10800156ED8 /* BFExercise.m */,
 				A972DC4F1981C12500156ED8 /* BFSet.h */,
 				A972DC501981C12500156ED8 /* BFSet.m */,
+				A972DC591982C4B100156ED8 /* LogLists */,
 			);
 			name = DataModels;
 			sourceTree = "<group>";

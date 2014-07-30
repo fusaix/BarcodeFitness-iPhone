@@ -13,6 +13,7 @@
 
 @interface BFAddWorkoutViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
+//@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 

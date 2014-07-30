@@ -14,6 +14,9 @@
 @synthesize lastDate = _lastDate;
 @synthesize duration = _duration;
 @synthesize density = _density;
+@synthesize note = _note;
+
+
 @synthesize row = _row; 
 
 

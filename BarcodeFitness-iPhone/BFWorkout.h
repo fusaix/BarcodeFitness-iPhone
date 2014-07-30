@@ -15,6 +15,9 @@
 @property (nonatomic, strong) NSDate *lastDate;
 @property (nonatomic) int duration;
 @property (nonatomic) float density;
+@property (nonatomic, strong) NSString *note; 
+
+
 @property (nonatomic) int row; 
 
 
