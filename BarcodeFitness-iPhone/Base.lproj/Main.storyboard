@@ -276,7 +276,6 @@
         <!--Workout View Controller-->
         <scene sceneID="oxd-yR-XAd">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aOx-Ke-V82" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bLQ-0A-Rf6" customClass="BFWorkoutViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Lep-CB-ww5"/>
@@ -316,6 +315,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="bLQ-0A-Rf6" id="UJ2-GD-1ub"/>
+                                    <outlet property="delegate" destination="bLQ-0A-Rf6" id="bDW-HI-KME"/>
+                                </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Db-g8-KjK">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
@@ -352,11 +355,12 @@
                         <barButtonItem key="rightBarButtonItem" title="Finish all" id="kl1-RN-Jcm"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="Ril-Ix-U8h" id="hrl-5W-XWk"/>
+                        <outlet property="tableView" destination="Ril-Ix-U8h" id="dZK-AY-SUT"/>
                         <segue destination="klS-ER-LvM" kind="push" identifier="startExercise" id="a4L-ah-uvD"/>
                         <segue destination="Uby-eK-Wk2" kind="modal" identifier="addExercise" id="4Bm-aH-ns0"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aOx-Ke-V82" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1802" y="-2"/>
         </scene>
@@ -485,10 +489,9 @@
             </objects>
             <point key="canvasLocation" x="1275" y="705"/>
         </scene>
-        <!--Scan View Controller-->
+        <!--Scan View Controller - Scan a QR Code-->
         <scene sceneID="Ap2-jf-mbv">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gQR-hO-IpM" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="5c7-AC-O0K" customClass="BFScanViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bst-aG-iXY"/>
@@ -499,7 +502,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="o8l-gS-Wdg">
+                    <navigationItem key="navigationItem" title="Scan a QR Code" id="o8l-gS-Wdg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="jdA-6J-uKH">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="5c7-AC-O0K" id="bey-yd-a8p"/>
@@ -510,10 +513,11 @@
                         <outlet property="viewPreview" destination="QlB-he-AAO" id="Ab4-wC-WtW"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gQR-hO-IpM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2774" y="705"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Select in list-->
         <scene sceneID="q3b-0F-n6O">
             <objects>
                 <viewController id="oiA-Eh-s2Q" sceneMemberID="viewController">
@@ -526,7 +530,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="lWf-qV-s5f">
+                    <navigationItem key="navigationItem" title="Select in list" id="lWf-qV-s5f">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="sfM-Fl-fwf"/>
                     </navigationItem>
                 </viewController>
@@ -534,7 +538,7 @@
             </objects>
             <point key="canvasLocation" x="2774" y="1383"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Touch a muscle-->
         <scene sceneID="llr-Jh-AdX">
             <objects>
                 <viewController id="cVe-Y9-cnj" sceneMemberID="viewController">
@@ -547,7 +551,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vCd-rY-arO">
+                    <navigationItem key="navigationItem" title="Touch a muscle" id="vCd-rY-arO">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ed7-bw-iJy"/>
                     </navigationItem>
                 </viewController>
@@ -555,7 +559,7 @@
             </objects>
             <point key="canvasLocation" x="2774" y="2053"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - Touch the button-->
         <scene sceneID="Vv6-MO-wMc">
             <objects>
                 <viewController id="TvY-bT-hP6" sceneMemberID="viewController">
@@ -568,7 +572,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="hZI-6e-ddL">
+                    <navigationItem key="navigationItem" title="Touch the button" id="hZI-6e-ddL">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="7SV-Rf-zjg"/>
                     </navigationItem>
                 </viewController>

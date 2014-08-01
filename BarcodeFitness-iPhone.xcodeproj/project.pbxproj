@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */; };
+		A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */; };
+		A9374E7B198AE4D900174C5E /* BFNetworkLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */; };
 		A97293FE197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
 		A9729400197DDB4300495470 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FF197DDB4300495470 /* CoreGraphics.framework */; };
 		A9729402197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
@@ -25,7 +28,6 @@
 		A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */; };
 		A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3B197F397000156ED8 /* BFWorkout.m */; };
 		A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */; };
-		A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC431980595F00156ED8 /* BFChooseViewController2.m */; };
 		A972DC4A1981BE0800156ED8 /* BFWorkoutList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC491981BE0800156ED8 /* BFWorkoutList.m */; };
 		A972DC4E1981C10800156ED8 /* BFExercise.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC4D1981C10800156ED8 /* BFExercise.m */; };
 		A972DC511981C12500156ED8 /* BFSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC501981C12500156ED8 /* BFSet.m */; };
@@ -45,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun2x.mp3; sourceTree = "<group>"; };
+		A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun.mp3; sourceTree = "<group>"; };
+		A9374E79198AE4D900174C5E /* BFNetworkLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNetworkLoader.h; sourceTree = "<group>"; };
+		A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNetworkLoader.m; sourceTree = "<group>"; };
 		A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeFitness-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97293FD197DDB4300495470 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A97293FF197DDB4300495470 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,8 +79,6 @@
 		A972DC3B197F397000156ED8 /* BFWorkout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkout.m; sourceTree = "<group>"; };
 		A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFAddWorkoutViewController.h; sourceTree = "<group>"; };
 		A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFAddWorkoutViewController.m; sourceTree = "<group>"; };
-		A972DC421980595F00156ED8 /* BFChooseViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewController2.h; sourceTree = "<group>"; };
-		A972DC431980595F00156ED8 /* BFChooseViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewController2.m; sourceTree = "<group>"; };
 		A972DC481981BE0800156ED8 /* BFWorkoutList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkoutList.h; sourceTree = "<group>"; };
 		A972DC491981BE0800156ED8 /* BFWorkoutList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkoutList.m; sourceTree = "<group>"; };
 		A972DC4C1981C10800156ED8 /* BFExercise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExercise.h; sourceTree = "<group>"; };
@@ -150,8 +154,6 @@
 				A9729422197DDB4300495470 /* BarcodeFitness-iPhoneTests */,
 				A97293FC197DDB4300495470 /* Frameworks */,
 				A97293FB197DDB4300495470 /* Products */,
-				A972DC421980595F00156ED8 /* BFChooseViewController2.h */,
-				A972DC431980595F00156ED8 /* BFChooseViewController2.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,6 +201,8 @@
 				A9729405197DDB4300495470 /* BarcodeFitness-iPhone-Info.plist */,
 				A9729406197DDB4300495470 /* InfoPlist.strings */,
 				A9729409197DDB4300495470 /* main.m */,
+				A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */,
+				A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */,
 				A972940B197DDB4300495470 /* BarcodeFitness-iPhone-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -233,6 +237,8 @@
 				A972DC4D1981C10800156ED8 /* BFExercise.m */,
 				A972DC4F1981C12500156ED8 /* BFSet.h */,
 				A972DC501981C12500156ED8 /* BFSet.m */,
+				A9374E79198AE4D900174C5E /* BFNetworkLoader.h */,
+				A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */,
 				A972DC591982C4B100156ED8 /* LogLists */,
 			);
 			name = DataModels;
@@ -327,6 +333,8 @@
 				A972DC6319885A4300156ED8 /* Images.xcassets in Resources */,
 				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
 				A9729411197DDB4300495470 /* Main.storyboard in Resources */,
+				A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */,
+				A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,10 +353,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A972DC441980595F00156ED8 /* BFChooseViewController2.m in Sources */,
 				A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */,
 				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
+				A9374E7B198AE4D900174C5E /* BFNetworkLoader.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
 				A972940A197DDB4300495470 /* main.m in Sources */,
 				A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */,

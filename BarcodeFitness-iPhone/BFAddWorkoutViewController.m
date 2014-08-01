@@ -31,8 +31,6 @@
 }
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)sender {
-
-    
     // save
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
         // save to workoutTemplates
@@ -42,15 +40,7 @@
         [BFWorkoutList addObject:newWorkout];
 
         
-//        NSString * newKey = [[NSDate date] description];
-        // set BFWorkout in BFWorkoutList
-//        [BFWorkoutList setWorkout:newWorkout forKey:newKey];
-        // set key
-//        [BFWorkoutList setCurrentKey:newKey];
-        // now workoutTemplates will only hold keys, so we will call is workoutListKeys
-//        [self.workoutListViewController.workoutTemplates addObject:newKey];
-        
-    } else {
+    } else { // isEqualToString:@"editWorkout"
         // set changes to the workout in workoutTemplates
         _workout.name = self.nameField.text;
         //_workout.image = ...

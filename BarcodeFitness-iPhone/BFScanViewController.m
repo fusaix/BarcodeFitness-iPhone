@@ -7,14 +7,25 @@
 //
 
 #import "BFScanViewController.h"
+#import "BFWorkoutViewController.h"
+#import "BFExercise.h"
 
 
 @interface BFScanViewController ()
 @property (strong, nonatomic) IBOutlet UIView *viewPreview;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+@property (nonatomic, strong) NSDictionary* parsedExerciseData;
 
 @end
 
+
 @implementation BFScanViewController
+@synthesize exerciseListViewController = _exerciseListViewController;
+@synthesize exercise = _exercise;
+@synthesize segueIdentifier = _segueIdentifier;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +40,27 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _captureSession = nil;
+    
+    // Load sound
+    [self loadBeepSound];
 
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    // Start Scanning
+    if ([self startReading]) {
+        self.navigationItem.title = @"Scanning...";
+        NSLog(@"start scanning");
+    } else {
+        self.title = @"Can't scan :(";
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // Stop scanning
+    [self stopReading];
+    NSLog(@"stop scanning");
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,43 +82,195 @@
 
 #pragma mark - Scanning
 
-//-(void) setUpCamera
-//{
-//    _highlightView = [[UIView alloc] init];
-//    _highlightView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
-//    _highlightView.layer.borderColor = [UIColor greenColor].CGColor;
-//    _highlightView.layer.borderWidth = 3;
-//    [self.view addSubview:_highlightView];
-//    
-//    _session = [[AVCaptureSession alloc] init];
-//    _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-//    NSError *error = nil;
-//    
-//    _input = [AVCaptureDeviceInput deviceInputWithDevice:_device error:&error];
-//    if (_input) {
-//        [_session addInput:_input];
-//    } else {
-//        NSLog(@"Error: %@", error);
-//    }
-//    
-//    _output = [[AVCaptureMetadataOutput alloc] init];
-//    [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-//    [_session addOutput:_output];
-//    
-//    _output.metadataObjectTypes = [_output availableMetadataObjectTypes];
-//    
-//    _prevLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
-//    _prevLayer.frame = CGRectMake(75, 150, 200, 200);
-//    _prevLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-//    
-//}
+
+- (BOOL)startReading {
+    NSError *error;
+    
+    // get device
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    // create input
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
+    if (!input) {
+        NSLog(@"%@", [error localizedDescription]);
+        return NO; // display self.title = @"Can't scan :(";
+    }
+    
+    // session
+    _captureSession = [[AVCaptureSession alloc] init];
+    [_captureSession addInput:input];
+    
+    // output creation and dispatch
+    AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    [_captureSession addOutput:captureMetadataOutput];
+    
+    dispatch_queue_t dispatchQueue;
+    dispatchQueue = dispatch_queue_create("myQueue", NULL);
+    [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
+    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
+    
+    // configure display
+    _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+    [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
+    [_viewPreview.layer addSublayer:_videoPreviewLayer];
+    
+    // run
+    [_captureSession startRunning];
+    
+    return YES;
+}
+
+-(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+    if (metadataObjects != nil && [metadataObjects count] > 0) {
+        AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
+        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
+//            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+            NSString * detectionString = [metadataObj stringValue];
+//            self.navigationItem.title = [metadataObj stringValue];
+            NSLog(@"Hey! The data is: %@",[metadataObj stringValue]);
+            
+            
+            
+            // Fake
+            // **************
+            [_captureSession stopRunning];
+
+            BFExercise *newExercise = [[BFExercise alloc] initWithName:[metadataObj stringValue]];
+            [self.exerciseListViewController.exercises addObject:newExercise];
+            // play success sound and vibrate !!!
+            if (_audioPlayer) {
+                [_audioPlayer play];
+            }
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+            // stop and dismiss NB: [_captureSession stopRunning]; already done.
+            [self performSelectorInBackground:@selector(stopReadingAndDismiss) withObject:nil];
+            // **************
+        
+            
+//            if (detectionString != nil) {
+//                // Stop further capture, as soon as you get the first one
+//                [_captureSession stopRunning];
+//                
+//                // GETTING the data using the QR code
+//                NSString* url_data=@"http://dev.m.gatech.edu/d/msandt3/api/barcodefitness/search?q=";
+//                
+//                url_data=[url_data stringByAppendingString:detectionString];
+//                url_data=[url_data stringByAppendingString:@"&type=exercise"];
+//                
+//                NSURL* url_fetch= [[NSURL alloc]initWithString:url_data];
+//                
+//                // Prepare the request object
+//                NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_fetch
+//                                                            cachePolicy:NSURLRequestReturnCacheDataElseLoad
+//                                                        timeoutInterval:30];
+//                // Prepare the variables for the JSON response
+//                NSData *urlData;
+//                NSURLResponse *response;
+//                NSError *error;
+//                
+//                // Make synchronous request
+//                urlData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+//                if (error) {
+//                    NSLog(@"Could not make synchronous request.");
+//                    NSLog(@"%@", [error localizedDescription]);
+//                    // play fail sound
+//                    if (_audioPlayer) {
+//                        [_audioPlayer play];
+//                    }
+//                    // show fail sign and wait 2s
+//                    
+//                    // run again
+//                    [_captureSession startRunning];
+//                }
+//                else{
+//                    // Parse data
+//                    self.parsedExerciseData = [NSJSONSerialization JSONObjectWithData:urlData options:0 error:&error];
+//                    if (error) {
+//                        NSLog(@"Could not parse data.");
+//                        NSLog(@"%@", [error localizedDescription]);
+//                        // play fail sound
+//                        if (_audioPlayer) {
+//                            [_audioPlayer play];
+//                        }
+//                        // show fail sign and wait 2s
+//                        
+//                        // run again
+//                        [_captureSession startRunning];
+//                    }
+//                    else{
+////                        _exercise.name = [self.parsedExerciseData valueForKey:@"name"];
+//                        
+//                        
+//                        
+//                        // save to exercises
+//                        BFExercise *newExercise = [[BFExercise alloc] initWithName:[self.parsedExerciseData valueForKey:@"name"]];
+//                        [self.exerciseListViewController.exercises addObject:newExercise];
+//                        
+//                        
+//                        NSLog(@"Perfect! The name is: %@",_exercise.name);
+//            
+//                        
+//                        // play success sound and vibrate !!!
+//                        if (_audioPlayer) {
+//                            [_audioPlayer play];
+//                        }
+//                        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+//                        // stop and dismiss NB: [_captureSession stopRunning]; already done. 
+//                        [self performSelectorInBackground:@selector(stopReadingAndDismiss) withObject:nil];
+//                    }
+//             
+//             
+//                }
+//
+//        
+//
+//            } // if (detectionString != nil)
+            
+            
+            
+        } // if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
+    }    
+}
+
+-(void)stopReading{
+    [_captureSession stopRunning];
+    _captureSession = nil;
+    [_videoPreviewLayer removeFromSuperlayer];
+}
+
+-(void)stopReadingAndDismiss{
+    _captureSession = nil;
+    [_videoPreviewLayer removeFromSuperlayer];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void) dismissViewThisController {
+}
+
+
+#pragma mark - Sound
+
+-(void)loadBeepSound{
+    NSString *beepFilePath = [[NSBundle mainBundle] pathForResource:@"PumpShotgun2x" ofType:@"mp3"];
+    NSURL *beepURL = [NSURL URLWithString:beepFilePath];
+    NSError *error;
+    
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:beepURL error:&error];
+    if (error) {
+        NSLog(@"Could not play beep file.");
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    else{
+        [_audioPlayer prepareToPlay];
+    }
+}
 
 
 #pragma mark - IBActions
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 @end
