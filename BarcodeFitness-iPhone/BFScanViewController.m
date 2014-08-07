@@ -8,6 +8,7 @@
 
 #import "BFScanViewController.h"
 #import "BFWorkoutViewController.h"
+#import "BFWorkoutList.h"
 #import "BFExercise.h"
 
 
@@ -17,14 +18,16 @@
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @property (nonatomic, strong) NSDictionary* parsedExerciseData;
+@property (nonatomic) BOOL success;
 
 @end
 
 
 @implementation BFScanViewController
 @synthesize exerciseListViewController = _exerciseListViewController;
+@synthesize wIndex = _wIndex; 
 @synthesize exercise = _exercise;
-@synthesize segueIdentifier = _segueIdentifier;
+//@synthesize segueIdentifier = _segueIdentifier;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -51,16 +54,17 @@
     // Start Scanning
     if ([self startReading]) {
         self.navigationItem.title = @"Scanning...";
-        NSLog(@"start scanning");
     } else {
         self.title = @"Can't scan :(";
     }
+    _success = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    // Stop scanning
-    [self stopReading];
-    NSLog(@"stop scanning");
+    if (!_success) { // Sucess scenario is handled separatly
+        // Stop scanning
+        [self stopReading];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,6 +122,8 @@
     // run
     [_captureSession startRunning];
     
+    NSLog(@"scanning started");
+    
     return YES;
 }
 
@@ -125,28 +131,37 @@
     if (metadataObjects != nil && [metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-//            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
             NSString * detectionString = [metadataObj stringValue];
-//            self.navigationItem.title = [metadataObj stringValue];
             NSLog(@"Hey! The data is: %@",[metadataObj stringValue]);
-            
-            
             
             // Fake
             // **************
             [_captureSession stopRunning];
 
+            // Sucess !!!
+            _success = YES;
+            
+            // Save
             BFExercise *newExercise = [[BFExercise alloc] initWithName:[metadataObj stringValue]];
             [self.exerciseListViewController.exercises addObject:newExercise];
+            // Save to persistent data
+            [BFWorkoutList addExercise: newExercise toWorkoutAtIndex: _wIndex];
+            NSLog(@"row: %d", _wIndex);
+            
             // play success sound and vibrate !!!
             if (_audioPlayer) {
                 [_audioPlayer play];
             }
             AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             // stop and dismiss NB: [_captureSession stopRunning]; already done.
-            [self performSelectorInBackground:@selector(stopReadingAndDismiss) withObject:nil];
+            [self performSelectorOnMainThread:@selector(dismissAndStopReading) withObject:nil waitUntilDone:YES];
             // **************
         
+            
+            // When scanned, we should verify if the link is part of the list
+            // if not : play failure sound and continue scanning
+            
+            
             
 //            if (detectionString != nil) {
 //                // Stop further capture, as soon as you get the first one
@@ -237,15 +252,15 @@
     [_captureSession stopRunning];
     _captureSession = nil;
     [_videoPreviewLayer removeFromSuperlayer];
+    NSLog(@"scanning stopped");
 }
 
--(void)stopReadingAndDismiss{
-    _captureSession = nil;
-    [_videoPreviewLayer removeFromSuperlayer];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void) dismissViewThisController {
+-(void)dismissAndStopReading{
+    [self dismissViewControllerAnimated:YES completion: ^{
+        _captureSession = nil;
+        [_videoPreviewLayer removeFromSuperlayer];
+        NSLog(@"scanning stopped 2.0");
+    }];
 }
 
 

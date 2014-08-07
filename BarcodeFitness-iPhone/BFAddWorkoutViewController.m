@@ -10,10 +10,11 @@
 #import "BFChooseViewController.h"
 #import "BFWorkoutList.h"
 #import "BFWorkout.h"
+#import "BFCollectionViewCell.h"
 
 @interface BFAddWorkoutViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
-//@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) NSMutableArray *workoutImages;
 
 @end
 
@@ -95,8 +96,21 @@
         }
     }
     
+    // Gesture to hide keyboard
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.tableView addGestureRecognizer:tapGestureRecognizer];
+    
+    // Load Names of Images
+    _workoutImages = [@[@"BarcodeFitnessIcon120.png",
+                        @"Monday.png",
+                        @"Tuesday.png",
+                        @"Wednesday.png",
+                        @"Thursday.png",
+                        @"Friday.png",
+                        @"Saturday.png",
+                        @"Sunday.png",
+                        @"Everyday.png"] mutableCopy];
+    
 }
 
 - (void) hideKeyboard {
@@ -125,6 +139,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UICollectionViewDataSource
+
+-(NSInteger)numberOfSectionsInCollectionView:
+(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _workoutImages.count;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    BFCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
+    
+    UIImage *image;
+    long row = [indexPath row];
+    
+    image = [UIImage imageNamed:_workoutImages[row]];
+    
+    myCell.imageView.image = image;
+    
+    return myCell;
+}
 
 
 @end

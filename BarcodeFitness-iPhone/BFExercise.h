@@ -15,6 +15,8 @@
 @property (nonatomic) int duration;
 @property (nonatomic) float density;
 
+@property (nonatomic, strong) NSMutableArray * sets;
+
 @property (nonatomic, strong) NSString *exerciseId;
 @property (nonatomic, strong) NSString *qrCode;
 

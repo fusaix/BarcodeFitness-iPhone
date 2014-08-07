@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface BFExerciseViewController : UIViewController
+@class BFExercise;
+@class BFSet;
+
+@interface BFExerciseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+//, UIGestureRecognizerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@property BFExercise * exercise;
+@property (nonatomic, strong) NSMutableArray * sets;
+@property (nonatomic, strong) BFSet * set;
+
 
 @end

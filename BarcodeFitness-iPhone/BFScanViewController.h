@@ -16,6 +16,8 @@
 @interface BFScanViewController : UIViewController  <AVCaptureMetadataOutputObjectsDelegate>
 @property (nonatomic, strong) BFWorkoutViewController * exerciseListViewController;
 @property (nonatomic, strong) BFExercise * exercise;
-@property (nonatomic, strong) NSString * segueIdentifier;
+@property (nonatomic) int wIndex;
+//@property (nonatomic, strong) NSString * segueIdentifier;
+
 
 @end

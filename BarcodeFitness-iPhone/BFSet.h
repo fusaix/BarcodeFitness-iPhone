@@ -10,4 +10,17 @@
 
 @interface BFSet : NSObject
 
+@property (nonatomic, strong) NSNumber *reps;
+@property (nonatomic, strong) NSNumber *weight;
+
+@property (nonatomic, strong) NSNumber *previousReps;
+@property (nonatomic, strong) NSNumber *previousWeight;
+
+@property (nonatomic, strong) NSNumber *setNumber;
+
+@property (nonatomic, assign) bool isDone;
+
+
+- (id)initWithReps:(int)reps andWeight: (int)weight andPreviousReps: (int)previousReps andPreviousWeight: (int)previousWeight andSetNumber: (int)setNumber;
+
 @end

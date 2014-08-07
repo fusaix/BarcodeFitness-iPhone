@@ -67,7 +67,7 @@
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="workoutCell" textLabel="uEV-Ws-ujU" detailTextLabel="h9O-Hq-UxH" style="IBUITableViewCellStyleSubtitle" id="vhL-oj-JKA">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="workoutCell" textLabel="uEV-Ws-ujU" detailTextLabel="h9O-Hq-UxH" style="IBUITableViewCellStyleSubtitle" id="vhL-oj-JKA" customClass="BFChooseViewControllerCell">
                                         <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vhL-oj-JKA" id="Ocx-9X-dJV">
@@ -113,7 +113,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="h2L-Z2-R5b"/>
-                                    <barButtonItem title="Sort" id="MMC-OB-Ce7"/>
+                                    <barButtonItem title="Sort" id="MMC-OB-Ce7">
+                                        <connections>
+                                            <action selector="sortButtonPressed:" destination="Z7G-C9-dzB" id="nHz-VQ-F9s"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -129,7 +133,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Launcher" id="fej-AQ-3CS">
-                        <barButtonItem key="rightBarButtonItem" image="magic" id="sNN-f3-Xdi"/>
+                        <barButtonItem key="rightBarButtonItem" image="magic" id="sNN-f3-Xdi">
+                            <connections>
+                                <action selector="magicButtonPressed:" destination="Z7G-C9-dzB" id="NVE-qC-mmO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="Ava-o3-RvU" id="6uI-ot-shg"/>
@@ -186,25 +194,25 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Image" footerTitle="Choose an image for your workout" id="M32-ba-a6B">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="180" id="Cf0-7j-P5P">
-                                        <rect key="frame" x="0.0" y="238" width="320" height="180"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="80" id="Cf0-7j-P5P">
+                                        <rect key="frame" x="0.0" y="238" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="320" tableViewCell="Cf0-7j-P5P" id="fct-8Q-AFj">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="C4l-NU-UPp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L91-mK-3yn">
+                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="L91-mK-3yn">
                                                         <size key="itemSize" width="60" height="60"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="m8q-Xz-TJy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="m8q-Xz-TJy" customClass="BFCollectionViewCell">
+                                                            <rect key="frame" x="0.0" y="10" width="60" height="60"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -217,8 +225,15 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             </view>
+                                                            <connections>
+                                                                <outlet property="imageView" destination="Dbk-rb-6TF" id="tk8-JE-hbO"/>
+                                                            </connections>
                                                         </collectionViewCell>
                                                     </cells>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="aPQ-Lv-LyM" id="3ef-12-GcN"/>
+                                                        <outlet property="delegate" destination="aPQ-Lv-LyM" id="xk8-1Y-w4e"/>
+                                                    </connections>
                                                 </collectionView>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -290,11 +305,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="exerciseCell" textLabel="uVV-bd-baB" detailTextLabel="aVH-xu-PKj" style="IBUITableViewCellStyleSubtitle" id="0ji-WD-K95">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="exerciseCell" textLabel="uVV-bd-baB" detailTextLabel="aVH-xu-PKj" style="IBUITableViewCellStyleSubtitle" id="0ji-WD-K95">
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0ji-WD-K95" id="QWd-aJ-Gqr">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Full Squat Rack" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uVV-bd-baB">
@@ -336,7 +351,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="f8I-0G-1U7"/>
-                                    <barButtonItem systemItem="compose" id="8LX-Ps-vIy"/>
+                                    <barButtonItem systemItem="compose" id="8LX-Ps-vIy">
+                                        <connections>
+                                            <action selector="noteButtonPressed:" destination="bLQ-0A-Rf6" id="mbf-nn-saz"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -352,7 +371,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="gHV-la-rIw">
-                        <barButtonItem key="rightBarButtonItem" title="Finish all" id="kl1-RN-Jcm"/>
+                        <barButtonItem key="rightBarButtonItem" title="Finish all" id="kl1-RN-Jcm">
+                            <connections>
+                                <action selector="finishAllButtonPressed:" destination="bLQ-0A-Rf6" id="IqY-re-eCg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Ril-Ix-U8h" id="dZK-AY-SUT"/>
@@ -381,57 +404,57 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="setCell" textLabel="FBx-9O-DON" detailTextLabel="tdV-ry-cn6" imageView="gut-di-qqz" style="IBUITableViewCellStyleValue1" id="Mor-Ju-RL9">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="setCell" textLabel="FBx-9O-DON" detailTextLabel="tdV-ry-cn6" imageView="gut-di-qqz" style="IBUITableViewCellStyleValue1" id="Mor-Ju-RL9" customClass="BFExerciseViewControllerCell">
                                         <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mor-Ju-RL9" id="V9Y-qg-fWx">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 2: 20 x 80 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FBx-9O-DON">
-                                                    <rect key="frame" x="46" y="13" width="113" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 2:  100 x 440 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FBx-9O-DON">
+                                                    <rect key="frame" x="48" y="11" width="158" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80 lb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tdV-ry-cn6">
-                                                    <rect key="frame" x="218" y="13" width="87" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 100 x 440 lb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tdV-ry-cn6">
+                                                    <rect key="frame" x="220" y="17" width="85" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="checkbox" id="gut-di-qqz">
-                                                    <rect key="frame" x="15" y="13" width="16" height="16"/>
+                                                    <rect key="frame" x="15" y="12" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.98561829329999995" green="0.58005629869999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doneSetCell" textLabel="hgz-QN-JBk" detailTextLabel="vDc-YL-xFG" imageView="dAK-TC-Wjf" style="IBUITableViewCellStyleValue1" id="Ywv-cG-mpY">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="doneSetCell" textLabel="hgz-QN-JBk" detailTextLabel="vDc-YL-xFG" imageView="dAK-TC-Wjf" style="IBUITableViewCellStyleValue1" id="Ywv-cG-mpY" customClass="BFExerciseViewControllerCell">
                                         <rect key="frame" x="0.0" y="130" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ywv-cG-mpY" id="A46-CY-JJq">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 1: 10 x 80 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgz-QN-JBk">
-                                                    <rect key="frame" x="46" y="13" width="112" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Set 1:  10 x 80 lb" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hgz-QN-JBk">
+                                                    <rect key="frame" x="48" y="11" width="137" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="vs 10 x 80 lb" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vDc-YL-xFG">
-                                                    <rect key="frame" x="218" y="13" width="87" height="18"/>
+                                                    <rect key="frame" x="234" y="17" width="71" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="checkbox_checked" id="dAK-TC-Wjf">
-                                                    <rect key="frame" x="15" y="13" width="16" height="16"/>
+                                                    <rect key="frame" x="15" y="12" width="18" height="18"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -439,16 +462,32 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="klS-ER-LvM" id="Ojg-F4-VVu"/>
+                                    <outlet property="delegate" destination="klS-ER-LvM" id="2eA-Ui-OVf"/>
+                                </connections>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0i1-oh-RUR">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="edit" id="NSS-qr-Aci"/>
+                                    <barButtonItem systemItem="edit" id="NSS-qr-Aci">
+                                        <connections>
+                                            <action selector="editButtonPressed:" destination="klS-ER-LvM" id="gv4-2d-jTF"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4ii-R1-PZq"/>
-                                    <barButtonItem systemItem="add" id="SoL-St-8BL"/>
+                                    <barButtonItem systemItem="add" id="SoL-St-8BL">
+                                        <connections>
+                                            <action selector="addSet:" destination="klS-ER-LvM" id="636-2N-qf5"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="jDI-Sc-EDF"/>
-                                    <barButtonItem title="Item" id="Yry-Fo-Cq9"/>
+                                    <barButtonItem image="Youtube" id="Yry-Fo-Cq9">
+                                        <connections>
+                                            <action selector="youtubeButtonPressed:" destination="klS-ER-LvM" id="jC3-Lh-n5o"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -464,8 +503,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hTk-wm-i3I">
-                        <barButtonItem key="rightBarButtonItem" title="Finish" id="bWU-V8-Rt7"/>
+                        <barButtonItem key="rightBarButtonItem" title="Finish" id="bWU-V8-Rt7">
+                            <connections>
+                                <action selector="finishButtonPressed:" destination="klS-ER-LvM" id="p2P-ek-TYe"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="efl-Bb-k2w" id="6jq-Kt-zsP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1aO-Ea-ebh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -679,9 +725,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Youtube" width="30" height="30"/>
         <image name="alteres" width="30" height="30"/>
-        <image name="checkbox" width="16" height="16"/>
-        <image name="checkbox_checked" width="16" height="16"/>
+        <image name="checkbox" width="18" height="18"/>
+        <image name="checkbox_checked" width="18" height="18"/>
         <image name="magic" width="30" height="30"/>
         <image name="mucleTop" width="35" height="35"/>
         <image name="tabScan" width="30" height="30"/>
@@ -692,6 +739,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5p9-0v-QRq"/>
+        <segue reference="DpS-pR-1XA"/>
     </inferredMetricsTieBreakers>
 </document>

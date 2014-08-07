@@ -11,6 +11,7 @@
 #import "BFWorkout.h"
 #import "BFAddWorkoutViewController.h"
 #import "BFWorkoutViewController.h"
+#import "BFChooseViewControllerCell.h"
 
 
 @interface BFChooseViewController ()
@@ -115,15 +116,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"workoutCell";
-    UITableViewCell *cell;
+//    UITableViewCell *cell; replaced by custom cell
+    BFChooseViewControllerCell *cell;
+
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     }
-    
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"workoutCell" forIndexPath:indexPath];
     
     // Configure the cell...
     BFWorkout * currentWorkout;
@@ -136,6 +136,7 @@
     }
     cell.textLabel.text = currentWorkout.name;
     cell.detailTextLabel.text = currentWorkout.description;
+    cell.imageView.image = currentWorkout.image;
 
 //    NSLog(@"%@", currentWorkout.name);
 //    NSLog(@"1- %@", _workoutTemplates);
@@ -144,10 +145,10 @@
     return cell;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return 50;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 55;
+}
 
 
 #pragma mark - UISearchDisplayController Delegate Methods
@@ -219,10 +220,13 @@
 //            NSLog(@"b. %@ - %i", currentWorkout, currentWorkout.row);
             // Delete the row from the data source workoutTemplates
             [self.workoutTemplates removeObjectAtIndex:currentWorkout.row];
+            // replace cell deletion but without animation :(
             self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
             [self.tableView reloadData];
             // Delete to workoutTemplatesRepresentation
             [BFWorkoutList removeObjectAtIndex: currentWorkout.row];
+            // anti edit mode glitch
+            tableView.editing = !tableView.editing;
         } else {
             CGRect newBounds = self.tableView.bounds;
             // Delete the row from the data source workoutTemplates
@@ -230,9 +234,12 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             // Delete to workoutTemplatesRepresentation
             [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
-            // reload data KILLS animations !!!!!!!!!!!!!!! so we'll use a trick to udate the rows
-            for (BFWorkout *workout in self.workoutTemplates) {
-                workout.row = (int) indexPath.row;
+            // reload data KILLS animations !!!!!!!!!!!!!!! so we'll use a trick to update the rows
+//            for (BFWorkout *workout in self.workoutTemplates) {
+//                workout.row = (int) indexPath.row;
+//            }
+            for (int i = 0; i < self.workoutTemplates.count; i++) {
+                ((BFWorkout*)[_workoutTemplates objectAtIndex:i]).row = i;
             }
             self.tableView.bounds = newBounds;
         }
@@ -285,7 +292,7 @@
 #pragma mark - Navigation
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Perform segue to candy detail
+    // Perform segue to detail
     [self performSegueWithIdentifier:@"startWorkout" sender:tableView];
     
 }
@@ -312,6 +319,14 @@
         addWorkoutViewController.renameRow = self.renameRow; // for the automatic name suggestion
         addWorkoutViewController.segueIdentifier = @"editWorkout";
     } else if ([segue.identifier isEqualToString:@"startWorkout"]) {
+        // updated true all workout.row by a capture of workoutTemplates
+        for (int i = 0; i < self.workoutTemplates.count; i++) {
+            ((BFWorkout*)[_workoutTemplates objectAtIndex:i]).row = i;
+        }
+//        for(BFWorkout* w in _workoutTemplates) {
+//            NSLog(@"> %@ Row: %d",w, w.row);
+//        }
+        // process the information to pass
         NSIndexPath *indexPath = [sender indexPathForSelectedRow];
         BFWorkout *workout = nil;
         if (self.searchDisplayController.active) {
@@ -320,9 +335,9 @@
             workout = [_workoutTemplates objectAtIndex:indexPath.row];
         }
         BFWorkoutViewController *destViewController = segue.destinationViewController;
+        destViewController.workoutListViewController = self; // to refresh templates
         destViewController.workout = workout;
     }
-    
 }
 
 #pragma mark - IBActions
@@ -332,7 +347,13 @@
 }
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
-    self.tableView.editing = !self.tableView.editing; // not a tableViewController so use the "self.tableView.editing" in stead of "self.editing"
+    if (!self.tableView.isEditing) {
+        [self.tableView setEditing:YES animated:YES];
+    } else {
+        [self.tableView setEditing:NO animated:YES];
+        
+    }
+//    self.tableView.editing = !self.tableView.editing; // not a tableViewController so use the "self.tableView.editing" in stead of "self.editing"
 
     if (self.tableView.editing) {
         sender.tintColor = [UIColor redColor];
@@ -349,6 +370,14 @@
 //    [textColor getRed:&red green:&green blue:&blue alpha:&alpha];
 //    NSLog(@"Red: %f Green:%f Blue:%f Alpha:%f", red, green, blue, alpha);
 
+}
+
+- (IBAction)magicButtonPressed:(UIBarButtonItem *)sender {
+}
+
+
+
+- (IBAction)sortButtonPressed:(UIBarButtonItem *)sender {
 }
 
 

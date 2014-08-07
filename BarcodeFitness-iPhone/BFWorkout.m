@@ -10,16 +10,28 @@
 
 @implementation BFWorkout
 @synthesize name = _name;
+@synthesize image = _image;
+@synthesize imageIndex = _imageIndex;
 @synthesize description = _description; // subtitle of cells in Launcher
 @synthesize lastDate = _lastDate;
 @synthesize duration = _duration;
 @synthesize density = _density;
 @synthesize note = _note;
+@synthesize exercises = _exercises;
+
+@synthesize row = _row;
+
+@synthesize date;//The time at which the user started his or her workout
+@synthesize workoutId;
+@synthesize previousExercises;//The list of exercises that the user performed
 
 
-@synthesize row = _row; 
-
-
++(id)workoutWithID:(NSString *)workoutId andDate:(NSString *)date {
+    BFWorkout *workout = [super new];
+    workout.date = date;
+    workout.workoutId = workoutId;
+    return workout;
+}
 
 - (id)initWithName:(NSString *)name {
     self = [super init];
@@ -53,7 +65,23 @@
 //        @"%.03f" = 3145.560 // which is equal to @"%.3f" */
 //        self.description = [NSString stringWithFormat:@"%@, Duration: %@, Density: %@ lb/s", [dateFormatter stringFromDate:_lastDate], durationFormatted, densityFormatted]; // @"Today, Duration: 0 min, Density: 0 lb/s";
         
-        self.description = name;
+        self.description = name; // to be changed 
+        
+        
+        NSArray* workoutImages = [NSArray arrayWithObjects: @"BarcodeFitnessIcon120.png",
+                                 @"Monday.png",
+                                 @"Tuesday.png",
+                                 @"Wednesday.png",
+                                 @"Thursday.png",
+                                 @"Friday.png",
+                                 @"Saturday.png",
+                                 @"Sunday.png",
+                                 @"Everyday.png", nil];
+        int i = arc4random() % workoutImages.count;
+        
+        self.image = [UIImage imageNamed:workoutImages[i]];
+        self.imageIndex = [NSNumber numberWithInteger:i];
+        self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
     }
     return self;
 }

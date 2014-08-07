@@ -10,7 +10,7 @@
 @class BFChooseViewController;
 @class BFWorkout;
 
-@interface BFAddWorkoutViewController : UITableViewController <UITextFieldDelegate>
+@interface BFAddWorkoutViewController : UITableViewController <UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;
 @property (nonatomic, strong) BFWorkout * workout;
 @property (nonatomic, strong) NSString * segueIdentifier;

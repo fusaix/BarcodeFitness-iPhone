@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A901468F1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */; };
+		A90146991993FB8100D8F2A3 /* BFSelectedFrameLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */; };
 		A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */; };
 		A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */; };
-		A9374E7B198AE4D900174C5E /* BFNetworkLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */; };
+		A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E80198C07F100174C5E /* BFExerciseList.m */; };
+		A9374E84198C08CE00174C5E /* BFNetworkExercises.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E83198C08CE00174C5E /* BFNetworkExercises.m */; };
+		A9374E8A198C090800174C5E /* BFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E89198C090800174C5E /* BFUser.m */; };
 		A97293FE197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
 		A9729400197DDB4300495470 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FF197DDB4300495470 /* CoreGraphics.framework */; };
 		A9729402197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
@@ -34,6 +38,17 @@
 		A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC5B1982C69200156ED8 /* BFLogList.m */; };
 		A972DC6319885A4300156ED8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A972DC6219885A4300156ED8 /* Images.xcassets */; };
 		A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC6519885BD400156ED8 /* BFScanViewController.m */; };
+		A9AD3188198FEB9A008A0A32 /* BFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */; };
+		A9AD3198198FFBF2008A0A32 /* BarcodeFitnessIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */; };
+		A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */; };
+		A9AD31B119900DDD008A0A32 /* Everyday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31A919900DDD008A0A32 /* Everyday.png */; };
+		A9AD31B219900DDD008A0A32 /* Friday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AA19900DDD008A0A32 /* Friday.png */; };
+		A9AD31B319900DDD008A0A32 /* Monday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AB19900DDD008A0A32 /* Monday.png */; };
+		A9AD31B419900DDD008A0A32 /* Saturday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AC19900DDD008A0A32 /* Saturday.png */; };
+		A9AD31B519900DDD008A0A32 /* Sunday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AD19900DDD008A0A32 /* Sunday.png */; };
+		A9AD31B619900DDD008A0A32 /* Thursday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AE19900DDD008A0A32 /* Thursday.png */; };
+		A9AD31B719900DDD008A0A32 /* Tuesday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AF19900DDD008A0A32 /* Tuesday.png */; };
+		A9AD31B819900DDD008A0A32 /* Wednesday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31B019900DDD008A0A32 /* Wednesday.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,10 +62,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A901468D1991E1D600D8F2A3 /* BFExerciseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseViewControllerCell.h; sourceTree = "<group>"; };
+		A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewControllerCell.m; sourceTree = "<group>"; };
+		A90146971993FB8100D8F2A3 /* BFSelectedFrameLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSelectedFrameLabel.h; sourceTree = "<group>"; };
+		A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSelectedFrameLabel.m; sourceTree = "<group>"; };
 		A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun2x.mp3; sourceTree = "<group>"; };
 		A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun.mp3; sourceTree = "<group>"; };
-		A9374E79198AE4D900174C5E /* BFNetworkLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNetworkLoader.h; sourceTree = "<group>"; };
-		A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNetworkLoader.m; sourceTree = "<group>"; };
+		A9374E7F198C07F100174C5E /* BFExerciseList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BFExerciseList.h; path = "../../ios-barcodefitness/BarcodeFitness-iPhone/BFExerciseList.h"; sourceTree = "<group>"; };
+		A9374E80198C07F100174C5E /* BFExerciseList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BFExerciseList.m; path = "../../ios-barcodefitness/BarcodeFitness-iPhone/BFExerciseList.m"; sourceTree = "<group>"; };
+		A9374E82198C08CE00174C5E /* BFNetworkExercises.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNetworkExercises.h; sourceTree = "<group>"; };
+		A9374E83198C08CE00174C5E /* BFNetworkExercises.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNetworkExercises.m; sourceTree = "<group>"; };
+		A9374E88198C090800174C5E /* BFUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFUser.h; sourceTree = "<group>"; };
+		A9374E89198C090800174C5E /* BFUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFUser.m; sourceTree = "<group>"; };
 		A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeFitness-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97293FD197DDB4300495470 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A97293FF197DDB4300495470 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,7 +95,7 @@
 		A972DC2E197F2C3000156ED8 /* BFChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewController.h; sourceTree = "<group>"; };
 		A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewController.m; sourceTree = "<group>"; };
 		A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseViewController.h; sourceTree = "<group>"; };
-		A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewController.m; sourceTree = "<group>"; };
+		A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		A972DC32197F2C3000156ED8 /* BFWorkoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkoutViewController.h; sourceTree = "<group>"; };
 		A972DC33197F2C3000156ED8 /* BFWorkoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWorkoutViewController.m; sourceTree = "<group>"; };
 		A972DC3A197F397000156ED8 /* BFWorkout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkout.h; sourceTree = "<group>"; };
@@ -90,6 +113,19 @@
 		A972DC6219885A4300156ED8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A972DC6419885BD400156ED8 /* BFScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFScanViewController.h; sourceTree = "<group>"; };
 		A972DC6519885BD400156ED8 /* BFScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFScanViewController.m; sourceTree = "<group>"; };
+		A9AD3186198FEB9A008A0A32 /* BFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFCollectionViewCell.h; sourceTree = "<group>"; };
+		A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFCollectionViewCell.m; sourceTree = "<group>"; };
+		A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BarcodeFitnessIcon120.png; sourceTree = "<group>"; };
+		A9AD31A2199006AA008A0A32 /* BFChooseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewControllerCell.h; sourceTree = "<group>"; };
+		A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewControllerCell.m; sourceTree = "<group>"; };
+		A9AD31A919900DDD008A0A32 /* Everyday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Everyday.png; sourceTree = "<group>"; };
+		A9AD31AA19900DDD008A0A32 /* Friday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friday.png; sourceTree = "<group>"; };
+		A9AD31AB19900DDD008A0A32 /* Monday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Monday.png; sourceTree = "<group>"; };
+		A9AD31AC19900DDD008A0A32 /* Saturday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Saturday.png; sourceTree = "<group>"; };
+		A9AD31AD19900DDD008A0A32 /* Sunday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunday.png; sourceTree = "<group>"; };
+		A9AD31AE19900DDD008A0A32 /* Thursday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Thursday.png; sourceTree = "<group>"; };
+		A9AD31AF19900DDD008A0A32 /* Tuesday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tuesday.png; sourceTree = "<group>"; };
+		A9AD31B019900DDD008A0A32 /* Wednesday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wednesday.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +159,10 @@
 				A972DC2F197F2C3000156ED8 /* BFChooseViewController.m */,
 				A972DC3E197F5D7700156ED8 /* BFAddWorkoutViewController.h */,
 				A972DC3F197F5D7700156ED8 /* BFAddWorkoutViewController.m */,
+				A9AD31A2199006AA008A0A32 /* BFChooseViewControllerCell.h */,
+				A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */,
+				A9AD3186198FEB9A008A0A32 /* BFCollectionViewCell.h */,
+				A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */,
 			);
 			name = 1.WorkoutsManagement;
 			sourceTree = "<group>";
@@ -143,6 +183,10 @@
 			children = (
 				A972DC30197F2C3000156ED8 /* BFExerciseViewController.h */,
 				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
+				A901468D1991E1D600D8F2A3 /* BFExerciseViewControllerCell.h */,
+				A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */,
+				A90146971993FB8100D8F2A3 /* BFSelectedFrameLabel.h */,
+				A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */,
 			);
 			name = 3.SetsManagement;
 			sourceTree = "<group>";
@@ -201,6 +245,15 @@
 				A9729405197DDB4300495470 /* BarcodeFitness-iPhone-Info.plist */,
 				A9729406197DDB4300495470 /* InfoPlist.strings */,
 				A9729409197DDB4300495470 /* main.m */,
+				A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */,
+				A9AD31A919900DDD008A0A32 /* Everyday.png */,
+				A9AD31AB19900DDD008A0A32 /* Monday.png */,
+				A9AD31AF19900DDD008A0A32 /* Tuesday.png */,
+				A9AD31B019900DDD008A0A32 /* Wednesday.png */,
+				A9AD31AE19900DDD008A0A32 /* Thursday.png */,
+				A9AD31AA19900DDD008A0A32 /* Friday.png */,
+				A9AD31AC19900DDD008A0A32 /* Saturday.png */,
+				A9AD31AD19900DDD008A0A32 /* Sunday.png */,
 				A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */,
 				A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */,
 				A972940B197DDB4300495470 /* BarcodeFitness-iPhone-Prefix.pch */,
@@ -233,12 +286,16 @@
 				A972DC491981BE0800156ED8 /* BFWorkoutList.m */,
 				A972DC3A197F397000156ED8 /* BFWorkout.h */,
 				A972DC3B197F397000156ED8 /* BFWorkout.m */,
+				A9374E7F198C07F100174C5E /* BFExerciseList.h */,
+				A9374E80198C07F100174C5E /* BFExerciseList.m */,
 				A972DC4C1981C10800156ED8 /* BFExercise.h */,
 				A972DC4D1981C10800156ED8 /* BFExercise.m */,
 				A972DC4F1981C12500156ED8 /* BFSet.h */,
 				A972DC501981C12500156ED8 /* BFSet.m */,
-				A9374E79198AE4D900174C5E /* BFNetworkLoader.h */,
-				A9374E7A198AE4D900174C5E /* BFNetworkLoader.m */,
+				A9374E82198C08CE00174C5E /* BFNetworkExercises.h */,
+				A9374E83198C08CE00174C5E /* BFNetworkExercises.m */,
+				A9374E88198C090800174C5E /* BFUser.h */,
+				A9374E89198C090800174C5E /* BFUser.m */,
 				A972DC591982C4B100156ED8 /* LogLists */,
 			);
 			name = DataModels;
@@ -330,11 +387,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9AD31B719900DDD008A0A32 /* Tuesday.png in Resources */,
+				A9AD31B119900DDD008A0A32 /* Everyday.png in Resources */,
 				A972DC6319885A4300156ED8 /* Images.xcassets in Resources */,
 				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
+				A9AD3198198FFBF2008A0A32 /* BarcodeFitnessIcon120.png in Resources */,
+				A9AD31B219900DDD008A0A32 /* Friday.png in Resources */,
+				A9AD31B319900DDD008A0A32 /* Monday.png in Resources */,
+				A9AD31B419900DDD008A0A32 /* Saturday.png in Resources */,
+				A9AD31B819900DDD008A0A32 /* Wednesday.png in Resources */,
 				A9729411197DDB4300495470 /* Main.storyboard in Resources */,
 				A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */,
+				A9AD31B519900DDD008A0A32 /* Sunday.png in Resources */,
 				A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */,
+				A9AD31B619900DDD008A0A32 /* Thursday.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,17 +421,23 @@
 			files = (
 				A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */,
 				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
+				A901468F1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m in Sources */,
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
-				A9374E7B198AE4D900174C5E /* BFNetworkLoader.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
+				A9374E84198C08CE00174C5E /* BFNetworkExercises.m in Sources */,
+				A90146991993FB8100D8F2A3 /* BFSelectedFrameLabel.m in Sources */,
 				A972940A197DDB4300495470 /* main.m in Sources */,
 				A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */,
 				A972DC511981C12500156ED8 /* BFSet.m in Sources */,
+				A9AD3188198FEB9A008A0A32 /* BFCollectionViewCell.m in Sources */,
 				A972DC40197F5D7700156ED8 /* BFAddWorkoutViewController.m in Sources */,
 				A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */,
 				A972DC4E1981C10800156ED8 /* BFExercise.m in Sources */,
 				A972DC4A1981BE0800156ED8 /* BFWorkoutList.m in Sources */,
+				A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */,
+				A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */,
 				A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */,
+				A9374E8A198C090800174C5E /* BFUser.m in Sources */,
 				A972DC36197F2C3000156ED8 /* BFWorkoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

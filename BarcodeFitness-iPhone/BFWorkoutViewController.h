@@ -11,9 +11,14 @@
 
 @class BFWorkout;
 @class BFExercise;
+@class BFChooseViewController;
+
 
 @interface BFWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) BFWorkout * workout;
+@property (nonatomic) int wIndex;
 @property (nonatomic, strong) NSMutableArray * exercises;
+@property (nonatomic, strong) BFChooseViewController * workoutListViewController;
+
 
 @end

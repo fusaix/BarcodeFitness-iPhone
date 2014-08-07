@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "checkbox-checked.png"
+      "filename" : "checkboxChecked.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "checkbox-checked-1.png"
+      "filename" : "checkboxChecked@2x.png"
     }
   ],
   "info" : {

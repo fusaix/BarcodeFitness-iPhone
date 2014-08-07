@@ -12,16 +12,28 @@
 
 
 @class BFWorkout;
+@class BFExercise;
 
 @interface BFWorkoutList : NSObject
 
-+(NSMutableArray *)getWorkoutTemplates;
+// O
++(void)saveToStandardUserDefaults;
+
+// 1
++(NSMutableArray *)getWorkoutTemplates; 
 +(void)setWorkoutName: (NSString *) name atIndex: (int) index;
 // + (void)setWorkoutImage: (UIImage *) image atIndex: (int) index;
-+(void)insertObject:(BFWorkout *)workout atIndex:(int)index;
 +(void)addObject:(BFWorkout *)workout;
++(void)insertObject:(BFWorkout *)workout atIndex:(int)index;
 +(void)removeObjectAtIndex:(int)index;
-+(void)saveToStandardUserDefaults;
-+(NSMutableDictionary*) workoutRepresentationFromWorkout:(BFWorkout *)workout;
 
+// 2 
++(void)addExercise: (BFExercise *) exercise toWorkoutAtIndex: (int) wIndex;
++(void)insertExercise: (BFExercise *) exercise atIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
++(void)removeExerciseAtIndex: (int) eIndex fromWorkoutAtIndex: (int) wIndex;
+
+// 3
+
+
+    
 @end
