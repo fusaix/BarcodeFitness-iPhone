@@ -101,15 +101,15 @@
     [self.tableView addGestureRecognizer:tapGestureRecognizer];
     
     // Load Names of Images
-    _workoutImages = [@[@"BarcodeFitnessIcon120.png",
-                        @"Monday.png",
-                        @"Tuesday.png",
-                        @"Wednesday.png",
-                        @"Thursday.png",
-                        @"Friday.png",
-                        @"Saturday.png",
-                        @"Sunday.png",
-                        @"Everyday.png"] mutableCopy];
+    _workoutImages = [@[@"BarcodeFitnessIcon120_sf.png",
+                        @"Monday_sf.png",
+                        @"Tuesday_sf.png",
+                        @"Wednesday_sf.png",
+                        @"Thursday_sf.png",
+                        @"Friday_sf.png",
+                        @"Saturday_sf.png",
+                        @"Sunday_sf.png",
+                        @"Everyday_sf.png"] mutableCopy];
     
 }
 
@@ -155,13 +155,12 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     BFCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
-    
     UIImage *image;
     long row = [indexPath row];
-    
     image = [UIImage imageNamed:_workoutImages[row]];
-    
     myCell.imageView.image = image;
+    
+    myCell.backgroundColor = [UIColor whiteColor];
     
     return myCell;
 }

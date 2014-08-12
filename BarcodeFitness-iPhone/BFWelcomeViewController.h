@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface BFWelcomeViewController : UIViewController
+
+@interface BFWelcomeViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate>
 
 @end

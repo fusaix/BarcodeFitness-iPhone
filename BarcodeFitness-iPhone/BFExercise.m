@@ -49,7 +49,8 @@
         //        NSString* densityFormatted = [NSString stringWithFormat:@"%.02f", _density];
         //        self.description = [NSString stringWithFormat:@"%@, Duration: %@, Density: %@ lb/s", [dateFormatter stringFromDate:_lastDate], durationFormatted, densityFormatted]; // @"Today, Duration: 0 min, Density: 0 lb/s";
         
-        self.description = name; // to be changed 
+        self.description = name; // to be changed
+        self.sets = [[NSMutableArray alloc] init]; // nothing at creation
     }
     return self;
 }

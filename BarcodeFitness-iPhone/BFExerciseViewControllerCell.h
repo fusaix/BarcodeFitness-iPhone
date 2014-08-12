@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "BFTableViewCellDelegate.h"
-//#import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVFoundation.h>
+
+@class BFSet;
 
 @interface BFExerciseViewControllerCell : UITableViewCell <UIGestureRecognizerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-//@property (nonatomic, strong) UITextField *text;
-@property (nonatomic, strong) NSNumber *setNumber;
-//@property (nonatomic, strong) UILabel *lbl;
-
-// The object that acts as delegate for this cell.
-//@property (nonatomic, assign) id<BFTableViewCellDelegate> delegate;
+@property (nonatomic) int sIndex;
+@property (nonatomic) int eIndex;
+@property (nonatomic) int wIndex;
+@property (nonatomic, strong) BFSet * set;
 
 @end

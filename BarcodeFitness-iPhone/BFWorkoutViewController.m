@@ -17,6 +17,7 @@
 
 @interface BFWorkoutViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 
 @end
 
@@ -58,7 +59,18 @@
     // Configure navigation bar
     self.title = _workout.name;
     // configure back button
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Rest" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"List" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
+    // Configure background
+    self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    
+    // Configure finish button
+    [    self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIFont fontWithName:@"Helvetica-Bold" size:18.0], NSFontAttributeName,
+                                        [self.navigationController.navigationBar tintColor], NSForegroundColorAttributeName,
+                                        nil] 
+                              forState:UIControlStateNormal];
     
 }
 
@@ -106,6 +118,8 @@
     
     cell.textLabel.text = currentExercise.name;
     cell.detailTextLabel.text = currentExercise.description;
+    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+
     
 //    NSLog(@"%@", currentExercise.name);
 //    NSLog(@"1- %@", _exercises);
@@ -150,7 +164,7 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    // exchange in workoutTemplates
+    // exchange in _exercises
     BFExercise * movedExercise = [_exercises objectAtIndex:fromIndexPath.row];
     [_exercises removeObjectAtIndex:fromIndexPath.row];
     [_exercises insertObject:movedExercise atIndex:toIndexPath.row];
@@ -193,15 +207,20 @@
 //        scanViewController.segueIdentifier = @"addExercise";
         
     } else if ([segue.identifier isEqualToString:@"startExercise"]) {
+        [self refreshTemplates];
         NSIndexPath *indexPath = [sender indexPathForSelectedRow];
-        BFExercise *exercise = nil;
-        exercise = [_exercises objectAtIndex:indexPath.row];
+//        BFExercise *exercise = nil;
+//        exercise = [_exercises objectAtIndex:indexPath.row];
         BFExerciseViewController *destViewController = segue.destinationViewController;
-        destViewController.exercise = exercise;
+//        destViewController.exercise = exercise;
+        destViewController.currentExerciseNumber = (int)indexPath.row + 1;
+        destViewController.totalNumberOfExercises = _exercises.count;
+//        destViewController.exercises = _exercises; // for navigation shortcuts
+        destViewController.wIndex = _wIndex;
+        destViewController.workoutListViewController = _workoutListViewController; // for template refresh 
     }
     
 }
-
 
 
 #pragma mark - IBActions
@@ -228,7 +247,10 @@
 - (IBAction)noteButtonPressed:(UIBarButtonItem *)sender {
 }
 
-- (IBAction)finishAllButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)finishButtonPressed:(UIBarButtonItem *)sender {
+    
+    // Set all sets of exercises as Done then set as not done in persistent data 
+    
 }
 
 @end

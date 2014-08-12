@@ -17,6 +17,7 @@
 @interface BFChooseViewController ()
 @property (nonatomic) int renameRow;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic, strong) NSMutableArray *filteredWorkoutTemplates;
 
 @end
@@ -80,7 +81,18 @@
     
     // configure back button 
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:nil action:nil];
-
+    
+    // configure background
+    self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    //    self.edgesForExtendedLayout = UIRectEdgeNone; this is not useful for the search bar glitch : the solution is to check "Under Oparque bars" in the storyboard for this view controller!!!
+    CGRect frame = self.tableView.bounds;
+    frame.origin.y = -frame.size.height;
+    UIView* viewBackground = [[UIView alloc] initWithFrame:frame];
+    [viewBackground setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]]];
+    [self.tableView addSubview:viewBackground]; // fix for the top of search bar
+    
 }
 
 
@@ -137,6 +149,8 @@
     cell.textLabel.text = currentWorkout.name;
     cell.detailTextLabel.text = currentWorkout.description;
     cell.imageView.image = currentWorkout.image;
+    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+
 
 //    NSLog(@"%@", currentWorkout.name);
 //    NSLog(@"1- %@", _workoutTemplates);

@@ -10,16 +10,25 @@
 #import "BFExercise.h"
 #import "BFSet.h"
 #import "BFExerciseViewControllerCell.h"
+#import "BFWorkoutList.h"
+#import "BFWorkout.h"
+#import "BFChooseViewController.h"
+
 
 @interface BFExerciseViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property NSArray * exercises;
 
 @end
 
 @implementation BFExerciseViewController
-@synthesize exercise = _exercise;
+@synthesize totalNumberOfExercises = _totalNumberOfExercises;
+@synthesize currentExerciseNumber = _currentExerciseNumber;
+//@synthesize exercise = _exercise;
 @synthesize sets = _sets;
-@synthesize set = _set;
+@synthesize wIndex = _wIndex;
+@synthesize workoutListViewController = _workoutListViewController; // to refresh the templates
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,32 +41,59 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.tableView reloadData];
-    // refresh the templates
-//    [self refreshTemplates];
+    // Instead of [self.tableView reloadData];
+    // Add to tableview (bottom of list)
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_sets.count-1 inSection:0];
+//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // refresh the templates
+    [self refreshTemplates];
+    
+//    NSLog(@"Templates refreshed by viewWillDisappear : %@",_sets);
+
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     // Init the NSMutableArray _exercises
-    // we get _exercises from the stored representation, translation is performed by ... BFWorkoutList the root data class.
-    if (!_sets) {
-        _sets = [[NSMutableArray alloc] initWithArray:_exercise.sets];
+    if (!_exercises) {
+        _exercises = [[NSMutableArray alloc] initWithArray:((BFWorkout *)[_workoutListViewController.workoutTemplates objectAtIndex: _wIndex ]).exercises];
     }
     
+    // then we get _sets from the stored representation, translation is performed by ... BFWorkoutList the root data class.
+    if (!_sets) {
+        _sets = [[NSMutableArray alloc] initWithArray: ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).sets]; // _exercise
+    }
+    
+    // Overwrite zeros in previous records with existing data
+    // ... for set in _sets ... 
+    
     // Configure navigation bar
-    self.title = _exercise.name;
+    self.title = [NSString stringWithFormat:@"%d of %d", _currentExerciseNumber, _totalNumberOfExercises];
     
     // Configure tableview
     [_tableView setSeparatorColor:[UIColor clearColor]];
+    
+    // configure background
+    self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
 
-    // Notification listeners
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // Right side navigation shortcuts buttons
+    UIBarButtonItem *upButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_up"] style:UIBarButtonItemStylePlain target:self action:@selector(upButtonPressed)];
+    UIBarButtonItem *downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_down"] style:UIBarButtonItemStylePlain target:self action:@selector(downButtonPressed)];
+    
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: downButton, upButton, nil]];
+    
+
+    // Notification listeners for scroll to visible
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 
@@ -70,10 +106,10 @@
 
 #pragma mark - Data management
 
-//- (void) refreshTemplates {
-//    _workoutListViewController.workoutTemplates = [BFWorkoutList getWorkoutTemplates];
-//    //    NSLog(@"Templates refreshed: %@",_exercises);
-//}
+- (void) refreshTemplates {
+    _workoutListViewController.workoutTemplates = [BFWorkoutList getWorkoutTemplates];
+}
+
 
 
 #pragma mark - Table view data source
@@ -85,7 +121,7 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Check the sets you performed";
+    return ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).name; // _exercise
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -109,49 +145,20 @@
 
     
     // Get data
-    int reps = [currentSet.reps integerValue];
-    int weight = [currentSet.weight integerValue];
-    int pReps = [currentSet.previousReps integerValue];
-    int pWeight = [currentSet.previousWeight integerValue];
-    int setNumber = [currentSet.setNumber integerValue];
+    int reps = [currentSet.reps intValue];
+    int weight = [currentSet.weight intValue];
+    int pReps = [currentSet.previousReps intValue];
+    int pWeight = [currentSet.previousWeight intValue];
+    int setNumber = [currentSet.setNumber intValue];
     
     // Set data
     cell.textLabel.text = [NSString stringWithFormat:@"Set %d:  %d x %d lb", setNumber, reps, weight];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"vs %d x %d lb", pReps, pWeight];
-    cell.setNumber = currentSet.setNumber; // This is the link betwin sets and their corresponding cell (here, the link is done at the cell creation in tableview)
-    
-//    // add gesture recognizers to cell
-//    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(startEditingCell:)];
-//    longPress.delegate = self;
-//    [cell addGestureRecognizer:longPress];
-//    
-//    
-//    // add pickerView and theTextField
-//    UIPickerView *pickerView = [[UIPickerView alloc] init];
-//    pickerView.dataSource = self;
-//    pickerView.delegate = self;
-//    // ... ...
-////    self.pickerTextField.inputView = pickerView;
-//
-//    UITextField *theTextField = [[UITextField alloc] initWithFrame:CGRectMake(45, 0, 180, 43)];
-//    theTextField.delegate = self;
-//    theTextField.tintColor = [UIColor clearColor];
-//    theTextField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.1];
-//    theTextField.inputView.userInteractionEnabled = NO;
-//    theTextField.textColor = [UIColor clearColor];
-//    
-//    theTextField.inputView = pickerView;
-//
-//    
-//    [cell addSubview:theTextField];
-//    
-//    
-//    // add rectangle
-//    UILabel *rectangle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 43)];
-////    rectangle.backgroundColor = [UIColor clearColor];
-//    rectangle.layer.borderColor = [UIColor redColor].CGColor;
-//    rectangle.layer.borderWidth = 1.0;
-//    [cell addSubview:rectangle];
+    cell.set = currentSet; // This is the link betwin sets and their corresponding cell (here, the link is done at the cell creation in tableview)
+    cell.sIndex = indexPath.row;
+    cell.eIndex = _currentExerciseNumber-1;
+    cell.wIndex = _wIndex;
+    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
     
     return cell;
 }
@@ -186,34 +193,19 @@
                              [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                          }
                          completion:^(BOOL finished) {
-                             if (finished) {
+                             if (finished && (indexPath.row != _sets.count)) { // no need to reload data if we delete the last row
                                  [tableView reloadData]; // reload data updates the setNumbers for cells at rendering
                              }
                          }];
         
-//        // Delete to workoutTemplatesRepresentation
-//        [BFWorkoutList removeExerciseAtIndex:indexPath.row fromWorkoutAtIndex:_workout.row];
-//        // refresh the templates
-//        [self refreshTemplates];
+        // Delete to workoutTemplatesRepresentation
+        [BFWorkoutList removeSetAtIndex:indexPath.row fromExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
+        // refresh the templates
+        [self refreshTemplates];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
-
-
-// Override to support rearranging the table view.
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-//{
-//    // exchange in workoutTemplates
-//    BFExercise * movedExercise = [_exercises objectAtIndex:fromIndexPath.row];
-//    [_exercises removeObjectAtIndex:fromIndexPath.row];
-//    [_exercises insertObject:movedExercise atIndex:toIndexPath.row];
-//    // exchange in workoutTemplatesRepresentation
-//    [BFWorkoutList removeExerciseAtIndex:fromIndexPath.row fromWorkoutAtIndex:_workout.row];
-//    [BFWorkoutList insertExercise:movedExercise atIndex:toIndexPath.row inWorkoutAtIndex:_workout.row];
-//    // refresh the templates
-//    [self refreshTemplates];
-//}
 
 
 // Override to support conditional rearranging of the table view.
@@ -231,89 +223,28 @@
 
 #pragma mark - Edit content
 
+- (void)keyboardWillShow:(NSNotification *)sender
+{
+    CGSize kbSize = [[[sender userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
-//// Cell editing
-//-(void)cellDidBeginEditing:(LOLTableViewCell *)editingCell {
-//    _editingOffset = _tableView.scrollView.contentOffset.y - editingCell.frame.origin.y;
-//    for(LOLTableViewCell* cell in [_tableView visibleCells]) {
-//        [UIView animateWithDuration:0.3
-//                         animations:^{
-//                             cell.frame = CGRectOffset(cell.frame, 0, _editingOffset);
-//                             if (cell != editingCell) {
-//                                 cell.alpha = 0.3;
-//                             }
-//                         }];
-//    }
-//}
-//-(void)cellDidEndEditing:(LOLTableViewCell *)editingCell {
-//    for(LOLTableViewCell* cell in [_tableView visibleCells]) {
-//        [UIView animateWithDuration:0.3
-//                         animations:^{
-//                             cell.frame = CGRectOffset(cell.frame, 0, -_editingOffset);
-//                             if (cell != editingCell)
-//                             {
-//                                 cell.alpha = 1.0;
-//                             }
-//                         }];
-//    }
-//}
-
-- (void)startEditingCell: (UIGestureRecognizer *)gestureRecognizer {
-    // begin content editing mode
-    NSLog(@"Selected");
-    [_tableView reloadData]; // reload data forces the update of setNumbers for cells at rendering
-    
-    BFExerciseViewControllerCell* editCell;
-    
-    //    if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-    CGPoint longPressLocation = [gestureRecognizer locationInView:self.tableView];
-    NSIndexPath *longPressIndexPath = [self.tableView indexPathForRowAtPoint:longPressLocation];
-    editCell = (BFExerciseViewControllerCell*)[self.tableView cellForRowAtIndexPath:longPressIndexPath];
-    // ...
-    NSLog(@"Selected %d", (int) longPressIndexPath.row);
-    
-    //    }
-    
-//    [editCell.text becomeFirstResponder];
-    //    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:longPressIndexPath.row inSection:0] animated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowUIKeyboard" object:nil];
-    
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, kbSize.height - 44, 0);
+        [_tableView setContentInset:edgeInsets];
+        [_tableView setScrollIndicatorInsets:edgeInsets];
+    }];
 }
 
+- (void)keyboardWillHide:(NSNotification *)sender
+{
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
 
-//- (void)keyboardWillShow:(NSNotification *)sender
-//{
-//    CGSize kbSize = [[[sender userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-//    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//
-//    [UIView animateWithDuration:duration animations:^{
-//        UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, kbSize.height, 0);
-//        [_tableView setContentInset:edgeInsets];
-//        [_tableView setScrollIndicatorInsets:edgeInsets];
-//    }];
-//}
-//
-//- (void)keyboardWillHide:(NSNotification *)sender
-//{
-//    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//
-//    [UIView animateWithDuration:duration animations:^{
-//        UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
-//        [_tableView setContentInset:edgeInsets];
-//        [_tableView setScrollIndicatorInsets:edgeInsets];
-//    }];
-//}
-
-//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-//    return 10;
-//}
-//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-//    return 4;
-//}
-//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-//    return @"OK";
-//}
-
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+        [_tableView setContentInset:edgeInsets];
+        [_tableView setScrollIndicatorInsets:edgeInsets];
+    }];
+}
 
 
 
@@ -322,17 +253,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // change Set status
+    // + change status is persistent data
     if (((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone) {
         ((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone = NO;
+        [BFWorkoutList setIsDone:NO atIndex:indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
     } else {
         ((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone = YES;
+        [BFWorkoutList setIsDone:YES atIndex:indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     }
     
     [tableView reloadData];
-//    BFExerciseViewControllerCell* editCell = (BFExerciseViewControllerCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-
-//    [editCell.text becomeFirstResponder];
 
 }
 
@@ -358,20 +289,29 @@
 #pragma mark - IBActions
 
 - (IBAction)addSet:(UIBarButtonItem *)sender {
-    // Default record SetX: 10 x 80 lb
-    int reps = 10;
-    int weight = 80;
-    int pReps = 10;
-    int pWeight = 80;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_sets.count inSection:0];
+
+    // Default record SetX: 10 x 30 lb
+    int reps;
+    int weight;
+    if (indexPath.row > 0) {
+        reps = [((BFSet *)[_sets objectAtIndex:indexPath.row-1]).reps intValue];
+        weight = [((BFSet *)[_sets objectAtIndex:indexPath.row-1]).weight intValue];
+    } else {
+        reps = 10;
+        weight = 30;
+    }
+    int pReps = 0;
+    int pWeight = 0;
     int setNumber = _sets.count+1;
     
-    // add to sets
-    BFSet * newSet = [[BFSet alloc] initWithReps: reps andWeight: weight andPreviousReps: pReps andPreviousWeight:pWeight andSetNumber: setNumber];
+    // Add to sets
+    BFSet * newSet = [[BFSet alloc] initWithReps: reps andWeight: weight andPreviousReps: pReps andPreviousWeight:pWeight andSetNumber: setNumber andIsDone: NO];
     [_sets addObject:newSet];
-    // add to tableview (bottom of list)
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_sets.count-1 inSection:0];
+    // Add to tableview (bottom of list)
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-
+    // Add to workoutTemplatesRepresentation
+    [BFWorkoutList addSet:newSet atIndex:indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
     
 }
 
@@ -388,7 +328,7 @@
         sender.tintColor = [self.navigationController.navigationBar tintColor];
     }
     
-    NSLog(@"%@", _sets);
+//    NSLog(@"%@", _sets);
 }
 
 - (IBAction)youtubeButtonPressed:(UIBarButtonItem *)sender {
@@ -396,10 +336,17 @@
     
 }
 
-- (IBAction)finishButtonPressed:(UIBarButtonItem *)sender {
-    
-    
+
+#pragma mark - Other actions
+
+- (void) upButtonPressed {
     
 }
+
+- (void) downButtonPressed {
+    
+}
+
+
 
 @end

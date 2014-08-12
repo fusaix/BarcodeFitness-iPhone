@@ -68,15 +68,15 @@
         self.description = name; // to be changed 
         
         
-        NSArray* workoutImages = [NSArray arrayWithObjects: @"BarcodeFitnessIcon120.png",
-                                 @"Monday.png",
-                                 @"Tuesday.png",
-                                 @"Wednesday.png",
-                                 @"Thursday.png",
-                                 @"Friday.png",
-                                 @"Saturday.png",
-                                 @"Sunday.png",
-                                 @"Everyday.png", nil];
+        NSArray* workoutImages = [NSArray arrayWithObjects: @"BarcodeFitnessIcon120_sf.png",
+                                 @"Monday_sf.png",
+                                 @"Tuesday_sf.png",
+                                 @"Wednesday_sf.png",
+                                 @"Thursday_sf.png",
+                                 @"Friday_sf.png",
+                                 @"Saturday_sf.png",
+                                 @"Sunday_sf.png",
+                                 @"Everyday_sf.png", nil];
         int i = arc4random() % workoutImages.count;
         
         self.image = [UIImage imageNamed:workoutImages[i]];

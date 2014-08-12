@@ -18,7 +18,7 @@
 @synthesize isDone = _isDone; 
 
 
-- (id)initWithReps:(int)reps andWeight: (int)weight andPreviousReps: (int)previousReps andPreviousWeight: (int)previousWeight andSetNumber: (int)setNumber{
+- (id)initWithReps:(int)reps andWeight: (int)weight andPreviousReps: (int)previousReps andPreviousWeight: (int)previousWeight andSetNumber: (int)setNumber andIsDone: (bool) isDone {
     self = [super init];
     if (self) {
         self.reps = [[NSNumber alloc] initWithInt: reps];
@@ -29,7 +29,7 @@
         
         self.setNumber = [[NSNumber alloc] initWithInt: setNumber];
         
-        _isDone = NO;
+        _isDone = isDone;
         
     }
     return self;

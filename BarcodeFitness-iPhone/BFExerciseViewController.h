@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@class BFExercise;
-@class BFSet;
+//@class BFExercise;
+@class BFChooseViewController;
 
 @interface BFExerciseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-//, UIGestureRecognizerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
-@property BFExercise * exercise;
+//@property BFExercise * exercise;
 @property (nonatomic, strong) NSMutableArray * sets;
-@property (nonatomic, strong) BFSet * set;
+@property (nonatomic) int totalNumberOfExercises;
+@property (nonatomic) int currentExerciseNumber;
+@property (nonatomic) int wIndex;
+@property (nonatomic, strong) BFChooseViewController * workoutListViewController;
 
 
 @end

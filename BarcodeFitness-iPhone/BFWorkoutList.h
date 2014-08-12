@@ -13,6 +13,7 @@
 
 @class BFWorkout;
 @class BFExercise;
+@class BFSet;
 
 @interface BFWorkoutList : NSObject
 
@@ -33,7 +34,10 @@
 +(void)removeExerciseAtIndex: (int) eIndex fromWorkoutAtIndex: (int) wIndex;
 
 // 3
++(void)addSet: (BFSet *) set atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
++(void)removeSetAtIndex: (int) sIndex fromExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
++(void)setReps: (NSNumber*) reps atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
++(void)setWeight: (NSNumber*) weight atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
++(void)setIsDone: (BOOL) isDone atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 
-
-    
 @end

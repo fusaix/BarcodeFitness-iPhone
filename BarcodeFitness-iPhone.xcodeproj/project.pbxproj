@@ -8,12 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		A901468F1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */; };
-		A90146991993FB8100D8F2A3 /* BFSelectedFrameLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */; };
 		A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */; };
 		A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */; };
 		A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E80198C07F100174C5E /* BFExerciseList.m */; };
 		A9374E84198C08CE00174C5E /* BFNetworkExercises.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E83198C08CE00174C5E /* BFNetworkExercises.m */; };
 		A9374E8A198C090800174C5E /* BFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E89198C090800174C5E /* BFUser.m */; };
+		A93B25B719954FAB002189A0 /* Everyday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25AF19954FAB002189A0 /* Everyday_sf.png */; };
+		A93B25B819954FAB002189A0 /* Friday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B019954FAB002189A0 /* Friday_sf.png */; };
+		A93B25B919954FAB002189A0 /* Monday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B119954FAB002189A0 /* Monday_sf.png */; };
+		A93B25BA19954FAB002189A0 /* Saturday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B219954FAB002189A0 /* Saturday_sf.png */; };
+		A93B25BB19954FAB002189A0 /* Sunday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B319954FAB002189A0 /* Sunday_sf.png */; };
+		A93B25BC19954FAB002189A0 /* Thursday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B419954FAB002189A0 /* Thursday_sf.png */; };
+		A93B25BD19954FAB002189A0 /* Tuesday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B519954FAB002189A0 /* Tuesday_sf.png */; };
+		A93B25BE19954FAB002189A0 /* Wednesday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25B619954FAB002189A0 /* Wednesday_sf.png */; };
+		A93B25C019954FB8002189A0 /* BarcodeFitnessIcon120_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25BF19954FB8002189A0 /* BarcodeFitnessIcon120_sf.png */; };
+		A93B25CE19980A1A002189A0 /* Kettlebell_handel.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25CD19980A1A002189A0 /* Kettlebell_handel.png */; };
+		A93B25D61998204F002189A0 /* Kettlebell_hollowbody.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25D51998204F002189A0 /* Kettlebell_hollowbody.png */; };
+		A93B25DE199824B5002189A0 /* Kettlebell_hollowbody2.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25DC199824B5002189A0 /* Kettlebell_hollowbody2.png */; };
+		A93B25F519983A9E002189A0 /* Code_sf1.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25F119983A9E002189A0 /* Code_sf1.png */; };
+		A93B25F619983A9E002189A0 /* Code_sf2.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25F219983A9E002189A0 /* Code_sf2.png */; };
+		A93B260919985CB8002189A0 /* AthleteHD_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B260819985CB8002189A0 /* AthleteHD_sf.png */; };
+		A93B260D19986AA1002189A0 /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B260C19986AA1002189A0 /* Logo.png */; };
+		A93B261B19998018002189A0 /* AthleteHD_sfR.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B261A19998018002189A0 /* AthleteHD_sfR.png */; };
 		A97293FE197DDB4300495470 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FD197DDB4300495470 /* Foundation.framework */; };
 		A9729400197DDB4300495470 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A97293FF197DDB4300495470 /* CoreGraphics.framework */; };
 		A9729402197DDB4300495470 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9729401197DDB4300495470 /* UIKit.framework */; };
@@ -39,16 +55,7 @@
 		A972DC6319885A4300156ED8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A972DC6219885A4300156ED8 /* Images.xcassets */; };
 		A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC6519885BD400156ED8 /* BFScanViewController.m */; };
 		A9AD3188198FEB9A008A0A32 /* BFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */; };
-		A9AD3198198FFBF2008A0A32 /* BarcodeFitnessIcon120.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */; };
 		A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */; };
-		A9AD31B119900DDD008A0A32 /* Everyday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31A919900DDD008A0A32 /* Everyday.png */; };
-		A9AD31B219900DDD008A0A32 /* Friday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AA19900DDD008A0A32 /* Friday.png */; };
-		A9AD31B319900DDD008A0A32 /* Monday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AB19900DDD008A0A32 /* Monday.png */; };
-		A9AD31B419900DDD008A0A32 /* Saturday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AC19900DDD008A0A32 /* Saturday.png */; };
-		A9AD31B519900DDD008A0A32 /* Sunday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AD19900DDD008A0A32 /* Sunday.png */; };
-		A9AD31B619900DDD008A0A32 /* Thursday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AE19900DDD008A0A32 /* Thursday.png */; };
-		A9AD31B719900DDD008A0A32 /* Tuesday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31AF19900DDD008A0A32 /* Tuesday.png */; };
-		A9AD31B819900DDD008A0A32 /* Wednesday.png in Resources */ = {isa = PBXBuildFile; fileRef = A9AD31B019900DDD008A0A32 /* Wednesday.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +71,6 @@
 /* Begin PBXFileReference section */
 		A901468D1991E1D600D8F2A3 /* BFExerciseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseViewControllerCell.h; sourceTree = "<group>"; };
 		A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewControllerCell.m; sourceTree = "<group>"; };
-		A90146971993FB8100D8F2A3 /* BFSelectedFrameLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSelectedFrameLabel.h; sourceTree = "<group>"; };
-		A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSelectedFrameLabel.m; sourceTree = "<group>"; };
 		A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun2x.mp3; sourceTree = "<group>"; };
 		A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = PumpShotgun.mp3; sourceTree = "<group>"; };
 		A9374E7F198C07F100174C5E /* BFExerciseList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BFExerciseList.h; path = "../../ios-barcodefitness/BarcodeFitness-iPhone/BFExerciseList.h"; sourceTree = "<group>"; };
@@ -74,6 +79,23 @@
 		A9374E83198C08CE00174C5E /* BFNetworkExercises.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNetworkExercises.m; sourceTree = "<group>"; };
 		A9374E88198C090800174C5E /* BFUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFUser.h; sourceTree = "<group>"; };
 		A9374E89198C090800174C5E /* BFUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFUser.m; sourceTree = "<group>"; };
+		A93B25AF19954FAB002189A0 /* Everyday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Everyday_sf.png; sourceTree = "<group>"; };
+		A93B25B019954FAB002189A0 /* Friday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friday_sf.png; sourceTree = "<group>"; };
+		A93B25B119954FAB002189A0 /* Monday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Monday_sf.png; sourceTree = "<group>"; };
+		A93B25B219954FAB002189A0 /* Saturday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Saturday_sf.png; sourceTree = "<group>"; };
+		A93B25B319954FAB002189A0 /* Sunday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunday_sf.png; sourceTree = "<group>"; };
+		A93B25B419954FAB002189A0 /* Thursday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Thursday_sf.png; sourceTree = "<group>"; };
+		A93B25B519954FAB002189A0 /* Tuesday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tuesday_sf.png; sourceTree = "<group>"; };
+		A93B25B619954FAB002189A0 /* Wednesday_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wednesday_sf.png; sourceTree = "<group>"; };
+		A93B25BF19954FB8002189A0 /* BarcodeFitnessIcon120_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BarcodeFitnessIcon120_sf.png; sourceTree = "<group>"; };
+		A93B25CD19980A1A002189A0 /* Kettlebell_handel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Kettlebell_handel.png; sourceTree = "<group>"; };
+		A93B25D51998204F002189A0 /* Kettlebell_hollowbody.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Kettlebell_hollowbody.png; sourceTree = "<group>"; };
+		A93B25DC199824B5002189A0 /* Kettlebell_hollowbody2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Kettlebell_hollowbody2.png; sourceTree = "<group>"; };
+		A93B25F119983A9E002189A0 /* Code_sf1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Code_sf1.png; sourceTree = "<group>"; };
+		A93B25F219983A9E002189A0 /* Code_sf2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Code_sf2.png; sourceTree = "<group>"; };
+		A93B260819985CB8002189A0 /* AthleteHD_sf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AthleteHD_sf.png; sourceTree = "<group>"; };
+		A93B260C19986AA1002189A0 /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		A93B261A19998018002189A0 /* AthleteHD_sfR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AthleteHD_sfR.png; sourceTree = "<group>"; };
 		A97293FA197DDB4300495470 /* BarcodeFitness-iPhone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BarcodeFitness-iPhone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A97293FD197DDB4300495470 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A97293FF197DDB4300495470 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -115,17 +137,8 @@
 		A972DC6519885BD400156ED8 /* BFScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFScanViewController.m; sourceTree = "<group>"; };
 		A9AD3186198FEB9A008A0A32 /* BFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFCollectionViewCell.h; sourceTree = "<group>"; };
 		A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFCollectionViewCell.m; sourceTree = "<group>"; };
-		A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BarcodeFitnessIcon120.png; sourceTree = "<group>"; };
 		A9AD31A2199006AA008A0A32 /* BFChooseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewControllerCell.h; sourceTree = "<group>"; };
 		A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewControllerCell.m; sourceTree = "<group>"; };
-		A9AD31A919900DDD008A0A32 /* Everyday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Everyday.png; sourceTree = "<group>"; };
-		A9AD31AA19900DDD008A0A32 /* Friday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Friday.png; sourceTree = "<group>"; };
-		A9AD31AB19900DDD008A0A32 /* Monday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Monday.png; sourceTree = "<group>"; };
-		A9AD31AC19900DDD008A0A32 /* Saturday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Saturday.png; sourceTree = "<group>"; };
-		A9AD31AD19900DDD008A0A32 /* Sunday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sunday.png; sourceTree = "<group>"; };
-		A9AD31AE19900DDD008A0A32 /* Thursday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Thursday.png; sourceTree = "<group>"; };
-		A9AD31AF19900DDD008A0A32 /* Tuesday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tuesday.png; sourceTree = "<group>"; };
-		A9AD31B019900DDD008A0A32 /* Wednesday.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Wednesday.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,10 +198,32 @@
 				A972DC31197F2C3000156ED8 /* BFExerciseViewController.m */,
 				A901468D1991E1D600D8F2A3 /* BFExerciseViewControllerCell.h */,
 				A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */,
-				A90146971993FB8100D8F2A3 /* BFSelectedFrameLabel.h */,
-				A90146981993FB8100D8F2A3 /* BFSelectedFrameLabel.m */,
 			);
 			name = 3.SetsManagement;
+			sourceTree = "<group>";
+		};
+		A93B25AE19954CB5002189A0 /* Images_sf */ = {
+			isa = PBXGroup;
+			children = (
+				A93B25BF19954FB8002189A0 /* BarcodeFitnessIcon120_sf.png */,
+				A93B25AF19954FAB002189A0 /* Everyday_sf.png */,
+				A93B25B019954FAB002189A0 /* Friday_sf.png */,
+				A93B25B119954FAB002189A0 /* Monday_sf.png */,
+				A93B25B219954FAB002189A0 /* Saturday_sf.png */,
+				A93B25B319954FAB002189A0 /* Sunday_sf.png */,
+				A93B25B419954FAB002189A0 /* Thursday_sf.png */,
+				A93B25B519954FAB002189A0 /* Tuesday_sf.png */,
+				A93B25B619954FAB002189A0 /* Wednesday_sf.png */,
+				A93B25CD19980A1A002189A0 /* Kettlebell_handel.png */,
+				A93B25D51998204F002189A0 /* Kettlebell_hollowbody.png */,
+				A93B25DC199824B5002189A0 /* Kettlebell_hollowbody2.png */,
+				A93B260819985CB8002189A0 /* AthleteHD_sf.png */,
+				A93B261A19998018002189A0 /* AthleteHD_sfR.png */,
+				A93B25F119983A9E002189A0 /* Code_sf1.png */,
+				A93B25F219983A9E002189A0 /* Code_sf2.png */,
+				A93B260C19986AA1002189A0 /* Logo.png */,
+			);
+			name = Images_sf;
 			sourceTree = "<group>";
 		};
 		A97293F1197DDB4300495470 = {
@@ -242,18 +277,10 @@
 		A9729404197DDB4300495470 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A93B25AE19954CB5002189A0 /* Images_sf */,
 				A9729405197DDB4300495470 /* BarcodeFitness-iPhone-Info.plist */,
 				A9729406197DDB4300495470 /* InfoPlist.strings */,
 				A9729409197DDB4300495470 /* main.m */,
-				A9AD3197198FFBF2008A0A32 /* BarcodeFitnessIcon120.png */,
-				A9AD31A919900DDD008A0A32 /* Everyday.png */,
-				A9AD31AB19900DDD008A0A32 /* Monday.png */,
-				A9AD31AF19900DDD008A0A32 /* Tuesday.png */,
-				A9AD31B019900DDD008A0A32 /* Wednesday.png */,
-				A9AD31AE19900DDD008A0A32 /* Thursday.png */,
-				A9AD31AA19900DDD008A0A32 /* Friday.png */,
-				A9AD31AC19900DDD008A0A32 /* Saturday.png */,
-				A9AD31AD19900DDD008A0A32 /* Sunday.png */,
 				A9374E731989E1AB00174C5E /* PumpShotgun2x.mp3 */,
 				A9374E75198AC2A800174C5E /* PumpShotgun.mp3 */,
 				A972940B197DDB4300495470 /* BarcodeFitness-iPhone-Prefix.pch */,
@@ -387,20 +414,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9AD31B719900DDD008A0A32 /* Tuesday.png in Resources */,
-				A9AD31B119900DDD008A0A32 /* Everyday.png in Resources */,
+				A93B25BA19954FAB002189A0 /* Saturday_sf.png in Resources */,
+				A93B25F619983A9E002189A0 /* Code_sf2.png in Resources */,
+				A93B25BC19954FAB002189A0 /* Thursday_sf.png in Resources */,
+				A93B25F519983A9E002189A0 /* Code_sf1.png in Resources */,
 				A972DC6319885A4300156ED8 /* Images.xcassets in Resources */,
+				A93B25BB19954FAB002189A0 /* Sunday_sf.png in Resources */,
+				A93B25D61998204F002189A0 /* Kettlebell_hollowbody.png in Resources */,
+				A93B25DE199824B5002189A0 /* Kettlebell_hollowbody2.png in Resources */,
 				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
-				A9AD3198198FFBF2008A0A32 /* BarcodeFitnessIcon120.png in Resources */,
-				A9AD31B219900DDD008A0A32 /* Friday.png in Resources */,
-				A9AD31B319900DDD008A0A32 /* Monday.png in Resources */,
-				A9AD31B419900DDD008A0A32 /* Saturday.png in Resources */,
-				A9AD31B819900DDD008A0A32 /* Wednesday.png in Resources */,
+				A93B25BE19954FAB002189A0 /* Wednesday_sf.png in Resources */,
+				A93B25B719954FAB002189A0 /* Everyday_sf.png in Resources */,
+				A93B25B819954FAB002189A0 /* Friday_sf.png in Resources */,
+				A93B25CE19980A1A002189A0 /* Kettlebell_handel.png in Resources */,
+				A93B25C019954FB8002189A0 /* BarcodeFitnessIcon120_sf.png in Resources */,
+				A93B260D19986AA1002189A0 /* Logo.png in Resources */,
 				A9729411197DDB4300495470 /* Main.storyboard in Resources */,
 				A9374E76198AC2A800174C5E /* PumpShotgun.mp3 in Resources */,
-				A9AD31B519900DDD008A0A32 /* Sunday.png in Resources */,
+				A93B25B919954FAB002189A0 /* Monday_sf.png in Resources */,
+				A93B25BD19954FAB002189A0 /* Tuesday_sf.png in Resources */,
+				A93B260919985CB8002189A0 /* AthleteHD_sf.png in Resources */,
 				A9374E741989E1AB00174C5E /* PumpShotgun2x.mp3 in Resources */,
-				A9AD31B619900DDD008A0A32 /* Thursday.png in Resources */,
+				A93B261B19998018002189A0 /* AthleteHD_sfR.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +460,6 @@
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
 				A9374E84198C08CE00174C5E /* BFNetworkExercises.m in Sources */,
-				A90146991993FB8100D8F2A3 /* BFSelectedFrameLabel.m in Sources */,
 				A972940A197DDB4300495470 /* main.m in Sources */,
 				A972DC35197F2C3000156ED8 /* BFExerciseViewController.m in Sources */,
 				A972DC511981C12500156ED8 /* BFSet.m in Sources */,
