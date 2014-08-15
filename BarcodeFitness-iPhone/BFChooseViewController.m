@@ -93,8 +93,10 @@
     [viewBackground setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]]];
     [self.tableView addSubview:viewBackground]; // fix for the top of search bar
     
+    // Configure button colors
+//    _toolBar.tintColor = [UIColor orangeColor];
+    
 }
-
 
 - (void)didReceiveMemoryWarning
 {

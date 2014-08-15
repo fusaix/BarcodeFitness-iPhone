@@ -111,6 +111,10 @@
                         @"Sunday_sf.png",
                         @"Everyday_sf.png"] mutableCopy];
     
+    // cofigure button colors
+//    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+
+    
 }
 
 - (void) hideKeyboard {

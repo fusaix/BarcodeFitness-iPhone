@@ -79,12 +79,13 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
     BFExercise * exercise;
     BFSet * set;
     BOOL isDone;
-    int i = 0;
+//    int i = 0;
     for (NSDictionary * workoutRepresentation in workoutTemplatesRepresentation) {
         // init workout
         workout = [[BFWorkout alloc]initWithName: [workoutRepresentation objectForKey:@"name"]];
         // ... image; with initWithNameAndImage
         
+//        int j = 0;
         // populate level 2
         for (NSDictionary * exerciseRepresentation in [workoutRepresentation objectForKey:@"exercises"]) {
             exercise = [[BFExercise alloc]initWithName: [exerciseRepresentation objectForKey:@"name"]];
@@ -98,13 +99,14 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
                 } else {
                     isDone = NO;
                 }
-                set = [[BFSet alloc]initWithReps: [[setRepresentation objectForKey:@"reps"]intValue] andWeight:[[setRepresentation objectForKey:@"weight"]intValue] andPreviousReps:0 andPreviousWeight:0 andSetNumber:setNumber andIsDone: isDone]; // previous records are populated at rendering
+                set = [[BFSet alloc]initWithReps: [[setRepresentation objectForKey:@"reps"]intValue] andWeight:[[setRepresentation objectForKey:@"weight"]floatValue] andPreviousReps:0 andPreviousWeight:0 andSetNumber:setNumber andIsDone: isDone]; // previous records are populated at rendering
                 [exercise.sets addObject:set];
             }
             [workout.exercises addObject:exercise];
+//            j++;
         }
         [workoutTemplates addObject:workout];
-        i++;
+//        i++;
     }
     
     
@@ -164,7 +166,7 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
 
 +(void)addSet: (BFSet *) set atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex {
     if ([[[[workoutTemplatesRepresentation objectAtIndex: wIndex] objectForKey:@"exercises"] objectAtIndex:eIndex] objectForKey:@"sets"] == nil) {
-        NSLog(@"Vide");
+//        NSLog(@"Vide");
         NSMutableArray * newSets = [[NSMutableArray alloc] init];
         [[[[workoutTemplatesRepresentation objectAtIndex: wIndex] objectForKey:@"exercises"] objectAtIndex:eIndex] setObject:newSets forKey:@"sets"];
     }

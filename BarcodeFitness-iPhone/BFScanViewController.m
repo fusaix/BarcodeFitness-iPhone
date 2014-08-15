@@ -47,6 +47,10 @@
     
     // Load sound
     [self loadBeepSound];
+    
+    // cofigure button colors
+//    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+//    self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
 
 }
 

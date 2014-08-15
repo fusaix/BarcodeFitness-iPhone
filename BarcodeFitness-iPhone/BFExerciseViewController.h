@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-//@class BFExercise;
 @class BFChooseViewController;
 
 @interface BFExerciseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
-//@property BFExercise * exercise;
 @property (nonatomic, strong) NSMutableArray * sets;
 @property (nonatomic) int totalNumberOfExercises;
 @property (nonatomic) int currentExerciseNumber;

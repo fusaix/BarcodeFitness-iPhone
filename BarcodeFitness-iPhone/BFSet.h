@@ -21,6 +21,6 @@
 @property (nonatomic, assign) bool isDone;
 
 
-- (id)initWithReps:(int)reps andWeight: (int)weight andPreviousReps: (int)previousReps andPreviousWeight: (int)previousWeight andSetNumber: (int)setNumber andIsDone: (bool) isDone ;
+- (id)initWithReps:(int)reps andWeight: (float)weight andPreviousReps: (int)previousReps andPreviousWeight: (float)previousWeight andSetNumber: (int)setNumber andIsDone: (bool) isDone ;
 
 @end

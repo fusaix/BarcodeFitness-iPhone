@@ -13,6 +13,7 @@
 #import "BFExercise.h"
 #import "BFExerciseViewController.h"
 #import "BFChooseViewController.h"
+#import "UIViewController+BackButtonHandler.h"
 
 
 @interface BFWorkoutViewController ()
@@ -23,7 +24,6 @@
 
 @implementation BFWorkoutViewController
 @synthesize workout = _workout;
-@synthesize wIndex = _wIndex; 
 @synthesize exercises = _exercises;
 @synthesize workoutListViewController = _workoutListViewController; // to refresh the templates 
 
@@ -42,6 +42,17 @@
     // refresh the templates
     [self refreshTemplates];
 //    NSLog(@"viewWillAppear: %@",_exercises);
+//    NSLog(@"B: %@",_workout);
+//    NSLog(@"C: %d",_workout.row);
+//    for(BFWorkout* w in _workoutListViewController.workoutTemplates) {
+//        NSLog(@"> %@ Row: %d",w, w.row);
+//    }
+
+}
+
+- (void) reloadWorkoutSpecifics {
+    _workout = [[BFWorkoutList getWorkoutTemplates] objectAtIndex:_workout.row];
+    _exercises = [[NSMutableArray alloc] initWithArray:_workout.exercises];
 
 }
 
@@ -71,8 +82,16 @@
                                         [self.navigationController.navigationBar tintColor], NSForegroundColorAttributeName,
                                         nil] 
                               forState:UIControlStateNormal];
+    // Configure button colors
+//    _toolBar.tintColor = [UIColor orangeColor];
     
+//    // back button
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed)];
+//    self.navigationItem.leftBarButtonItem = cancelButton;
+
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -152,7 +171,7 @@
         [_exercises removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         // Delete to workoutTemplatesRepresentation
-        [BFWorkoutList removeExerciseAtIndex:indexPath.row fromWorkoutAtIndex:_workout.row];
+        [BFWorkoutList removeExerciseAtIndex:(int)indexPath.row fromWorkoutAtIndex:(int)_workout.row];
         // refresh the templates
         [self refreshTemplates];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -169,8 +188,8 @@
     [_exercises removeObjectAtIndex:fromIndexPath.row];
     [_exercises insertObject:movedExercise atIndex:toIndexPath.row];
     // exchange in workoutTemplatesRepresentation
-    [BFWorkoutList removeExerciseAtIndex:fromIndexPath.row fromWorkoutAtIndex:_workout.row];
-    [BFWorkoutList insertExercise:movedExercise atIndex:toIndexPath.row inWorkoutAtIndex:_workout.row];
+    [BFWorkoutList removeExerciseAtIndex:(int)fromIndexPath.row fromWorkoutAtIndex:_workout.row];
+    [BFWorkoutList insertExercise:movedExercise atIndex:(int)toIndexPath.row inWorkoutAtIndex:(int)_workout.row];
     // refresh the templates
     [self refreshTemplates];
 }
@@ -209,19 +228,26 @@
     } else if ([segue.identifier isEqualToString:@"startExercise"]) {
         [self refreshTemplates];
         NSIndexPath *indexPath = [sender indexPathForSelectedRow];
-//        BFExercise *exercise = nil;
-//        exercise = [_exercises objectAtIndex:indexPath.row];
         BFExerciseViewController *destViewController = segue.destinationViewController;
-//        destViewController.exercise = exercise;
         destViewController.currentExerciseNumber = (int)indexPath.row + 1;
-        destViewController.totalNumberOfExercises = _exercises.count;
-//        destViewController.exercises = _exercises; // for navigation shortcuts
-        destViewController.wIndex = _wIndex;
+        destViewController.totalNumberOfExercises = (int)_exercises.count;
+        destViewController.wIndex = _workout.row;
         destViewController.workoutListViewController = _workoutListViewController; // for template refresh 
     }
     
 }
 
+-(BOOL) navigationShouldPopOnBackButton {
+    // Confirmation
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"All sets will be undone."
+                                                    message:@"Do you really want to cancel this workout?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No"
+                                          otherButtonTitles:@"Yes",nil];
+    alert.tag = 1;
+    [alert show];
+    return NO;
+}
 
 #pragma mark - IBActions
 
@@ -248,9 +274,48 @@
 }
 
 - (IBAction)finishButtonPressed:(UIBarButtonItem *)sender {
-    
-    // Set all sets of exercises as Done then set as not done in persistent data 
-    
+    // Confirmation
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You have finish you workout!"
+                                                    message:@"Press OK if you have finished."
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"OK",nil];
+    alert.tag = 2;
+    [alert show];
+}
+
+#pragma mark - Action result
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        // refresh templates and reload specifics
+        [self refreshTemplates];
+        [self reloadWorkoutSpecifics];
+        // reset all sets status of each exercise
+        for (int eIndex = 0; eIndex < _exercises.count; eIndex++) {
+            for (int sIndex = 0; sIndex < ((BFExercise*)[_exercises objectAtIndex:eIndex]).sets.count ; sIndex++) {
+                [BFWorkoutList setIsDone:NO atIndex:sIndex toExerciseAtIndex:eIndex inWorkoutAtIndex:(int)_workout.row];
+            }
+        }
+        if (alertView.tag == 1) {
+            // back to  launcher
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            // back to home screen
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+}
+
+- (void) cancelButtonPressed {
+    // Confirmation
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Quit workout"
+                                                    message:@"Are you sure cancel workout?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"No"
+                                          otherButtonTitles:@"Yes",nil];
+    alert.tag = 1;
+    [alert show];
 }
 
 @end

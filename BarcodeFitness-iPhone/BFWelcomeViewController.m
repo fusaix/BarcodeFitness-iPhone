@@ -13,14 +13,18 @@
 // Images
 @property (strong, nonatomic) IBOutlet UIImageView *athleteImage;
 @property (strong, nonatomic) IBOutlet UIImageView *logoImage;
+@property (strong, nonatomic) IBOutlet UIImageView *performanceHistoryImage;
+@property (strong, nonatomic) IBOutlet UIImageView *scanImage;
+@property (strong, nonatomic) IBOutlet UIImageView *workoutImage;
+
 // buttons
 @property (strong, nonatomic) IBOutlet UIButton *scanButton;
 @property (strong, nonatomic) IBOutlet UIButton *performanceHistoryButton;
 @property (strong, nonatomic) IBOutlet UIButton *workoutButton;
-// video
-@property (strong, nonatomic) IBOutlet UIView *viewPreview;
-@property (nonatomic, strong) AVCaptureSession *captureSession;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+@property (strong, nonatomic) IBOutlet UIButton *shareButton;
+@property (strong, nonatomic) IBOutlet UIButton *rateButton;
+@property (strong, nonatomic) IBOutlet UIButton *moreButton;
+@property (strong, nonatomic) IBOutlet UIButton *logoButton;
 
 @end
 
@@ -31,40 +35,45 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    // configure back button
+    // Configure back button
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
-    // configure background
+    // Configure background
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"paperBackground"] forBarMetrics: UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
     self.navigationController.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
     
-//    // Load images
-//    NSArray *imageNames = @[@"CRC1.jpg", @"CRC2.jpg", @"CRC3.jpg", @"CRC4.jpg", @"CRC5.jpg"];
-//
-//    NSMutableArray *images = [[NSMutableArray alloc] init];
-//    for (int i = 0; i < imageNames.count; i++) {
-//        [images addObject:[UIImage imageNamed:[imageNames objectAtIndex:i]]];
-//    }
-//    
-//    // Normal Animation
-//    UIImageView *animationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 500, 500)];
-//    animationImageView.animationImages = images;
-//    animationImageView.animationDuration = 10.0;
-//    
-//    [self.view addSubview:animationImageView];
-//    [animationImageView startAnimating];
+    // Configure button colors
+//    _shareButton.tintColor = [UIColor orangeColor];
+//    _rateButton.tintColor = [UIColor orangeColor];
+//    _moreButton.tintColor = [UIColor orangeColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
     
-    // register to a notification UIApplicationWillEnterForegroundNotification to force animation to restart
+    // disable swipe back
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+    
+    // Register to a notification UIApplicationWillEnterForegroundNotification to force animation to restart
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fadeButtonImages)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
     
-    // touch
+    // Touch
     [_workoutButton addTarget:self action:@selector(workoutButtonTouched) forControlEvents:UIControlEventTouchDown];
     [_workoutButton addTarget:self action:@selector(workoutButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
+    [_workoutButton addTarget:self action:@selector(workoutButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
+    [_logoButton addTarget:self action:@selector(logoButtonTouched) forControlEvents:UIControlEventTouchDown];
+    [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
+    [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
+    [_scanButton addTarget:self action:@selector(fadeLabelImages2) forControlEvents:UIControlEventTouchDown];
+    [_performanceHistoryButton addTarget:self action:@selector(fadeLabelImages3) forControlEvents:UIControlEventTouchDown];
 
+}
+
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,13 +81,9 @@
     _athleteImage.highlighted = NO;
     _scanButton.highlighted = NO;
     _performanceHistoryButton.highlighted = NO;
+    _logoButton.highlighted = NO;
     [self.navigationController setNavigationBarHidden: YES animated:YES];
     
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    // Start video
-    [self startReading];
 }
 
 
@@ -86,19 +91,16 @@
     [self.navigationController setNavigationBarHidden: NO animated:YES];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    // Stop video
-    [self stopReading];
-}
-
 - (void) fadeButtonImages {
-    [_viewPreview setAlpha:0.0];
     [UIView animateWithDuration:4.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
                          [_athleteImage setAlpha:0.1];
-                         [_logoImage setAlpha:0.1];
+//                         [_logoImage setAlpha:0.1];
+                         [_workoutImage setAlpha:0.1];
+                         [_performanceHistoryImage setAlpha:0.1];
+                         [_scanImage setAlpha:0.1];
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -109,15 +111,72 @@
 
 - (void) animateButtonImages {
     [_athleteImage setAlpha:0.1];
-    [_logoImage setAlpha:0.1];
-    [_viewPreview setAlpha:0.1];
+//    [_logoImage setAlpha:0.1];
+    [_workoutImage setAlpha:0.1];
+    [_performanceHistoryImage setAlpha:0.1];
+    [_scanImage setAlpha:0.1];
     [UIView animateWithDuration:4.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
                          [_athleteImage setAlpha:1.0];
-                         [_logoImage setAlpha:1.0];
-                         [_viewPreview setAlpha:1.0];
+//                         [_logoImage setAlpha:1.0];
+                         [_workoutImage setAlpha:1.0];
+                         [_performanceHistoryImage setAlpha:1.0];
+                         [_scanImage setAlpha:1.0];
+                     }
+                     completion:^(BOOL finished) {
+                         if (finished) {
+                             [self fadeLabelImages];
+                         }
+                     }];
+
+}
+
+- (void) fadeLabelImages {
+    [_workoutImage setAlpha:1.0];
+    [_performanceHistoryImage setAlpha:1.0];
+    [_scanImage setAlpha:1.0];
+    [UIView animateWithDuration:4.0
+                          delay:0.0
+                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^(void) {
+                         [_workoutImage setAlpha:0.0];
+                         [_performanceHistoryImage setAlpha:0.0];
+                         [_scanImage setAlpha:0.0];
+                     }
+                     completion:nil];
+}
+
+- (void) fadeLabelImages1 {
+    [_workoutImage setAlpha:1.0];
+    [UIView animateWithDuration:4.0
+                          delay:0.0
+                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^(void) {
+                         [_workoutImage setAlpha:0.0];
+                     }
+                     completion:nil];
+}
+
+- (void) fadeLabelImages2 {
+    [_scanImage setAlpha:1.0];
+    [UIView animateWithDuration:4.0
+                          delay:0.0
+                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^(void) {
+                         [_scanImage setAlpha:0.0];
+                     }
+                     completion:nil];
+}
+
+- (void) fadeLabelImages3 {
+    [_performanceHistoryImage setAlpha:1.0];
+    [UIView animateWithDuration:4.0
+                          delay:0.0
+                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^(void) {
+                         [_performanceHistoryImage setAlpha:0.0];
                      }
                      completion:nil];
 }
@@ -140,58 +199,6 @@
 }
 
 
-#pragma mark - Scanning
-
-
-- (BOOL)startReading {
-    NSError *error;
-    
-    // get device
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
-    // create input
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
-    if (!input) {
-        NSLog(@"%@", [error localizedDescription]);
-        return NO; // display self.title = @"Can't scan :(";
-    }
-    
-    // session
-    _captureSession = [[AVCaptureSession alloc] init];
-    [_captureSession addInput:input];
-    
-    // output creation and dispatch
-    AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
-    [_captureSession addOutput:captureMetadataOutput];
-    
-    dispatch_queue_t dispatchQueue;
-    dispatchQueue = dispatch_queue_create("myQueue", NULL);
-    [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
-    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
-    
-    // configure display
-    _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
-    [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
-    [_viewPreview.layer addSublayer:_videoPreviewLayer];
-    
-    // run
-    [_captureSession startRunning];
-    
-//    NSLog(@"scanning started");
-    
-    return YES;
-}
-
--(void)stopReading{
-    [_captureSession stopRunning];
-    _captureSession = nil;
-    [_videoPreviewLayer removeFromSuperlayer];
-//    NSLog(@"scanning stopped");
-}
-
-
-
 #pragma mark - IBActions and touch methods
 
 
@@ -203,25 +210,51 @@
 
 - (IBAction)performanceHistory:(UIButton *)sender {
     
-    
 }
 
 - (IBAction)scanButtonPressed:(UIButton *)sender {
     
+}
+
+- (IBAction)logoButtonPressed:(id)sender {
+    // go to webpage
     
 }
 
+- (IBAction)shareButtonPressed:(UIButton *)sender {
+    
+}
+
+- (IBAction)rateButtonPressed:(UIButton *)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id869869380"]];
+
+}
+
+
+- (IBAction)moreButtonPressed:(UIButton *)sender {
+    
+}
+
+
 - (void) workoutButtonTouched {
-//    _scanButton.highlighted = YES;
-//    _performanceHistoryButton.highlighted = YES;
     _athleteImage.highlighted = YES;
+    [self fadeLabelImages1];
 
 }
 
 - (void) workoutButtonTouchedUpOutside {
     _athleteImage.highlighted = NO;
-//    _scanButton.highlighted = NO;
-//    _performanceHistoryButton.highlighted = NO;
+
+}
+
+- (void) logoButtonTouched {
+    _logoImage.highlighted = YES;
+    
+}
+
+- (void) logoButtonTouchedUpOutside {
+    _logoImage.highlighted = NO;
+    
 }
 
 

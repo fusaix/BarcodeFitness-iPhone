@@ -80,8 +80,16 @@
     }
     
     _weightArray = [[NSMutableArray alloc]init];
-    for (int i = 1; i < 1001; i++) {
-        NSString *weight = [NSString stringWithFormat:@"%d",i];
+    NSString *weight;
+    float floati;
+    for (int i = 2; i < 1001; i++) {
+        floati = i;
+        if (i%2 == 0) {
+            weight = [NSString stringWithFormat:@"%.f",floati/2];
+        } else {
+            weight = [NSString stringWithFormat:@"%.1f",floati/2];
+        }
+        
         [_weightArray addObject: weight];
     }
 
@@ -138,13 +146,13 @@
     // position picker view
     [_pickerView selectRow:[_set.reps intValue]-1 inComponent:0 animated:YES];
     [_pickerView reloadComponent:0];
-    [_pickerView selectRow:[_set.weight intValue]-1 inComponent:1 animated:YES];
+    [_pickerView selectRow:([_set.weight floatValue]-1)*2 inComponent:1 animated:YES];
     [_pickerView reloadComponent:1];
     [_pickerView selectRow:1 inComponent:2 animated:NO];
     [_pickerView reloadComponent:2];
     
     // make sound
-    AudioServicesPlaySystemSound(1306);
+    AudioServicesPlaySystemSound(1105); // see http://iphonedevwiki.net/index.php/AudioServices 
     
     // scroll to visible
 //    [ wordsTableView scrollRectToVisible:textFieldRect animated:YES];
@@ -199,8 +207,8 @@
 {
 //    NSLog(@"Row %d selected in component %d", row, component);
     
-    int reps = 0;
-    int weight = 0;
+    NSString * reps;
+    NSString * weight;
     
     NSString * newReps;
     NSString * newWeight;
@@ -212,20 +220,20 @@
     switch(component) {
         case 0:
             newReps = [_repsArray objectAtIndex:row];
-            weight = [_set.weight intValue];
+            weight = [_set.weight stringValue];
             // update reps
-            self.textLabel.text = [NSString stringWithFormat:@"Set %@:  %@ x %d lb", _set.setNumber, newReps, weight];
+            self.textLabel.text = [NSString stringWithFormat:@"Set %@:  %@ x %@ lb", _set.setNumber, newReps, weight];
             _set.reps = [NSNumber numberWithInt:[newReps intValue]];
             // update in persistent data
             myNumber = [f numberFromString:newReps];
             [BFWorkoutList setReps:myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];
             break;
         case 1:
-            reps = [_set.reps intValue];
+            reps = [_set.reps stringValue];
             newWeight = [_weightArray objectAtIndex:row];
             // update weight
-            self.textLabel.text = [NSString stringWithFormat:@"Set %@:  %d x %@ lb", _set.setNumber, reps, newWeight];
-            _set.weight = [NSNumber numberWithInt:[newWeight intValue]];
+            self.textLabel.text = [NSString stringWithFormat:@"Set %@:  %@ x %@ lb", _set.setNumber, reps, newWeight];
+            _set.weight = [NSNumber numberWithFloat:[newWeight floatValue]];
             // update in persistent data
             myNumber = [f numberFromString:newWeight];
             [BFWorkoutList setWeight: myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];

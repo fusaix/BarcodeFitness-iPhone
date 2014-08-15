@@ -18,14 +18,14 @@
 @synthesize isDone = _isDone; 
 
 
-- (id)initWithReps:(int)reps andWeight: (int)weight andPreviousReps: (int)previousReps andPreviousWeight: (int)previousWeight andSetNumber: (int)setNumber andIsDone: (bool) isDone {
+- (id)initWithReps:(int)reps andWeight: (float)weight andPreviousReps: (int)previousReps andPreviousWeight: (float)previousWeight andSetNumber: (int)setNumber andIsDone: (bool) isDone {
     self = [super init];
     if (self) {
         self.reps = [[NSNumber alloc] initWithInt: reps];
-        self.weight = [[NSNumber alloc] initWithInt: weight];
+        self.weight = [[NSNumber alloc] initWithFloat: weight];
         
         self.previousReps = [[NSNumber alloc] initWithInt: previousReps];
-        self.previousWeight = [[NSNumber alloc] initWithInt: previousWeight];
+        self.previousWeight = [[NSNumber alloc] initWithFloat: previousWeight];
         
         self.setNumber = [[NSNumber alloc] initWithInt: setNumber];
         

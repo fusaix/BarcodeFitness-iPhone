@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>7C95F6FA-61EF-4A91-8DD3-FAF00D809680</string>
+	<string>41A370BB-DD1B-4D5D-A147-F39EF3280FEE</string>
 	<key>IDESourceControlProjectName</key>
 	<string>BarcodeFitness-iPhone</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -20,16 +20,16 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0515BBE3-DFF5-417F-978C-9A8749BC9062</key>
-		<string>../../../ios-barcodefitness</string>
-		<key>7721557A-92EC-480A-A411-500CF0BB2836</key>
 		<string>../..</string>
+		<key>7721557A-92EC-480A-A411-500CF0BB2836</key>
+		<string>../../../BarcodeFitness-iPhone</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/fusaix/BarcodeFitness-iPhone.git</string>
+	<string>https://github.storm.gatech.edu/gtjourney/ios-barcodefitness.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>7721557A-92EC-480A-A411-500CF0BB2836</string>
+	<string>0515BBE3-DFF5-417F-978C-9A8749BC9062</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>

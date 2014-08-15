@@ -19,13 +19,15 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property NSArray * exercises;
+@property (nonatomic, strong) UIBarButtonItem *upButton;
+@property (nonatomic, strong) UIBarButtonItem *downButton;
+
 
 @end
 
 @implementation BFExerciseViewController
 @synthesize totalNumberOfExercises = _totalNumberOfExercises;
 @synthesize currentExerciseNumber = _currentExerciseNumber;
-//@synthesize exercise = _exercise;
 @synthesize sets = _sets;
 @synthesize wIndex = _wIndex;
 @synthesize workoutListViewController = _workoutListViewController; // to refresh the templates
@@ -40,14 +42,6 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    // Instead of [self.tableView reloadData];
-    // Add to tableview (bottom of list)
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_sets.count-1 inSection:0];
-//    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-}
-
 
 - (void)viewWillDisappear:(BOOL)animated {
     // refresh the templates
@@ -57,25 +51,44 @@
 
 }
 
+- (void) loadExerciseSpecifics {
+    // Init the NSMutableArray _exercises
+    _exercises = [[NSMutableArray alloc] initWithArray:((BFWorkout *)[_workoutListViewController.workoutTemplates objectAtIndex: _wIndex ]).exercises];
+    // then we get _sets from the stored representation, translation is performed by ... BFWorkoutList the root data class.
+    _sets = [[NSMutableArray alloc] initWithArray: ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).sets]; // _exercise
+    // Overwrite zeros in previous records with existing data
+    // ... for set in _sets ...
+    
+    // Configure navigation bar
+    self.title = [NSString stringWithFormat:@"%d of %d", _currentExerciseNumber, _totalNumberOfExercises];
+    
+    // buttons state
+    if (_currentExerciseNumber == 1) {
+        _upButton.enabled = NO;
+    } else {
+        _upButton.enabled = YES;
+    }
+    if (_currentExerciseNumber == _totalNumberOfExercises) {
+        _downButton.enabled = NO;
+    } else {
+        _downButton.enabled = YES;
+    }
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    // Init the NSMutableArray _exercises
-    if (!_exercises) {
-        _exercises = [[NSMutableArray alloc] initWithArray:((BFWorkout *)[_workoutListViewController.workoutTemplates objectAtIndex: _wIndex ]).exercises];
-    }
     
-    // then we get _sets from the stored representation, translation is performed by ... BFWorkoutList the root data class.
-    if (!_sets) {
-        _sets = [[NSMutableArray alloc] initWithArray: ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).sets]; // _exercise
-    }
+    // Right side navigation shortcuts buttons
+    _upButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_up"] style:UIBarButtonItemStylePlain target:self action:@selector(upButtonPressed)];
+    _downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_down"] style:UIBarButtonItemStylePlain target:self action:@selector(downButtonPressed)];
     
-    // Overwrite zeros in previous records with existing data
-    // ... for set in _sets ... 
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: _downButton, _upButton, nil]];
     
-    // Configure navigation bar
-    self.title = [NSString stringWithFormat:@"%d of %d", _currentExerciseNumber, _totalNumberOfExercises];
+    // Init data
+    [self loadExerciseSpecifics];
     
     // Configure tableview
     [_tableView setSeparatorColor:[UIColor clearColor]];
@@ -84,16 +97,14 @@
     self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
     self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
 
-    // Right side navigation shortcuts buttons
-    UIBarButtonItem *upButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_up"] style:UIBarButtonItemStylePlain target:self action:@selector(upButtonPressed)];
-    UIBarButtonItem *downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_down"] style:UIBarButtonItemStylePlain target:self action:@selector(downButtonPressed)];
-    
-    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects: downButton, upButton, nil]];
-    
 
     // Notification listeners for scroll to visible
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // Configure button colors
+//    _toolBar.tintColor = [UIColor orangeColor];
+    
     
 }
 
@@ -128,6 +139,7 @@
 {
     // Return the number of rows in the section.
     return self.sets.count;
+
 }
 
 
@@ -145,20 +157,21 @@
 
     
     // Get data
-    int reps = [currentSet.reps intValue];
-    int weight = [currentSet.weight intValue];
-    int pReps = [currentSet.previousReps intValue];
-    int pWeight = [currentSet.previousWeight intValue];
+    NSString* reps = [currentSet.reps stringValue];
+    NSString* weight = [currentSet.weight stringValue];
+    NSString* pReps = [currentSet.previousReps stringValue];
+    NSString* pWeight = [currentSet.previousWeight stringValue];
     int setNumber = [currentSet.setNumber intValue];
     
     // Set data
-    cell.textLabel.text = [NSString stringWithFormat:@"Set %d:  %d x %d lb", setNumber, reps, weight];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"vs %d x %d lb", pReps, pWeight];
+    cell.textLabel.text = [NSString stringWithFormat:@"Set %d:  %@ x %@ lb", setNumber, reps, weight];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"vs %@ x %@ lb", pReps, pWeight];
     cell.set = currentSet; // This is the link betwin sets and their corresponding cell (here, the link is done at the cell creation in tableview)
-    cell.sIndex = indexPath.row;
+    cell.sIndex = (int) indexPath.row;
     cell.eIndex = _currentExerciseNumber-1;
     cell.wIndex = _wIndex;
     cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    
     
     return cell;
 }
@@ -256,11 +269,14 @@
     // + change status is persistent data
     if (((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone) {
         ((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone = NO;
-        [BFWorkoutList setIsDone:NO atIndex:indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
+        [BFWorkoutList setIsDone:NO atIndex:(int)indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
     } else {
         ((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone = YES;
         [BFWorkoutList setIsDone:YES atIndex:indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
-        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+//        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+        AudioServicesPlaySystemSound(1054); // see http://iphonedevwiki.net/index.php/AudioServices
+
+        
     }
     
     [tableView reloadData];
@@ -293,16 +309,16 @@
 
     // Default record SetX: 10 x 30 lb
     int reps;
-    int weight;
+    float weight;
     if (indexPath.row > 0) {
         reps = [((BFSet *)[_sets objectAtIndex:indexPath.row-1]).reps intValue];
-        weight = [((BFSet *)[_sets objectAtIndex:indexPath.row-1]).weight intValue];
+        weight = [((BFSet *)[_sets objectAtIndex:indexPath.row-1]).weight floatValue];
     } else {
         reps = 10;
         weight = 30;
     }
     int pReps = 0;
-    int pWeight = 0;
+    float pWeight = 0;
     int setNumber = _sets.count+1;
     
     // Add to sets
@@ -340,11 +356,21 @@
 #pragma mark - Other actions
 
 - (void) upButtonPressed {
-    
+    [self refreshTemplates];
+    _currentExerciseNumber--;
+    [self loadExerciseSpecifics];
+    [self.tableView reloadData];
+    // make sound
+    AudioServicesPlaySystemSound(1101); // see http://iphonedevwiki.net/index.php/AudioServices
 }
 
 - (void) downButtonPressed {
-    
+    [self refreshTemplates];
+    _currentExerciseNumber++;
+    [self loadExerciseSpecifics];
+    [self.tableView reloadData];
+    // make sound
+    AudioServicesPlaySystemSound(1101); // see http://iphonedevwiki.net/index.php/AudioServices
 }
 
 
