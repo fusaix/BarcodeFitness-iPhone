@@ -115,6 +115,7 @@
 		A972DC511981C12500156ED8 /* BFSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC501981C12500156ED8 /* BFSet.m */; };
 		A972DC5C1982C69200156ED8 /* BFLogList.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC5B1982C69200156ED8 /* BFLogList.m */; };
 		A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A972DC6519885BD400156ED8 /* BFScanViewController.m */; };
+		A98517A519AFC75D0074264B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A972940F197DDB4300495470 /* Main.storyboard */; };
 		A9AD3188198FEB9A008A0A32 /* BFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */; };
 		A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */; };
 		A9AFD6E319A3C43F00FABB43 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9AFD6E219A3C43F00FABB43 /* Images.xcassets */; };
@@ -600,6 +601,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A98517A519AFC75D0074264B /* Main.storyboard in Resources */,
 				A93B25BA19954FAB002189A0 /* Saturday_sf.png in Resources */,
 				A94FB255199BF07A006157AC /* Code_sf1HD.png in Resources */,
 				A906463119A2CCAE0085C21A /* pie53.png in Resources */,
