@@ -19,5 +19,25 @@
 @property (nonatomic, strong) NSMutableArray * exercises;
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;
 
+@property (nonatomic) int mode; // 0 = Auto, 1 = Manu, 2 = Off
+@property (nonatomic, strong) NSDate * workoutBeginTime;
+@property (nonatomic, strong) NSDate * timerBeginTime;
+
+@property (nonatomic, strong) UILocalNotification *restTimeEndedNotification;
+
++ (BOOL) resting;
++ (void) setResting: (BOOL) answer;
+
++ (int) restTime;
++ (void) setRestTime: (int) answer;
+
++ (int) currentRestTime;
++ (void) setCurrentRestTime: (int) answer;
+
++ (NSString *)timeFormatted: (int)totalSeconds;
++ (NSString *)timeFormatted2: (int)totalSeconds;
++ (NSString *)timeFormatted3: (int)totalSeconds;
+
+@property (nonatomic) BOOL finishFlag;
 
 @end

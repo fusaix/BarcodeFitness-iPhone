@@ -12,12 +12,11 @@
 @synthesize name = _name;
 @synthesize image = _image;
 @synthesize imageIndex = _imageIndex;
-@synthesize description = _description; // subtitle of cells in Launcher
-@synthesize lastDate = _lastDate;
-@synthesize duration = _duration;
-@synthesize density = _density;
-@synthesize note = _note;
+@synthesize lastDate = _lastDate; // subtitle of cells in Launcher
+@synthesize duration = _duration; // subtitle of cells in Launcher
+@synthesize note = _note; // note string // subtitle of cells in Launcher
 @synthesize exercises = _exercises;
+@synthesize totalWeight = _totalWeight; // subtitle of cells in Launcher
 
 @synthesize row = _row;
 
@@ -25,6 +24,34 @@
 @synthesize workoutId;
 @synthesize previousExercises;//The list of exercises that the user performed
 
+
+//NSArray* workoutImages = [NSArray arrayWithObjects: @"BarcodeFitnessIconRounded.png",
+//                                         @"Monday_sf.png",
+//                                         @"Tuesday_sf.png",
+//                                         @"Wednesday_sf.png",
+//                                         @"Thursday_sf.png",
+//                                         @"Friday_sf.png",
+//                                         @"Saturday_sf.png",
+//                                         @"Sunday_sf.png",
+//                                         @"Everyday_sf.png", nil];
+
++ (NSArray *)workoutImages
+{
+    static NSArray *_workoutImages;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _workoutImages = @[@"BarcodeFitnessIconRounded.png",
+                    @"Monday_sf.png",
+                    @"Tuesday_sf.png",
+                    @"Wednesday_sf.png",
+                    @"Thursday_sf.png",
+                    @"Friday_sf.png",
+                    @"Saturday_sf.png",
+                    @"Sunday_sf.png",
+                    @"Everyday_sf.png"];
+    });
+    return _workoutImages;
+}
 
 +(id)workoutWithID:(NSString *)workoutId andDate:(NSString *)date {
     BFWorkout *workout = [super new];
@@ -37,7 +64,38 @@
     self = [super init];
     if (self) {
         self.name = name;
+
+        // choose a random image
+        int i = arc4random() % [BFWorkout workoutImages].count;
         
+        self.image = [UIImage imageNamed:[BFWorkout workoutImages][i]];
+        self.imageIndex = [NSNumber numberWithInteger:i];
+        self.lastDate = [NSDate date];
+        self.duration = [NSNumber numberWithInteger:0];
+        self.note = @"~";
+        self.totalWeight = [NSNumber numberWithInteger:0];
+        
+        self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name andImage: (NSNumber *) imageIndex andLastDate: (NSDate *) lastDate andDuration: (NSNumber *) duration andNote: (NSString*) note andTotalWeight: (NSNumber *) totalWeight{
+    self = [super init];
+    if (self) {
+        self.name = name;
+        self.image = [UIImage imageNamed:[BFWorkout workoutImages][[imageIndex intValue]]];
+        self.lastDate = lastDate;
+        self.duration = duration;
+        self.note = note;
+        self.totalWeight = totalWeight;
+        
+        self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
+    }
+    return self;
+}
+
+
 //        // default text for description
 //        _lastDate = [NSDate date];
 //        _duration = 0;
@@ -64,29 +122,6 @@
 //        @"%.3f"  = 3145.560
 //        @"%.03f" = 3145.560 // which is equal to @"%.3f" */
 //        self.description = [NSString stringWithFormat:@"%@, Duration: %@, Density: %@ lb/s", [dateFormatter stringFromDate:_lastDate], durationFormatted, densityFormatted]; // @"Today, Duration: 0 min, Density: 0 lb/s";
-        
-        self.description = name; // to be changed 
-        
-        
-        NSArray* workoutImages = [NSArray arrayWithObjects: @"BarcodeFitnessIcon120_sf.png",
-                                 @"Monday_sf.png",
-                                 @"Tuesday_sf.png",
-                                 @"Wednesday_sf.png",
-                                 @"Thursday_sf.png",
-                                 @"Friday_sf.png",
-                                 @"Saturday_sf.png",
-                                 @"Sunday_sf.png",
-                                 @"Everyday_sf.png", nil];
-        int i = arc4random() % workoutImages.count;
-        
-        self.image = [UIImage imageNamed:workoutImages[i]];
-        self.imageIndex = [NSNumber numberWithInteger:i];
-        self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
-    }
-    return self;
-}
-
-
 
 
 @end

@@ -101,7 +101,7 @@
     [self.tableView addGestureRecognizer:tapGestureRecognizer];
     
     // Load Names of Images
-    _workoutImages = [@[@"BarcodeFitnessIcon120_sf.png",
+    _workoutImages = [@[@"BarcodeFitnessIconRounded.png",
                         @"Monday_sf.png",
                         @"Tuesday_sf.png",
                         @"Wednesday_sf.png",
@@ -111,9 +111,8 @@
                         @"Sunday_sf.png",
                         @"Everyday_sf.png"] mutableCopy];
     
-    // cofigure button colors
+    // configure button colors
 //    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
-
     
 }
 

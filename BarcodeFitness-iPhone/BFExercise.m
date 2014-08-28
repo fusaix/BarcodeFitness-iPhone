@@ -10,10 +10,10 @@
 
 @implementation BFExercise
 @synthesize name = _name;
-@synthesize description = _description; // subtitle of cells in Launcher
+//@synthesize description = _description; // subtitle of cells in Launcher
 @synthesize lastDate = _lastDate;
 @synthesize duration = _duration;
-@synthesize density = _density;
+//@synthesize density = _density;
 
 @synthesize sets = _sets; 
 
@@ -22,6 +22,8 @@
     exercise.name = name;
     exercise.qrCode = qrCode;
     exercise.exerciseId = exerciseId;
+    
+    exercise.sets = [[NSMutableArray alloc] init]; // nothing at creation
     return exercise;
 }
 
@@ -49,7 +51,7 @@
         //        NSString* densityFormatted = [NSString stringWithFormat:@"%.02f", _density];
         //        self.description = [NSString stringWithFormat:@"%@, Duration: %@, Density: %@ lb/s", [dateFormatter stringFromDate:_lastDate], durationFormatted, densityFormatted]; // @"Today, Duration: 0 min, Density: 0 lb/s";
         
-        self.description = name; // to be changed
+//        self.description = name; // to be changed
         self.sets = [[NSMutableArray alloc] init]; // nothing at creation
     }
     return self;

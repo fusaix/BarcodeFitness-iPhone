@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic, strong) NSMutableArray *filteredWorkoutTemplates;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *magicButton;
+@property (nonatomic) BOOL noteMode;
 
 @end
 
@@ -43,27 +45,33 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // show navigation bar
+    [self.navigationController setNavigationBarHidden: NO animated:YES];
+    // reload table 
     [self.tableView reloadData];
     // refresh search result table
     self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
+    // Magic Button
+    _magicButton.enabled = YES;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    // hide search bar
-    if (!self.searchDisplayController.active) {
-        [UIView animateWithDuration:0.5
-                              delay:1.0
-                            options:(UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction)
-                         animations:^(void) {
-                             [self hideSearchBar];
-                         }
-                         completion:nil];
-    }
-//completion:^(BOOL finished) {
-//    if (finished) {
+//- (void)viewWillDisappear:(BOOL)animated {
+//    // hide search bar
+//    if (!self.searchDisplayController.isActive) {
+//        [UIView animateWithDuration:0.5
+//                              delay:1.0
+//                            options:(UIViewAnimationOptionCurveEaseOut|UIViewAnimationOptionAllowUserInteraction)
+//                         animations:^(void) {
+//                             [self hideSearchBar];
+//                         }
+//                         completion:nil];
 //    }
-//}];
-}
+////completion:^(BOOL finished) {
+////    if (finished) {
+////    }
+////}];
+//    
+//}
 
 - (void)viewDidLoad
 {
@@ -80,22 +88,35 @@
     [self hideSearchBar];
     
     // configure back button 
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Quit" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     // configure background
-    self.tableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
-    self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
-    self.searchDisplayController.searchResultsTableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
-    //    self.edgesForExtendedLayout = UIRectEdgeNone; this is not useful for the search bar glitch : the solution is to check "Under Oparque bars" in the storyboard for this view controller!!!
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"metalBackground"]];
+    self.tableView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.4];
+    //    self.tableView.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+    self.toolBar.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Fonte"]];
+    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];
+    
     CGRect frame = self.tableView.bounds;
     frame.origin.y = -frame.size.height;
     UIView* viewBackground = [[UIView alloc] initWithFrame:frame];
-    [viewBackground setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]]];
+    [viewBackground setBackgroundColor:[[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"GameImage"]]];
     [self.tableView addSubview:viewBackground]; // fix for the top of search bar
     
-    // Configure button colors
-//    _toolBar.tintColor = [UIColor orangeColor];
+    // other colors
+    [_tableView setSeparatorColor:[UIColor blackColor]];
+    [self.searchDisplayController.searchResultsTableView setSeparatorColor:[UIColor blackColor]];
     
+    // Configure button colors
+    _toolBar.tintColor = [UIColor orangeColor]; 
+    
+    // Configure search bar text color
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor]];
+    
+    // self.edgesForExtendedLayout = UIRectEdgeNone; is not useful for the search bar glitch : the solution is to check "Under Oparque bars" in the storyboard for this view controller!!!
+    
+    // Note Mode or Detail Mode
+    _noteMode = NO; // Detail Mode
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,6 +135,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"Choose a workout to start";
+//    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -148,10 +170,47 @@
         // Update workout.row for research mode
         currentWorkout.row = (int) indexPath.row;
     }
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     cell.textLabel.text = currentWorkout.name;
-    cell.detailTextLabel.text = currentWorkout.description;
+    
+    // description
+    float totalWeight = [currentWorkout.totalWeight floatValue];
+    
+    NSString * lastDateText;
+//    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//    [df setDateFormat:@"yyyy-MM-dd hh:mm:ss a"];
+//    NSDate *lastDate = [df dateFromString: @"2014-08-29 1:11:11 am"];
+    NSDate * lastDate = currentWorkout.lastDate;
+    if ([self daysBetweenDate:lastDate andDate:[NSDate date]] == 0) { // today
+        lastDateText = @"Today";
+    } else if ([self daysBetweenDate:lastDate andDate:[NSDate date]] == 1) { // yesterday
+        lastDateText = @"Yesterday";
+    } else {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yy"];
+        lastDateText = [dateFormatter stringFromDate:lastDate];
+    }
+    
+    if (_noteMode) {     // if in note mode
+        cell.detailTextLabel.text = currentWorkout.note;
+    } else {
+        if ((int)totalWeight  == totalWeight) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, Last: %@, Total: %.f lb", lastDateText, [BFWorkoutViewController timeFormatted3:[currentWorkout.duration intValue]], totalWeight];
+        } else {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, Last: %@, Total: %.1f lb", lastDateText, [BFWorkoutViewController timeFormatted3:[currentWorkout.duration intValue]], totalWeight];
+        }
+    }
+    
     cell.imageView.image = currentWorkout.image;
-    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Black"]];
+//    cell.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.1]; // 0.1
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"accessory"]];
+    UIView *orangeView = [[UIView alloc] init];
+    orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
+    [cell setSelectedBackgroundView:orangeView];
 
 
 //    NSLog(@"%@", currentWorkout.name);
@@ -161,11 +220,38 @@
     return cell;
 }
 
+// compute days between two NSDate
+- (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime {
+    NSDate *fromDate;
+    NSDate *toDate;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&fromDate interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&toDate interval:NULL forDate:toDateTime];
+    NSDateComponents *difference = [calendar components:NSDayCalendarUnit fromDate:fromDate toDate:toDate options:0];
+    return [difference day];
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 55;
 }
 
+// Custom header background
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor whiteColor]];
+    header.backgroundView.backgroundColor = [UIColor darkGrayColor];
+}
+
+#pragma mark - Search Bar
+
+- (void) hideSearchBar {
+    CGRect newBounds = self.tableView.bounds;
+    newBounds.origin.y = newBounds.origin.y + self.searchDisplayController.searchBar.bounds.size.height;
+    self.tableView.bounds = newBounds;
+}
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
@@ -186,7 +272,8 @@
 //    [self hideSearchBar];
 }
 
-#pragma mark - Content Filtering and Search bar methods
+
+#pragma mark - Content Filtering
 
 -(void)filterContentForSearchText:(NSString*)searchText {
     
@@ -204,14 +291,6 @@
         }
     }
 }
-
-- (void) hideSearchBar {
-    CGRect newBounds = self.tableView.bounds;
-    newBounds.origin.y = newBounds.origin.y + self.searchDisplayController.searchBar.bounds.size.height;
-    self.tableView.bounds = newBounds;
-
-}
-
 
 
 #pragma mark - Edit modes
@@ -244,20 +323,27 @@
             // anti edit mode glitch
             tableView.editing = !tableView.editing;
         } else {
-            CGRect newBounds = self.tableView.bounds;
             // Delete the row from the data source workoutTemplates
             [self.workoutTemplates removeObjectAtIndex:indexPath.row];
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            CGRect newBounds = self.tableView.bounds;
+//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            self.tableView.bounds = newBounds;
+            [UIView animateWithDuration:1.2
+                                  delay:0.0
+                                options:(UIViewAnimationOptionTransitionCurlDown)
+                             animations:^(void) {
+                                             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                             }
+                             completion:nil];
             // Delete to workoutTemplatesRepresentation
             [BFWorkoutList removeObjectAtIndex: (int) indexPath.row];
             // reload data KILLS animations !!!!!!!!!!!!!!! so we'll use a trick to update the rows
-//            for (BFWorkout *workout in self.workoutTemplates) {
-//                workout.row = (int) indexPath.row;
-//            }
+            //            for (BFWorkout *workout in self.workoutTemplates) {
+            //                workout.row = (int) indexPath.row;
+            //            }
             for (int i = 0; i < self.workoutTemplates.count; i++) {
                 ((BFWorkout*)[_workoutTemplates objectAtIndex:i]).row = i;
             }
-            self.tableView.bounds = newBounds;
         }
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -309,8 +395,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Perform segue to detail
-    [self performSegueWithIdentifier:@"startWorkout" sender:tableView];
-    
+    [self startWorkout];
+}
+
+- (void) startWorkout {
+    [self performSegueWithIdentifier:@"startWorkout" sender:_tableView];
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -388,12 +477,16 @@
 
 }
 
-- (IBAction)magicButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)magicButtonPressed:(UIBarButtonItem *)sender { // dice
+    int i = arc4random() % _workoutTemplates.count;
+    [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    _magicButton.enabled = NO;
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startWorkout) userInfo:nil repeats:NO];
 }
 
-
-
-- (IBAction)sortButtonPressed:(UIBarButtonItem *)sender {
+- (IBAction)infoButtonPressed:(UIBarButtonItem *)sender {
+    _noteMode = !_noteMode;
+    [_tableView reloadData];
 }
 
 

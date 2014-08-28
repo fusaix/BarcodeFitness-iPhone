@@ -25,17 +25,19 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
 }
 
 + (NSMutableDictionary*) workoutRepresentationFromWorkout:(BFWorkout *)workout {
-    NSMutableDictionary * workoutRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: workout.name, @"name", workout.imageIndex, @"imageIndex", [self exercisesRepresentationFromExercises:workout.exercises], @"exercises", nil];
+    NSMutableDictionary * workoutRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: workout.name, @"name", workout.imageIndex, @"imageIndex", workout.lastDate, @"lastDate", workout.duration, @"duration", workout.note, @"note", workout.totalWeight, @"totalWeight", [self exercisesRepresentationFromExercises:workout.exercises], @"exercises", nil];
     // ... image;
+    // ... lastDate;
+    // ... note;
+    // ... totalWeight;
     // ... exercises;
     
     return workoutRepresentation;
 }
 
 + (NSMutableDictionary*) exerciseRepresentationFromExercise:(BFExercise *)exercise {
-    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", nil];
-    // ... description;
-    // ... sets;
+    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", [self setsRepresentationFromSets:exercise.sets], @"sets", nil];
+    // description done at rendering
     
     return exerciseRepresentation;
 }
@@ -79,16 +81,14 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
     BFExercise * exercise;
     BFSet * set;
     BOOL isDone;
-//    int i = 0;
     for (NSDictionary * workoutRepresentation in workoutTemplatesRepresentation) {
         // init workout
-        workout = [[BFWorkout alloc]initWithName: [workoutRepresentation objectForKey:@"name"]];
-        // ... image; with initWithNameAndImage
+        workout = [[BFWorkout alloc] initWithName:[workoutRepresentation objectForKey:@"name"] andImage:[workoutRepresentation objectForKey:@"imageIndex"] andLastDate:[workoutRepresentation objectForKey:@"lastDate"] andDuration:[workoutRepresentation objectForKey:@"duration"] andNote:[workoutRepresentation objectForKey:@"note"] andTotalWeight:[workoutRepresentation objectForKey:@"totalWeight"]];
+//        NSLog(@"img %@ - date %@ - dur %@ - note %@ - weig %@ ",[workoutRepresentation objectForKey:@"imageIndex"], [workoutRepresentation objectForKey:@"lastDate"], [workoutRepresentation objectForKey:@"duration"], [workoutRepresentation objectForKey:@"note"], [workoutRepresentation objectForKey:@"totalWeight"] );
         
-//        int j = 0;
         // populate level 2
         for (NSDictionary * exerciseRepresentation in [workoutRepresentation objectForKey:@"exercises"]) {
-            exercise = [[BFExercise alloc]initWithName: [exerciseRepresentation objectForKey:@"name"]];
+            exercise = [[BFExercise alloc] initWithName:[exerciseRepresentation objectForKey:@"name"]];
             
             // populate level 3
             int setNumber = 0;
@@ -103,10 +103,8 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
                 [exercise.sets addObject:set];
             }
             [workout.exercises addObject:exercise];
-//            j++;
         }
         [workoutTemplates addObject:workout];
-//        i++;
     }
     
     
@@ -159,7 +157,28 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
     [self saveToStandardUserDefaults];
 }
 
++(float)computeWeightForWorkoutAtIndex:(int) wIndex {
+    float totalWeight = 0;
+    for (NSDictionary * exerciseRepresentation in [[workoutTemplatesRepresentation objectAtIndex: wIndex] objectForKey:@"exercises"]) {
+        for (NSDictionary * setRepresentation in [exerciseRepresentation objectForKey:@"sets"]) {
+            totalWeight += [[setRepresentation objectForKey:@"weight"] floatValue];
+        }
+    }
+    [[workoutTemplatesRepresentation objectAtIndex: wIndex] setValue:[NSNumber numberWithFloat:totalWeight] forKey:@"totalWeight"];
+//    NSLog(@"%f", totalWeight);
+    [self saveToStandardUserDefaults];
+    return totalWeight; 
+}
 
++(void)setDuration:(int) duration forWorkoutAtIndex:(int) wIndex {
+    [[workoutTemplatesRepresentation objectAtIndex: wIndex] setValue:[NSNumber numberWithInt:duration] forKey:@"duration"];
+    [self saveToStandardUserDefaults];
+}
+
++(void)setLastDate:(NSDate *) lastDate forWorkoutAtIndex:(int) wIndex {
+    [[workoutTemplatesRepresentation objectAtIndex: wIndex] setValue:lastDate forKey:@"lastDate"];
+    [self saveToStandardUserDefaults];
+}
 
 
 #pragma mark - Level 3: SetsManagement

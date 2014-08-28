@@ -46,7 +46,7 @@
     _pickerView.dataSource = self;
     _pickerView.delegate = self;
     
-    _theTextField = [[UITextField alloc] initWithFrame:CGRectMake(45, 0, 180, 43)];
+    _theTextField = [[UITextField alloc] initWithFrame:CGRectMake(45, 0, 180, 44)];
     _theTextField.delegate = self;
     _theTextField.tintColor = [UIColor clearColor];
     _theTextField.inputView.userInteractionEnabled = NO;
@@ -118,7 +118,7 @@
     
 //    NSLog(@"%f", self.textLabel.frame.size.width);
     
-    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x,self.textLabel.frame.origin.y,170 ,self.textLabel.frame.size.height);
+    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x,self.textLabel.frame.origin.y,180 ,self.textLabel.frame.size.height);
 }
 
 #pragma mark - TextField methods
@@ -126,6 +126,8 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     _rectangleLabel.layer.hidden = YES;
 //    _theTextField.backgroundColor =[UIColor clearColor];
+    // make sound to fix low sound bug
+    AudioServicesPlaySystemSound(1057); // see http://iphonedevwiki.net/index.php/AudioServices
 
 }
 
@@ -152,11 +154,7 @@
     [_pickerView reloadComponent:2];
     
     // make sound
-    AudioServicesPlaySystemSound(1105); // see http://iphonedevwiki.net/index.php/AudioServices 
-    
-    // scroll to visible
-//    [ wordsTableView scrollRectToVisible:textFieldRect animated:YES];
-
+    AudioServicesPlaySystemSound(1057); // see http://iphonedevwiki.net/index.php/AudioServices
     
 }
 

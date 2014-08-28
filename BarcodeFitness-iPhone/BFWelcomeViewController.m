@@ -39,17 +39,15 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStyleBordered target:nil action:nil];
     
     // Configure background
-    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"paperBackground"] forBarMetrics: UIBarMetricsDefault];
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"metalBackground"]];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Fonte"] forBarMetrics: UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    self.navigationController.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+    
+    // title color 
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     // Configure button colors
-//    _shareButton.tintColor = [UIColor orangeColor];
-//    _rateButton.tintColor = [UIColor orangeColor];
-//    _moreButton.tintColor = [UIColor orangeColor];
-//    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+    self.navigationController.navigationBar.tintColor = [UIColor orangeColor]; 
     
     // disable swipe back
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -69,7 +67,11 @@
     [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
     [_scanButton addTarget:self action:@selector(fadeLabelImages2) forControlEvents:UIControlEventTouchDown];
     [_performanceHistoryButton addTarget:self action:@selector(fadeLabelImages3) forControlEvents:UIControlEventTouchDown];
-
+    // add gesture recognizers to title
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(whiteStatusBar)];
+    longPress.delegate = self;
+    [self.navigationController.navigationBar addGestureRecognizer:longPress];
+    
 }
 
 -(void)dealloc {
@@ -83,21 +85,36 @@
     _performanceHistoryButton.highlighted = NO;
     _logoButton.highlighted = NO;
     [self.navigationController setNavigationBarHidden: YES animated:YES];
+    // Status bar
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
 }
 
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden: NO animated:YES];
+- (void) whiteStatusBar {
+    // Status bar white
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [NSTimer scheduledTimerWithTimeInterval:4.0
+                                     target:self
+                                   selector:@selector(blackStatusBar)
+                                   userInfo:nil
+                                    repeats:NO];
 }
+
+- (void) blackStatusBar {
+    // Status bar black
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [self.navigationController setNavigationBarHidden: NO animated:YES];
+//}
 
 - (void) fadeButtonImages {
     [UIView animateWithDuration:4.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-                         [_athleteImage setAlpha:0.1];
-//                         [_logoImage setAlpha:0.1];
+                         [_athleteImage setAlpha:0.2];
                          [_workoutImage setAlpha:0.1];
                          [_performanceHistoryImage setAlpha:0.1];
                          [_scanImage setAlpha:0.1];
@@ -110,8 +127,7 @@
 }
 
 - (void) animateButtonImages {
-    [_athleteImage setAlpha:0.1];
-//    [_logoImage setAlpha:0.1];
+    [_athleteImage setAlpha:0.2];
     [_workoutImage setAlpha:0.1];
     [_performanceHistoryImage setAlpha:0.1];
     [_scanImage setAlpha:0.1];
@@ -120,15 +136,14 @@
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
                          [_athleteImage setAlpha:1.0];
-//                         [_logoImage setAlpha:1.0];
                          [_workoutImage setAlpha:1.0];
                          [_performanceHistoryImage setAlpha:1.0];
                          [_scanImage setAlpha:1.0];
                      }
                      completion:^(BOOL finished) {
-                         if (finished) {
+//                         if (finished) {
                              [self fadeLabelImages];
-                         }
+//                         }
                      }];
 
 }
@@ -210,14 +225,18 @@
 
 - (IBAction)performanceHistory:(UIButton *)sender {
     
+    
 }
 
 - (IBAction)scanButtonPressed:(UIButton *)sender {
     
+    
 }
 
 - (IBAction)logoButtonPressed:(id)sender {
-    // go to webpage
+    // go to more
+    [self performSegueWithIdentifier:@"moreSegue" sender:self];
+
     
 }
 
@@ -232,6 +251,7 @@
 
 
 - (IBAction)moreButtonPressed:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"moreSegue" sender:self];
     
 }
 
@@ -239,7 +259,7 @@
 - (void) workoutButtonTouched {
     _athleteImage.highlighted = YES;
     [self fadeLabelImages1];
-
+    
 }
 
 - (void) workoutButtonTouchedUpOutside {
@@ -249,6 +269,7 @@
 
 - (void) logoButtonTouched {
     _logoImage.highlighted = YES;
+    
     
 }
 

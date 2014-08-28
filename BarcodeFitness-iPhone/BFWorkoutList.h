@@ -33,11 +33,16 @@
 +(void)insertExercise: (BFExercise *) exercise atIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 +(void)removeExerciseAtIndex: (int) eIndex fromWorkoutAtIndex: (int) wIndex;
 
++(float)computeWeightForWorkoutAtIndex:(int) wIndex;
++(void)setDuration:(int) duration forWorkoutAtIndex:(int) wIndex;
++(void)setLastDate:(NSDate *) lastDate forWorkoutAtIndex:(int) wIndex;
+
 // 3
 +(void)addSet: (BFSet *) set atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 +(void)removeSetAtIndex: (int) sIndex fromExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 +(void)setReps: (NSNumber*) reps atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 +(void)setWeight: (NSNumber*) weight atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
 +(void)setIsDone: (BOOL) isDone atIndex: (int) sIndex toExerciseAtIndex: (int) eIndex inWorkoutAtIndex: (int) wIndex;
+
 
 @end

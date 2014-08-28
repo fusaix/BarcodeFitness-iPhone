@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface BFWelcomeViewController : UIViewController 
+@interface BFWelcomeViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @end

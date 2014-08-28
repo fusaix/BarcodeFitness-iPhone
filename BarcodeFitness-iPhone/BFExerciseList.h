@@ -16,6 +16,6 @@
 
 +(NSArray *)getAllExercises;
 +(void)saveToStandardUserDefaults: (NSArray * ) jsonArray;
-
++(void)loadExercisesFromNetwork;
 
 @end

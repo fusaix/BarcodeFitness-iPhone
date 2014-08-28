@@ -10,13 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 
 @class BFChooseViewController;
+@class BFWorkoutViewController;
 
 @interface BFExerciseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
 @property (nonatomic, strong) NSMutableArray * sets;
 @property (nonatomic) int totalNumberOfExercises;
 @property (nonatomic) int currentExerciseNumber;
 @property (nonatomic) int wIndex;
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;
-
+@property (nonatomic, strong) BFWorkoutViewController * exerciseListViewController;
 
 @end

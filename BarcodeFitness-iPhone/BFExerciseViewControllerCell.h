@@ -11,11 +11,12 @@
 
 @class BFSet;
 
-@interface BFExerciseViewControllerCell : UITableViewCell <UIGestureRecognizerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface BFExerciseViewControllerCell : UITableViewCell <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic) int sIndex;
 @property (nonatomic) int eIndex;
 @property (nonatomic) int wIndex;
 @property (nonatomic, strong) BFSet * set;
+
 
 @end

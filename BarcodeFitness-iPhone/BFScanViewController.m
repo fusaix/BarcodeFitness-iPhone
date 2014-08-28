@@ -25,9 +25,8 @@
 
 @implementation BFScanViewController
 @synthesize exerciseListViewController = _exerciseListViewController;
-@synthesize wIndex = _wIndex; 
-@synthesize exercise = _exercise;
-//@synthesize segueIdentifier = _segueIdentifier;
+@synthesize wIndex = _wIndex;
+//@synthesize exercise = _exercise;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -48,7 +47,7 @@
     // Load sound
     [self loadBeepSound];
     
-    // cofigure button colors
+    // configure button colors
 //    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
 //    self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
 
@@ -126,7 +125,7 @@
     // run
     [_captureSession startRunning];
     
-    NSLog(@"scanning started");
+//    NSLog(@"scanning started");
     
     return YES;
 }
@@ -150,7 +149,7 @@
             [self.exerciseListViewController.exercises addObject:newExercise];
             // Save to persistent data
             [BFWorkoutList addExercise: newExercise toWorkoutAtIndex: _wIndex];
-            NSLog(@"row: %d", _wIndex);
+//            NSLog(@"row: %d", _wIndex);
             
             // play success sound and vibrate !!!
             if (_audioPlayer) {
@@ -256,14 +255,14 @@
     [_captureSession stopRunning];
     _captureSession = nil;
     [_videoPreviewLayer removeFromSuperlayer];
-    NSLog(@"scanning stopped");
+//    NSLog(@"scanning stopped");
 }
 
 -(void)dismissAndStopReading{
     [self dismissViewControllerAnimated:YES completion: ^{
         _captureSession = nil;
         [_videoPreviewLayer removeFromSuperlayer];
-        NSLog(@"scanning stopped 2.0");
+//        NSLog(@"scanning stopped 2.0");
     }];
 }
 
