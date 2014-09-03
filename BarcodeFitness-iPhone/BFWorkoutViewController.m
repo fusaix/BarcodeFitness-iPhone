@@ -16,12 +16,14 @@
 #import "UIViewController+BackButtonHandler.h"
 #import "BFSet.h"
 #import "BFExerciseListViewController.h"
+#import "BFWorkoutNoteCell.h"
 
 
 @interface BFWorkoutViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic) int duration;
+@property (nonatomic) BOOL takingNote;
 
 @property (nonatomic) int timeSpentInWorkout;
 
@@ -68,6 +70,8 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
     if (_finishFlag) {
         [self performSelector: @selector(finishButtonPressed:) withObject:self afterDelay: 0.0];
     }
+    
+    _takingNote = NO;
 }
 
 
@@ -244,75 +248,95 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return _workout.name;
+    if (section == 0) {
+        return nil;
+    } else {
+        return _workout.name;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.exercises.count;
+    if (section == 0) {
+        return 1;
+    } else {
+        return self.exercises.count;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell" forIndexPath:indexPath];
-    
-    // Configure the cell...
-    BFExercise * currentExercise;
-    currentExercise = [self.exercises objectAtIndex:indexPath.row];
-    
-    cell.textLabel.text = currentExercise.name;
-    cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Black"]];
-
-//    cell.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.1];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-    UIView *orangeView = [[UIView alloc] init];
-    orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
-    [cell setSelectedBackgroundView:orangeView];
-    
-    // cell image
-    float numberOfSetsDone = 0;
-    float totalWeight = 0;
-    float numberOfSets = currentExercise.sets.count;
-    for (BFSet* set in currentExercise.sets) {
-        if (set.isDone) {
-            numberOfSetsDone++;
+    if (indexPath.section == 0) {
+        BFWorkoutNoteCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"noteCell" forIndexPath:indexPath];
+        cell.wIndex = (int)_workout.row;
+        cell.workout = _workout; 
+        cell.textView.text = _workout.note;
+        cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
+        
+        return cell;
+        
+    } else {
+        
+        UITableViewCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell" forIndexPath:indexPath];
+        
+        // Configure the cell...
+        BFExercise * currentExercise;
+        currentExercise = [self.exercises objectAtIndex:indexPath.row];
+        
+        cell.textLabel.text = currentExercise.name;
+        cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Black"]];
+        
+        //    cell.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.1];
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+        UIView *orangeView = [[UIView alloc] init];
+        orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
+        [cell setSelectedBackgroundView:orangeView];
+        
+        // cell image
+        float numberOfSetsDone = 0;
+        float totalWeight = 0;
+        float numberOfSets = currentExercise.sets.count;
+        for (BFSet* set in currentExercise.sets) {
+            if (set.isDone) {
+                numberOfSetsDone++;
+            }
+            totalWeight = totalWeight + [set.weight floatValue];
         }
-        totalWeight = totalWeight + [set.weight floatValue];
+        float pourcent = 0;
+        if (currentExercise.sets.count != 0) {
+            pourcent = numberOfSetsDone/numberOfSets;
+            cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"pie%.f.png", 60*pourcent]];
+        } else {
+            cell.imageView.image = [UIImage imageNamed:@"pieV.png"];
+        }
+        // subtitle
+        NSString* setWord;
+        if (numberOfSets > 1) {
+            setWord = @"sets";
+        } else {
+            setWord = @"set";
+        }
+        if ((int)totalWeight == totalWeight) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
+        } else {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.1f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
+        }
+        
+        
+        //    NSLog(@"%@", currentExercise.name);
+        //    NSLog(@"1- %@", _exercises);
+        
+        return cell;
     }
-    float pourcent = 0;
-    if (currentExercise.sets.count != 0) {
-        pourcent = numberOfSetsDone/numberOfSets;
-        cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"pie%.f.png", 60*pourcent]];
-    } else {
-        cell.imageView.image = [UIImage imageNamed:@"pieV.png"];
-    }
-    // subtitle
-    NSString* setWord;
-    if (numberOfSets > 1) {
-        setWord = @"sets";
-    } else {
-        setWord = @"set";
-    }
-    if ((int)totalWeight == totalWeight) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
-    } else {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.1f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
-    }
-    
-    
-//    NSLog(@"%@", currentExercise.name);
-//    NSLog(@"1- %@", _exercises);
-    
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -471,7 +495,10 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 }
 
 - (IBAction)noteButtonPressed:(UIBarButtonItem *)sender {
-    // add or change note
+    // Select all in note
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [((BFWorkoutNoteCell*)[_tableView cellForRowAtIndexPath:indexPath]).textView selectAll:self];
+    [((BFWorkoutNoteCell*)[_tableView cellForRowAtIndexPath:indexPath]).textView becomeFirstResponder];
     
 }
 
@@ -569,6 +596,8 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
             [BFWorkoutList setLastDate:[NSDate date] forWorkoutAtIndex:wIndex];
             // Store in history
             // ...
+            
+            
             
             // back to home screen
             [self.navigationController popToRootViewControllerAnimated:YES];

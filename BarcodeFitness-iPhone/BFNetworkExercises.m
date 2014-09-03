@@ -104,7 +104,7 @@ static NSString *baseUrlString = @"http://dev.m.gatech.edu/d/bedmonds3/api/barco
 +(BFWorkout *)loadWorkoutFromJSON:(NSDictionary *)jsonWorkout {
     BFWorkout *workout = [BFWorkout workoutWithID:[jsonWorkout objectForKey:@"workout_id"] andDate:[jsonWorkout objectForKey:@"start_time"]];
     for (NSDictionary *jsonExercise in [jsonWorkout objectForKey:@"data"]) {
-        BFExercise *exercise = [[BFExercise alloc] initWithName:[jsonExercise objectForKey:@"exercise_name"] andCompagny:@"company"];
+        BFExercise *exercise = [[BFExercise alloc] initWithName:[jsonExercise objectForKey:@"exercise_name"] qrCode: [jsonExercise objectForKey:@"qr_code"] andCompagny:[jsonExercise objectForKey:@"company"]];
         exercise.exerciseId = [jsonExercise objectForKey:@"exercise_id"];
         //TODO: add loading of exercise data.
     }

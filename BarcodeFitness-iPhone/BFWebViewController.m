@@ -31,13 +31,17 @@
     // Do any additional setup after loading the view.
     _webView.delegate = self;
     
-    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    if ([_parentIdentifier isEqualToString:@"More"]) {
+        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    } else {
+        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    }
     [_spinner startAnimating];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
     
-    //1
-    NSString *urlString = @"http://www.crc.gatech.edu/content/556/crc-hours-of-operation";
-    
+//    //1
+//    NSString *urlString = @"http://www.crc.gatech.edu/content/556/crc-hours-of-operation";
+//    
 //    //2
 //    NSURL *url = [NSURL URLWithString:urlString];
 //    
@@ -58,7 +62,7 @@
 //         }
 //     }];
     
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: [NSURL URLWithString: urlString] cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 3.0];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL: [NSURL URLWithString: _urlString] cachePolicy: NSURLRequestUseProtocolCachePolicy timeoutInterval: 3.0];
     [self.webView loadRequest: request];
 
     
@@ -67,7 +71,7 @@
 
 - (void)cancelWeb
 {
-    NSLog(@"didn't finish loading within 3 sec");
+    NSLog(@"didn't finish loading within 5 sec");
     // do anything error
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't load this page :("
                                                     message:@"You must be connected to the internet to load this page."
@@ -87,7 +91,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     // webView connected
-    _timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cancelWeb) userInfo:nil repeats:NO];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(cancelWeb) userInfo:nil repeats:NO];
 }
 
 - (void)didReceiveMemoryWarning

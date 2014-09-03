@@ -36,7 +36,7 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
 }
 
 + (NSMutableDictionary*) exerciseRepresentationFromExercise:(BFExercise *)exercise {
-    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", exercise.company, @"company", [self setsRepresentationFromSets:exercise.sets], @"sets", nil];
+    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", exercise.qrCode, @"qrCode", exercise.company, @"company", [self setsRepresentationFromSets:exercise.sets], @"sets", nil];
     // description done at rendering
     
     return exerciseRepresentation;
@@ -88,7 +88,7 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
         
         // populate level 2
         for (NSDictionary * exerciseRepresentation in [workoutRepresentation objectForKey:@"exercises"]) {
-            exercise = [[BFExercise alloc] initWithName:[exerciseRepresentation objectForKey:@"name"] andCompagny:[exerciseRepresentation objectForKey:@"company"]];
+            exercise = [[BFExercise alloc] initWithName:[exerciseRepresentation objectForKey:@"name"]  qrCode: [exerciseRepresentation objectForKey:@"qrCode"] andCompagny:[exerciseRepresentation objectForKey:@"company"]];
             
             // populate level 3
             int setNumber = 0;
@@ -115,6 +115,14 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
     [[workoutTemplatesRepresentation objectAtIndex: index] setObject:name forKey:@"name"];
     [self saveToStandardUserDefaults];
 }
+
+// + (void)setWorkoutImage: (UIImage *) image atIndex: (int) index { 
+
++(void)setWorkoutNote: (NSString *) note atIndex: (int) index {
+    [[workoutTemplatesRepresentation objectAtIndex: index] setObject:note forKey:@"note"];
+    [self saveToStandardUserDefaults];
+}
+
 
 +(void)addObject:(BFWorkout *)workout {
     [workoutTemplatesRepresentation addObject:[self workoutRepresentationFromWorkout:workout]];

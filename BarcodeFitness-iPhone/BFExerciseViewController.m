@@ -15,7 +15,7 @@
 #import "BFChooseViewController.h"
 #import "BFWorkoutViewController.h"
 #import "BFExerciseTimerCell.h"
-
+#import "BFWebViewController.h"
 
 
 @interface BFExerciseViewController ()
@@ -368,18 +368,18 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    // Get the new view controller using [segue destinationViewController].
-//    // Pass the selected object to the new view controller.
-//    if ([segue.identifier isEqualToString:@""]){
-//
-//        
-//    } else if ([segue.identifier isEqualToString:@""]) {
-//
-//    }
-//    
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"videoSegue"]){
+        BFWebViewController *destViewController = segue.destinationViewController;
+        destViewController.urlString = ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).qrCode;
+//        NSLog(@"%@", ((BFExercise*)[_exercises objectAtIndex:_currentExerciseNumber-1]).qrCode);
+        destViewController.parentIdentifier = @"Exercise";
+    }
+    
+}
 
 
 
@@ -432,7 +432,7 @@
 }
 
 - (IBAction)youtubeButtonPressed:(UIBarButtonItem *)sender {
-    
+    [self performSegueWithIdentifier:@"videoSegue" sender:self];
     
 }
 

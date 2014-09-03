@@ -8,6 +8,8 @@
 
 #import "BFWelcomeViewController.h"
 #import "BFChooseViewController.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @interface BFWelcomeViewController ()
 // Images
@@ -68,7 +70,7 @@
     }
     
     // Register to a notification UIApplicationWillEnterForegroundNotification to force animation to restart
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fadeButtonImages)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(animateButtonImages)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
     _activeButtom = 0;
     
@@ -78,9 +80,10 @@
     [_workoutButton addTarget:self action:@selector(workoutButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
     [_logoButton addTarget:self action:@selector(logoButtonTouched) forControlEvents:UIControlEventTouchDown];
     [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
-    [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
-//    [_scanButton addTarget:self action:@selector(fadeLabelImages2) forControlEvents:UIControlEventTouchDown];
-//    [_performanceHistoryButton addTarget:self action:@selector(fadeLabelImages3) forControlEvents:UIControlEventTouchDown];
+    [_scanButton addTarget:self action:@selector(scanButtonTouched) forControlEvents:UIControlEventTouchDown];
+    [_scanButton addTarget:self action:@selector(scanButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
+    [_performanceHistoryButton addTarget:self action:@selector(performanceHistoryButtonTouched) forControlEvents:UIControlEventTouchDown];
+    [_performanceHistoryButton addTarget:self action:@selector(performanceHistoryButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
     // add gesture recognizers to title
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(whiteStatusBar)];
     longPress.delegate = self;
@@ -93,15 +96,19 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self animateButtonImages];
     _athleteImage.highlighted = NO;
     _scanButton.highlighted = NO;
     _performanceHistoryButton.highlighted = NO;
-    _logoButton.highlighted = NO;
+    _logoImage.highlighted = NO;
     [self.navigationController setNavigationBarHidden: YES animated:YES];
     // Status bar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
+}
+
+-  (void) viewDidAppear:(BOOL)animated {
+    _activeButtom = 0;
+    [self fadeButtonImages];
 }
 
 - (void) whiteStatusBar {
@@ -121,26 +128,15 @@
 
 
 - (void) fadeButtonImages {
-    [UIView animateWithDuration:3.0
+    [_athleteImage setAlpha:1.0];
+    [_scanImage setAlpha:1.0];
+    [_performanceHistoryImage setAlpha:1.0];
+    [UIView animateWithDuration:2.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-                         switch (_activeButtom) {
-                             case 0:
-                                 [_athleteImage setAlpha:0.2];
-                                 _selectorLabel.text = @"Start workout";
-                                 break;
-                             case 1:
-                                 [_scanImage setAlpha:0.2];
-                                 _selectorLabel.text = @"Scan";
-                                 break;
-                             case 2:
-                                 [_performanceHistoryImage setAlpha:0.2];
-                                 _selectorLabel.text = @"Performance history";
-                                 break;
-                             default:
-                                 break;
-                         }
+                         [_selectorLabel setAlpha:0.0];
+                         [_athleteImage setAlpha:0.5];
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -150,96 +146,88 @@
 }
 
 - (void) animateButtonImages {
-    switch (_activeButtom) {
-        case 0:
-            [_athleteImage setAlpha:0.2];
-            break;
-        case 1:
-            [_scanImage setAlpha:0.2];
-            break;
-        case 2:
-            [_performanceHistoryImage setAlpha:0.2];
-            break;
-        default:
-            break;
-    }
-    [UIView animateWithDuration:3.0
+    [_selectorLabel setAlpha:0.0];
+    [UIView animateWithDuration:0.1
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-                         [_athleteImage setAlpha:1.0];
                          switch (_activeButtom) {
                              case 0:
+                                 _athleteImage.highlighted = YES;
                                  _selectorLabel.text = @"Start workout";
-                                 _activeButtom = 1;
                                  break;
                              case 1:
+                                 _scanImage.highlighted = YES;
                                  _selectorLabel.text = @"Scan";
-                                 _activeButtom = 2;
                                  break;
                              case 2:
+                                 _performanceHistoryImage.highlighted = YES;
                                  _selectorLabel.text = @"Performance history";
-                                 _activeButtom = 0;
                                  break;
                              default:
                                  break;
                          }
+                         [_selectorLabel setAlpha:1.0];
                      }
                      completion:^(BOOL finished) {
-//                         if (finished) {
-                             [self fadeLabelImages];
-//                         }
+                         if (finished) {
+                             [self animateLabelImages];
+                         }
+                     }];
+}
+
+- (void) animateLabelImages {
+    _athleteImage.highlighted = NO;
+    _performanceHistoryImage.highlighted = NO;
+    _scanImage.highlighted = NO;
+    [_athleteImage setAlpha:1.0];
+    [_scanImage setAlpha:1.0];
+    [_performanceHistoryImage setAlpha:1.0];
+
+
+    [UIView animateWithDuration:2.0
+                          delay:2.0
+                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^(void) {
+                         int y;
+                         switch (_activeButtom) {
+                             case 0:
+                                 _selectorLabel.text = @"Start workout";
+                                 y = 60;
+                                 _activeButtom = 1;
+                                 [_scanImage setAlpha:0.5];
+                                 break;
+                             case 1:
+                                 _selectorLabel.text = @"Scan";
+                                 y = 230;
+                                 _activeButtom = 2;
+                                 [_performanceHistoryImage setAlpha:0.5];
+                                 break;
+                             case 2:
+                                 _selectorLabel.text = @"Performance history";
+                                 y = 145;
+                                 _activeButtom = 0;
+                                 [_athleteImage setAlpha:0.5];
+                                 break;
+                             default:
+                                 break;
+                         }
+                         
+                         // move arrow
+                         CGRect frame = _arrowView.frame;
+                         frame.origin.y = 465;
+                         frame.origin.x = y;
+                         _arrowView.frame = frame;
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         if (finished) {
+                             [self animateButtonImages];
+                         }
                      }];
 
 }
 
-- (void) fadeLabelImages {
-//    [_workoutLabelImage setAlpha:1.0];
-//    [_performanceHistoryLabelImage setAlpha:1.0];
-//    [_scanLabelImage setAlpha:1.0];
-    [UIView animateWithDuration:10.0
-                          delay:0.0
-                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-                     animations:^(void) {
-//                         [_workoutLabelImage setAlpha:0.0];
-//                         [_performanceHistoryLabelImage setAlpha:0.0];
-//                         [_scanLabelImage setAlpha:0.0];
-                     }
-                     completion:nil];
-}
-
-//- (void) fadeLabelImages1 {
-//    [_workoutLabelImage setAlpha:1.0];
-//    [UIView animateWithDuration:4.0
-//                          delay:0.0
-//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-//                     animations:^(void) {
-//                         [_workoutLabelImage setAlpha:0.0];
-//                     }
-//                     completion:nil];
-//}
-//
-//- (void) fadeLabelImages2 {
-//    [_scanLabelImage setAlpha:1.0];
-//    [UIView animateWithDuration:4.0
-//                          delay:0.0
-//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-//                     animations:^(void) {
-//                         [_scanLabelImage setAlpha:0.0];
-//                     }
-//                     completion:nil];
-//}
-//
-//- (void) fadeLabelImages3 {
-//    [_performanceHistoryLabelImage setAlpha:1.0];
-//    [UIView animateWithDuration:4.0
-//                          delay:0.0
-//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-//                     animations:^(void) {
-//                         [_performanceHistoryLabelImage setAlpha:0.0];
-//                     }
-//                     completion:nil];
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -269,12 +257,10 @@
 
 
 - (IBAction)performanceHistory:(UIButton *)sender {
-    _performanceHistoryImage.highlighted = !_performanceHistoryImage.highlighted;
     
 }
 
 - (IBAction)scanButtonPressed:(UIButton *)sender {
-    _scanImage.highlighted = !_scanImage.highlighted;
     
 }
 
@@ -319,13 +305,26 @@
 
 - (void) logoButtonTouched {
     _logoImage.highlighted = YES;
-    
-    
 }
 
 - (void) logoButtonTouchedUpOutside {
     _logoImage.highlighted = NO;
-    
+}
+
+- (void) scanButtonTouched {
+    _scanImage.highlighted = YES;
+}
+
+- (void) scanButtonTouchedUpOutside {
+    _scanImage.highlighted = NO;
+}
+
+- (void) performanceHistoryButtonTouched {
+    _performanceHistoryImage.highlighted = YES;
+}
+
+- (void) performanceHistoryButtonTouchedUpOutside {
+    _performanceHistoryImage.highlighted = NO;
 }
 
 

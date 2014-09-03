@@ -22,7 +22,7 @@
 @property (nonatomic) int row;
 
 
-- (id)initWithName:(NSString *)name andCompagny: (NSString *)compagny;
+- (id)initWithName:(NSString *)name  qrCode: (NSString *)qrCode andCompagny: (NSString *)compagny;
 
 -(void)print;
 +(id)exerciseWithName:(NSString *)name exerciseId:(NSString *)exerciseId qrCode:(NSString *)qrCode andCompany:(NSString *)company;

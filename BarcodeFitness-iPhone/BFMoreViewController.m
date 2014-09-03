@@ -7,6 +7,8 @@
 //
 
 #import "BFMoreViewController.h"
+#import "BFWebViewController.h"
+
 
 @interface BFMoreViewController ()
 
@@ -84,6 +86,11 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"webSegue"]){
+        BFWebViewController *destViewController = segue.destinationViewController;
+        destViewController.urlString = @"http://www.crc.gatech.edu/content/556/crc-hours-of-operation";
+        destViewController.parentIdentifier = @"More"; 
+    }
 
     
 }

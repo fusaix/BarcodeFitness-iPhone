@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface BFWebViewController : UIViewController <UIWebViewDelegate>
-
+@property NSString *urlString;
+@property NSString *parentIdentifier;
 @end

@@ -30,10 +30,11 @@
     return exercise;
 }
 
-- (id)initWithName:(NSString *)name andCompagny: (NSString *)compagny {
+- (id)initWithName:(NSString *)name qrCode: (NSString *)qrCode andCompagny: (NSString *)compagny {
     self = [super init];
     if (self) {
         self.name = name;
+        self.qrCode = qrCode; 
         self.company = compagny;
         self.sets = [[NSMutableArray alloc] init]; // nothing at creation
     }

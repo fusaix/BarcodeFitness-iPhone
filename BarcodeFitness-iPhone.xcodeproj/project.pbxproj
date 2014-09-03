@@ -121,7 +121,6 @@
 		A9E6C30419B675FE00614FE0 /* LogoB.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30019B675FE00614FE0 /* LogoB.png */; };
 		A9E6C30519B675FE00614FE0 /* LogoN.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30119B675FE00614FE0 /* LogoN.png */; };
 		A9E6C30719B675FE00614FE0 /* LogoOB.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30319B675FE00614FE0 /* LogoOB.png */; };
-		A9E6C31719B6AC2400614FE0 /* Fleche40.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C31619B6AC2400614FE0 /* Fleche40.png */; };
 		A9F83DE019AFF62B00183D56 /* BFBodyExercisesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F83DDF19AFF62B00183D56 /* BFBodyExercisesViewController.m */; };
 		A9F83DE319AFF65A00183D56 /* BFMagicCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F83DE219AFF65A00183D56 /* BFMagicCreatorViewController.m */; };
 		A9F83DE619B03A1B00183D56 /* BFWorkoutNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F83DE519B03A1B00183D56 /* BFWorkoutNoteCell.m */; };
@@ -273,7 +272,6 @@
 		A9E6C30019B675FE00614FE0 /* LogoB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoB.png; sourceTree = "<group>"; };
 		A9E6C30119B675FE00614FE0 /* LogoN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoN.png; sourceTree = "<group>"; };
 		A9E6C30319B675FE00614FE0 /* LogoOB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoOB.png; sourceTree = "<group>"; };
-		A9E6C31619B6AC2400614FE0 /* Fleche40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fleche40.png; sourceTree = "<group>"; };
 		A9F83DDE19AFF62B00183D56 /* BFBodyExercisesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFBodyExercisesViewController.h; sourceTree = "<group>"; };
 		A9F83DDF19AFF62B00183D56 /* BFBodyExercisesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFBodyExercisesViewController.m; sourceTree = "<group>"; };
 		A9F83DE119AFF65A00183D56 /* BFMagicCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFMagicCreatorViewController.h; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 		A93B25AE19954CB5002189A0 /* Images_sf */ = {
 			isa = PBXGroup;
 			children = (
-				A9E6C31619B6AC2400614FE0 /* Fleche40.png */,
 				A914445619B1E211004D85F1 /* cancel512.png */,
 				A9B0E82B19A3177F0026FF2E /* BarcodeFitnessIconRounded.png */,
 				A93B25BF19954FB8002189A0 /* BarcodeFitnessIcon120_sf.png */,
@@ -702,7 +699,6 @@
 				A906460719A2CCAE0085C21A /* pie11.png in Resources */,
 				A906460219A2CCAE0085C21A /* pie6.png in Resources */,
 				A906460419A2CCAE0085C21A /* pie8.png in Resources */,
-				A9E6C31719B6AC2400614FE0 /* Fleche40.png in Resources */,
 				A93B260919985CB8002189A0 /* AthleteHD_sf.png in Resources */,
 				A914445919B1E25A004D85F1 /* Images.xcassets in Resources */,
 				A93B261B19998018002189A0 /* AthleteHD_sfR.png in Resources */,
