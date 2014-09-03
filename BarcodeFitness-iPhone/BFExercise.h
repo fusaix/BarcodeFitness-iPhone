@@ -10,19 +10,22 @@
 
 @interface BFExercise : NSObject
 @property (nonatomic, strong) NSString *name;
-//@property (nonatomic, strong) NSString *description; // subtitle of cells
 @property (nonatomic, strong) NSDate *lastDate;
 @property (nonatomic) int duration;
-//@property (nonatomic) float density;
 
 @property (nonatomic, strong) NSMutableArray * sets;
 
 @property (nonatomic, strong) NSString *exerciseId;
 @property (nonatomic, strong) NSString *qrCode;
+@property (nonatomic, strong) NSString *company;
 
-- (id) initWithName: (NSString*) name;
+@property (nonatomic) int row;
+
+
+- (id)initWithName:(NSString *)name andCompagny: (NSString *)compagny;
 
 -(void)print;
-+(id)exerciseWithName:(NSString *)name exerciseId:(NSString *)exerciseId qrCode:(NSString *)qrCode;
++(id)exerciseWithName:(NSString *)name exerciseId:(NSString *)exerciseId qrCode:(NSString *)qrCode andCompany:(NSString *)company;
+
 
 @end

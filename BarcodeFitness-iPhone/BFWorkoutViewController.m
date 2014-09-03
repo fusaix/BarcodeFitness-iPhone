@@ -40,6 +40,8 @@
 static int currentRestTime;
 static int restTime;
 static bool resting;
+static int mode; // 0 = Auto, 1 = Manu, 2 = Off
+
 
 @synthesize finishFlag = _finishFlag;
 
@@ -52,7 +54,7 @@ static bool resting;
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {    
     // refresh the templates
     [self refreshTemplates];
 //    NSLog(@"viewWillAppear: %@",_exercises);
@@ -129,7 +131,14 @@ static bool resting;
     if(!_restTimeEndedNotification) {
         _restTimeEndedNotification = [[UILocalNotification alloc] init];
     }
-    restTime = 10; // default (to be change by loading from persitent data)
+    restTime = [[[NSUserDefaults standardUserDefaults] objectForKey:kRestTime] intValue];
+    if (restTime == 0) {
+        restTime = 5; // default minimum (Or can we put 42? Because 42 is... :D)
+    }
+    mode = [[[NSUserDefaults standardUserDefaults] objectForKey:kMode] intValue];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kMode] == nil) {
+        mode = 1; // default: Manual
+    }
     currentRestTime = restTime;
     _restTimeEndedNotification.alertBody = [NSString stringWithFormat:@"%@ rest time is finished!", [BFWorkoutViewController timeFormatted2:restTime]];
     _restTimeEndedNotification.soundName = UILocalNotificationDefaultSoundName; // see http://iphonedevwiki.net/index.php/AudioServices
@@ -137,7 +146,7 @@ static bool resting;
     
     [BFWorkoutViewController setResting:NO];
     _finishFlag = NO;
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -148,6 +157,7 @@ static bool resting;
 
 #pragma mark - Timer
 
+// timer action
 - (void) startWorkout {
     _timeSpentInWorkout = [[NSDate date] timeIntervalSinceDate:_workoutBeginTime];
     self.title = [BFWorkoutViewController timeFormatted:_timeSpentInWorkout];
@@ -196,12 +206,28 @@ static bool resting;
     restTime = answer;
 }
 
++ (void) saveRestTime {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:restTime] forKey:kRestTime];
+}
+
 + (int) currentRestTime {
     return currentRestTime;
 }
 
 + (void) setCurrentRestTime: (int) answer {
     currentRestTime = answer; 
+}
+
++ (int) mode {
+    return mode;
+}
+
++ (void) setMode: (int) answer {
+    mode = answer;
+}
+
++ (void) saveMode {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:mode] forKey:kMode];
 }
 
 
@@ -277,9 +303,9 @@ static bool resting;
         setWord = @"set";
     }
     if ((int)totalWeight == totalWeight) {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.f%% of %.f %@, total weight: %.f lb", 100*pourcent,numberOfSets, setWord, totalWeight];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
     } else {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.f%% of %.f %@, total weight: %.1f lb", 100*pourcent,numberOfSets, setWord, totalWeight];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.1f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
     }
     
     
@@ -329,6 +355,8 @@ static bool resting;
                          completion:nil];
         // Delete to workoutTemplatesRepresentation
         [BFWorkoutList removeExerciseAtIndex:(int)indexPath.row fromWorkoutAtIndex:(int)_workout.row];
+        // Update weight data
+        [BFWorkoutList computeWeightForWorkoutAtIndex:(int)_workout.row];
         // refresh the templates
         [self refreshTemplates];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -443,12 +471,14 @@ static bool resting;
 }
 
 - (IBAction)noteButtonPressed:(UIBarButtonItem *)sender {
+    // add or change note
+    
 }
 
 - (IBAction)finishButtonPressed:(UIBarButtonItem *)sender {
     _finishFlag = NO;
     // Update weight data
-    float totalWeight = [BFWorkoutList computeWeightForWorkoutAtIndex:(int)_workout.row]; // this is a compusory pass point for getting out
+    float totalWeight = [BFWorkoutList computeWeightForWorkoutAtIndex:(int)_workout.row]; // this is a compulsory pass point for getting out
     // texts
     float totalDoneWeight = 0;
     for (int eIndex = 0; eIndex < _exercises.count; eIndex++) {
@@ -461,32 +491,50 @@ static bool resting;
     NSString * title;
     NSString * message;
     _duration = [[NSDate date] timeIntervalSinceDate:_workoutBeginTime];
-    if (totalDoneWeight == totalWeight) {
-        if ((int)totalWeight == totalWeight) {
-            title = [NSString stringWithFormat:@"You have finished your workout! Total lifted: %.f lb. Duration: %@", totalWeight, [BFWorkoutViewController timeFormatted3:_duration]];
-        } else {
-           title = [NSString stringWithFormat:@"You have finished your workout! Total lifted: %.1f lb. Duration: %@", totalWeight, [BFWorkoutViewController timeFormatted3:_duration]];
-        }
-        message = @"Your performance will be saved in history.";
+    if(totalWeight == 0) {
+        // Empty workout
+        [self empltyWorkoutCase];
     } else {
-        if ((int)totalWeight == totalWeight && (int)totalDoneWeight == totalDoneWeight) {
-            title = [NSString stringWithFormat:@"You have only lifted %.f lb over %.f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
-        } else if ((int)totalWeight == totalWeight) {
-            title = [NSString stringWithFormat:@"You have only lifted %.1f lb over %.f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
-        }  else if ((int)totalDoneWeight == totalDoneWeight) {
-            title = [NSString stringWithFormat:@"You have only lifted %.f lb over %.1f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+        // None emplty workout cases
+        if (totalDoneWeight == totalWeight) {
+            if ((int)totalWeight == totalWeight) {
+                title = [NSString stringWithFormat:@"You have finished your workout! Total lifted: %.f lb. Duration: %@", totalWeight, [BFWorkoutViewController timeFormatted3:_duration]];
+            } else {
+                title = [NSString stringWithFormat:@"You have finished your workout! Total lifted: %.1f lb. Duration: %@", totalWeight, [BFWorkoutViewController timeFormatted3:_duration]];
+            }
+            message = @"Your performance will be saved in history.";
         } else {
-            title = [NSString stringWithFormat:@"You have only lifted %.1f lb over %.1f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+            if ((int)totalWeight == totalWeight && (int)totalDoneWeight == totalDoneWeight) {
+                title = [NSString stringWithFormat:@"You have only lifted %.f lb over %.f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+            } else if ((int)totalWeight == totalWeight) {
+                title = [NSString stringWithFormat:@"You have only lifted %.1f lb over %.f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+            }  else if ((int)totalDoneWeight == totalDoneWeight) {
+                title = [NSString stringWithFormat:@"You have only lifted %.f lb over %.1f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+            } else {
+                title = [NSString stringWithFormat:@"You have only lifted %.1f lb over %.1f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
+            }
+            message = @"Your performance will be saved in history.";
         }
-        message = @"Your performance will be saved in history.";
+        // Confirmation
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Finish",nil];
+        alert.tag = 2;
+        [alert show];
     }
+        
+}
+
+- (void) empltyWorkoutCase {
     // Confirmation
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Your workout is empty. Total weight is 0 lb!"
+                                                    message:@"Please add weight using \"Add exercise\" to create new exercises in your workout, and \"Add set\" to create sets in each exercise. In an exercise, you can touch a set record text to adjust reps and weights."
                                                    delegate:self
                                           cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Finish",nil];
-    alert.tag = 2;
+                                          otherButtonTitles:nil];
+    // No second button, no action
     [alert show];
 }
 
@@ -497,7 +545,7 @@ static bool resting;
         // preserve _workout.row before refreshing 
         int wIndex = (int)_workout.row;
         // Update weight data
-        [BFWorkoutList computeWeightForWorkoutAtIndex:wIndex]; // this is a compusory pass point for getting out
+//        [BFWorkoutList computeWeightForWorkoutAtIndex:wIndex]; // this is a compulsory pass point for getting out (this line is not compulsory, just sanity check)
         // refresh templates reload specifics
         [self refreshTemplates];
         [self reloadWorkoutSpecifics];

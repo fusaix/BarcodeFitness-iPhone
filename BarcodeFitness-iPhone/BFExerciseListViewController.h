@@ -10,7 +10,7 @@
 
 @class BFWorkoutViewController;
 
-@interface BFExerciseListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface BFExerciseListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate>
 @property (nonatomic, strong) NSMutableArray * exercises;
 @property (nonatomic, strong) BFWorkoutViewController * exerciseListViewController;
 @property (nonatomic) int wIndex;

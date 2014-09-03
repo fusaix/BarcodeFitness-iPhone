@@ -90,6 +90,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // Configure back button
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    
     // Right side navigation shortcuts buttons
     _upButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_up"] style:UIBarButtonItemStylePlain target:self action:@selector(upButtonPressed)];
     _downButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"arrow_down"] style:UIBarButtonItemStylePlain target:self action:@selector(downButtonPressed)];
@@ -119,7 +122,6 @@
     
     // Configure button colors
     _toolBar.tintColor = [UIColor orangeColor];
-
     
     // Color notes:
     // orange = 234 129 50
@@ -175,9 +177,7 @@
         BFExerciseTimerCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"timerCell" forIndexPath:indexPath];
         
         cell.exerciseListViewController = _exerciseListViewController; // for cell content auto update
-        
-//        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.detailTextLabel.textColor = [UIColor whiteColor];
+
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
         cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Black"]];
@@ -232,18 +232,13 @@
     
     if (indexPath.section == 0) {
         if (![BFWorkoutViewController resting]) {
-            _exerciseListViewController.timerBeginTime = [NSDate date];            
-            // (re)-schedule timer notification
-            _exerciseListViewController.restTimeEndedNotification.fireDate = [[NSDate date] dateByAddingTimeInterval:[BFWorkoutViewController currentRestTime]];
-            [[UIApplication sharedApplication] scheduleLocalNotification:_exerciseListViewController.restTimeEndedNotification];
-            // change status
-            [BFWorkoutViewController setResting:YES];
-            // make sound
-            AudioServicesPlaySystemSound(1113); // see http://iphonedevwiki.net/index.php/AudioServices
+            // Fire Timer
+            // **********
+            [self fireTimer];
         } else {
             // Cancel notification
             [[UIApplication sharedApplication] cancelLocalNotification:_exerciseListViewController.restTimeEndedNotification];
-            
+            // change status
             [BFWorkoutViewController setResting:NO];
             // make sound
             AudioServicesPlaySystemSound(1112); // see http://iphonedevwiki.net/index.php/AudioServices
@@ -251,7 +246,7 @@
     } else {
         // change Set status
         // + change status is persistent data
-        if (((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone) {
+        if (((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone) { // Cancel done
             ((BFSet *)[_sets objectAtIndex:indexPath.row]).isDone = NO;
             [BFWorkoutList setIsDone:NO atIndex:(int)indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
         } else {
@@ -259,8 +254,13 @@
             [BFWorkoutList setIsDone:YES atIndex:(int)indexPath.row toExerciseAtIndex:_currentExerciseNumber-1 inWorkoutAtIndex:_wIndex];
             //        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             AudioServicesPlaySystemSound(1110); // see http://iphonedevwiki.net/index.php/AudioServices
-            // Check if all sets are done
-            [self checkIfWorkoutFinished];
+            // Check if all sets are done. And if not and in mode Auto, then fire timer
+            if(![self checkIfWorkoutFinished] && [BFWorkoutViewController mode] == 0) {
+                // Cancel previous notification
+                [[UIApplication sharedApplication] cancelLocalNotification:_exerciseListViewController.restTimeEndedNotification];
+                // Fire Timer
+                [self fireTimer];
+            }
         }
     }
     
@@ -311,6 +311,8 @@
                          }];
         // Delete to workoutTemplatesRepresentation
         [BFWorkoutList removeSetAtIndex:(int)indexPath.row fromExerciseAtIndex:eIndex inWorkoutAtIndex:_wIndex];
+        // Update weight data
+        [BFWorkoutList computeWeightForWorkoutAtIndex:_wIndex];
         // refresh the templates
         [self refreshTemplates];
         
@@ -409,6 +411,8 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     // Add to workoutTemplatesRepresentation
     [BFWorkoutList addSet:newSet atIndex:(int)indexPath.row toExerciseAtIndex:eIndex inWorkoutAtIndex:_wIndex];
+    // Update weight data
+    [BFWorkoutList computeWeightForWorkoutAtIndex:_wIndex];
 }
 
 - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
@@ -454,7 +458,7 @@
 }
 
 
-- (void) checkIfWorkoutFinished {
+- (BOOL) checkIfWorkoutFinished {
     BOOL allDone = YES;
     for (int eIndex = 0; eIndex < _exercises.count; eIndex++) {
         for (BFSet * set in ((BFExercise*)[_exercises objectAtIndex:eIndex]).sets) {
@@ -473,8 +477,20 @@
         // go back to list
         [self.navigationController popViewControllerAnimated:YES];
     }
-
+    return allDone;
 }
-
+- (void) fireTimer {
+    _exerciseListViewController.timerBeginTime = [NSDate date];
+    // (re)-schedule timer notification
+    if ([BFWorkoutViewController mode] != 2) { // if non Off
+        _exerciseListViewController.restTimeEndedNotification.fireDate = nil;
+        _exerciseListViewController.restTimeEndedNotification.fireDate = [[NSDate date] dateByAddingTimeInterval:[BFWorkoutViewController restTime]];
+        [[UIApplication sharedApplication] scheduleLocalNotification:_exerciseListViewController.restTimeEndedNotification];
+    }
+    // change status
+    [BFWorkoutViewController setResting:YES];
+    // make sound
+    AudioServicesPlaySystemSound(1113); // see http://iphonedevwiki.net/index.php/AudioServices
+}
 
 @end

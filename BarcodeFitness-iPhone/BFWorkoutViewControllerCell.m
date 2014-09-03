@@ -33,11 +33,11 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(8,8,35,35);
+    self.imageView.frame = CGRectMake(15,8,35,35);
     float limgW =  self.imageView.image.size.width;
     if(limgW > 0) {
-        self.textLabel.frame = CGRectMake(55,self.textLabel.frame.origin.y,self.textLabel.frame.size.width,self.textLabel.frame.size.height);
-        self.detailTextLabel.frame = CGRectMake(55,self.detailTextLabel.frame.origin.y,230,self.detailTextLabel.frame.size.height);
+        self.textLabel.frame = CGRectMake(65,self.textLabel.frame.origin.y,self.textLabel.frame.size.width,self.textLabel.frame.size.height);
+        self.detailTextLabel.frame = CGRectMake(65,self.detailTextLabel.frame.origin.y,220,self.detailTextLabel.frame.size.height);
     }
 }
 

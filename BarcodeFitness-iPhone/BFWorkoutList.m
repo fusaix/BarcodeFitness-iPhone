@@ -36,7 +36,7 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
 }
 
 + (NSMutableDictionary*) exerciseRepresentationFromExercise:(BFExercise *)exercise {
-    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", [self setsRepresentationFromSets:exercise.sets], @"sets", nil];
+    NSMutableDictionary * exerciseRepresentation = [[NSMutableDictionary alloc] initWithObjectsAndKeys: exercise.name, @"name", exercise.company, @"company", [self setsRepresentationFromSets:exercise.sets], @"sets", nil];
     // description done at rendering
     
     return exerciseRepresentation;
@@ -88,7 +88,7 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
         
         // populate level 2
         for (NSDictionary * exerciseRepresentation in [workoutRepresentation objectForKey:@"exercises"]) {
-            exercise = [[BFExercise alloc] initWithName:[exerciseRepresentation objectForKey:@"name"]];
+            exercise = [[BFExercise alloc] initWithName:[exerciseRepresentation objectForKey:@"name"] andCompagny:[exerciseRepresentation objectForKey:@"company"]];
             
             // populate level 3
             int setNumber = 0;

@@ -80,16 +80,20 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    // Get today's date for day of week
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEEE"];
+    
     _nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    int number = (int) _workoutListViewController.workoutTemplates.count; //number of existing workouts
+//    int number = (int) _workoutListViewController.workoutTemplates.count; //number of existing workouts
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
         self.navigationItem.title = @"Add workout";
-        self.nameField.text = [NSString stringWithFormat: @"Workout #%i", number+1];
+        self.nameField.text = [NSString stringWithFormat: @"%@ - ", [dateFormatter stringFromDate:[NSDate date]]];
         self.nameField.textColor = [UIColor grayColor];
     } else {
         self.navigationItem.title = @"Edit workout";
         if ([self.workout.name isEqualToString:@""]) {
-            self.nameField.text = [NSString stringWithFormat: @"Workout #%i", _renameRow+1];
+            self.nameField.text = [NSString stringWithFormat: @"%@ - ", [dateFormatter stringFromDate:[NSDate date]]];
             self.nameField.textColor = [UIColor grayColor];
         } else {
             self.nameField.text = self.workout.name;
@@ -122,7 +126,9 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)iTextField {
-    [iTextField selectAll:self];
+    if ([_segueIdentifier isEqualToString:@"editWorkout"]) { // if edit mode
+        [iTextField selectAll:self]; // Select all field.
+    }
     self.nameField.textColor = [UIColor blackColor];
 
 }

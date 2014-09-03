@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#define kRestTime @"restTime"
+#define kMode @"mode"
 
 @class BFWorkout;
 @class BFExercise;
@@ -19,7 +21,6 @@
 @property (nonatomic, strong) NSMutableArray * exercises;
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;
 
-@property (nonatomic) int mode; // 0 = Auto, 1 = Manu, 2 = Off
 @property (nonatomic, strong) NSDate * workoutBeginTime;
 @property (nonatomic, strong) NSDate * timerBeginTime;
 
@@ -30,9 +31,14 @@
 
 + (int) restTime;
 + (void) setRestTime: (int) answer;
++ (void) saveRestTime; 
 
 + (int) currentRestTime;
 + (void) setCurrentRestTime: (int) answer;
+
++ (int) mode;
++ (void) setMode: (int) answer;
++ (void) saveMode;
 
 + (NSString *)timeFormatted: (int)totalSeconds;
 + (NSString *)timeFormatted2: (int)totalSeconds;

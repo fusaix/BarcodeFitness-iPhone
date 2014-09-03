@@ -61,7 +61,7 @@
 # pragma mark - Badge notification 
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@ rest time is finished!", [self timeFormatted2:[BFWorkoutViewController currentRestTime]]]
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%@ rest time is finished!", [BFWorkoutViewController timeFormatted2:[BFWorkoutViewController currentRestTime]]]
                                                     message:@"Ready for next set?"
                                                    delegate:self
                                           cancelButtonTitle:@"Yes, Sir!"
@@ -84,11 +84,5 @@
     }
 }
 
-- (NSString *)timeFormatted2: (int)totalSeconds {
-    int seconds = totalSeconds % 60;
-    int minutes = (totalSeconds / 60) % 60;
-    
-    return [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
-}
 
 @end

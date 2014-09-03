@@ -28,9 +28,17 @@ static NSArray *allExercisesRepresentation = nil; // jsonArray
     NSMutableArray *allExercises = [NSMutableArray array];
     for (NSDictionary *jsonExercise in allExercisesRepresentation) {
         // do something with object
-        [allExercises addObject: [BFExercise exerciseWithName:[jsonExercise objectForKey:@"name"] exerciseId:[jsonExercise objectForKey:@"id"] qrCode:[jsonExercise objectForKey:@"qr_code"]]];
+        [allExercises addObject: [BFExercise exerciseWithName:[jsonExercise objectForKey:@"name"] exerciseId:[jsonExercise objectForKey:@"id"] qrCode:[jsonExercise objectForKey:@"qr_code"] andCompany:[jsonExercise objectForKey:@"company"]]];
     }
-    return allExercises;
+    
+    // Sort by name
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray;
+    sortedArray = [allExercises sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return sortedArray;
 }
 
 

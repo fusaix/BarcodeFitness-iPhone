@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "accessoryV.png"
+      "filename" : "stopwatch.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "accessoryV@2x.png"
+      "filename" : "stopwatch@2x.png"
     }
   ],
   "info" : {

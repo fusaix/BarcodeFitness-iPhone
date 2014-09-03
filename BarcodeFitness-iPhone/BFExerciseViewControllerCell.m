@@ -235,6 +235,8 @@
             // update in persistent data
             myNumber = [f numberFromString:newWeight];
             [BFWorkoutList setWeight: myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];
+            // Update weight data
+            [BFWorkoutList computeWeightForWorkoutAtIndex:_wIndex];
             break;
         case 2:
             ok = [_okArray objectAtIndex:row];
@@ -244,9 +246,6 @@
             }
             break;
     }
-    
-    
-    
 
 
 }

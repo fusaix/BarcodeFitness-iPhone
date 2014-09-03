@@ -15,7 +15,9 @@
 
 @interface BFExerciseListViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) NSMutableArray *wishList; // list of NSString used as BOOL
+@property (nonatomic, strong) NSMutableArray *filteredExercises;
+@property (nonatomic) int count;
 
 @end
 
@@ -23,6 +25,14 @@
 @synthesize exercises = _exercises;
 @synthesize exerciseListViewController = _exerciseListViewController;
 @synthesize wIndex = _wIndex;
+
+-(NSMutableArray *)filteredExercises
+{
+    if (!_filteredExercises) {
+        _filteredExercises = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _filteredExercises;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,7 +51,18 @@
         _exercises = [[NSMutableArray alloc] initWithArray:[BFExerciseList getAllExercises]];
 
     }
-
+    if (!_wishList) {
+        _wishList = [[NSMutableArray alloc] init];
+        NSString * flag = @"NO";
+        for(int i = 0; i < _exercises.count; i++) {
+            [_wishList addObject:flag];
+        }
+    }
+    // Configure search bar text color
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor blackColor]];
+    
+    // Background color
+//    self.searchDisplayController.searchResultsTableView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.8];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,28 +81,71 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Default exercises";
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if (_count == 0) {
+            return @"No selection yet";
+        } else {
+            return [NSString stringWithFormat:@"%d selected in list", _count];
+        }
+    } else {
+        return @"Default exercises";
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.exercises.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return self.filteredExercises.count;
+    } else {
+        return self.exercises.count;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell" forIndexPath:indexPath];
+    UITableViewCell * cell;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell"];
+//        cell.backgroundColor = [UIColor clearColor];
+    } else {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell" forIndexPath:indexPath];
+    }
     
     // Configure the cell...
     BFExercise * currentExercise;
-    currentExercise = [self.exercises objectAtIndex:indexPath.row];
+    if (tableView == self.searchDisplayController.searchResultsTableView) { // if research mode
+        currentExercise = [self.filteredExercises objectAtIndex:indexPath.row];
+    } else { // else default mode
+        currentExercise = [self.exercises objectAtIndex:indexPath.row];
+    }
     
     cell.textLabel.text = currentExercise.name;
-    UIView *orangeView = [[UIView alloc] init];
-    orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
-    [cell setSelectedBackgroundView:orangeView];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Machine constructor: %@",currentExercise.company];
+    cell.detailTextLabel.textColor = [UIColor grayColor];
+//    UIView *orangeView = [[UIView alloc] init];
+//    orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
+//    [cell setSelectedBackgroundView:orangeView];
+    
+    // checked or unchecked
+    int eIndex;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        eIndex = currentExercise.row;
+    } else {
+        eIndex = indexPath.row;
+    }
+    if ([[_wishList objectAtIndex:eIndex] isEqualToString:@"YES"]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        // Select
+        cell.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
+        cell.textLabel.textColor = [UIColor blackColor];
+    } else if ([[_wishList objectAtIndex:eIndex] isEqualToString:@"NO"]){
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        // Deselect
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [self.navigationController.navigationBar tintColor];
+    }
     
     // cell image
     
@@ -94,14 +158,99 @@
 #pragma mark - Row selected
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Save
-    [self.exerciseListViewController.exercises addObject:[_exercises objectAtIndex:indexPath.row]];
-    // Save to persistent data
-    [BFWorkoutList addExercise: [_exercises objectAtIndex:indexPath.row] toWorkoutAtIndex: _wIndex];
-    // Dismiss
-    [self dismissViewControllerAnimated:YES completion:nil];
-
+    // change flag status
+    if (self.searchDisplayController.active) {
+        // Invoke currentExercise for its "original" row
+        BFExercise *currentExercise = [self.filteredExercises objectAtIndex:indexPath.row];
+        if ([[_wishList objectAtIndex:currentExercise.row] isEqualToString:@"NO"]) {
+            [_wishList replaceObjectAtIndex:currentExercise.row withObject:@"YES"];
+            // make sound
+            AudioServicesPlaySystemSound(1110); // see http://iphonedevwiki.net/index.php/AudioServices
+        } else if ([[_wishList objectAtIndex:currentExercise.row] isEqualToString:@"YES"]) {
+            [_wishList replaceObjectAtIndex:currentExercise.row withObject:@"NO"];
+        }
+        // refresh search result table (tableview reload data for search result table view)
+        self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
+    } else {
+        if ([[_wishList objectAtIndex:indexPath.row] isEqualToString:@"NO"]) {
+            [_wishList replaceObjectAtIndex:indexPath.row withObject:@"YES"];
+            // make sound
+            AudioServicesPlaySystemSound(1110); // see http://iphonedevwiki.net/index.php/AudioServices
+        } else if ([[_wishList objectAtIndex:indexPath.row] isEqualToString:@"YES"]) {
+            [_wishList replaceObjectAtIndex:indexPath.row withObject:@"NO"];
+        }
+    }
+    // count
+    _count = 0;
+    for (int i = 0; i < _exercises.count; i++ ) {
+        if ([[_wishList objectAtIndex:i] isEqualToString:@"YES"]) {
+            _count++;
+        }
+    }
+    if (_count == 0) {
+        self.navigationController.navigationBar.topItem.title = @"Select in list";
+    } else {
+        self.navigationController.navigationBar.topItem.title = [NSString stringWithFormat:@"%d selected in list", _count];
+    }
+    // reload for check and uncheck
+    [_tableView reloadData];
+    
 }
+
+#pragma mark - UISearchDisplayController Delegate Methods
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    // Tells the table data source to reload when text changes
+    [self filterContentForSearchText:searchString];
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    [searchBar setShowsCancelButton:YES animated:YES];
+    // Custom searchBar cancel button
+    UIButton *cancelButton;
+    UIView *topView = searchBar.subviews[0];
+    for (UIView *subView in topView.subviews) {
+        if ([subView isKindOfClass:NSClassFromString(@"UINavigationButton")]) {
+            cancelButton = (UIButton*)subView;
+        }
+    }
+    if (cancelButton) {
+        [cancelButton setTitle:@"End searching" forState:UIControlStateNormal];
+    }
+}
+
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    // make sound
+    AudioServicesPlaySystemSound(1057); // see http://iphonedevwiki.net/index.php/AudioServices
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchDisplayController.searchBar.text = @"";
+    [searchBar resignFirstResponder];
+    //    [self hideSearchBar];
+}
+
+
+#pragma mark - Content Filtering
+
+-(void)filterContentForSearchText:(NSString*)searchText {
+    // Update exercise.row
+    for (int i = 0; i < _exercises.count; i++) {
+        ((BFExercise*)[_exercises objectAtIndex:i]).row = i;
+    }
+    // Remove all objects from the filtered search array
+    [self.filteredExercises removeAllObjects];
+    
+    for (BFExercise *exercise in _exercises) {
+        if ([exercise.name rangeOfString:searchText options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            [self.filteredExercises addObject:exercise];
+        }
+    }
+}
+
 
 /*
 #pragma mark - Navigation
@@ -120,6 +269,18 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
+    for (int i = 0; i < _exercises.count; i++ ) {
+        if ([[_wishList objectAtIndex:i] isEqualToString:@"YES"]) {
+            // Save
+            [self.exerciseListViewController.exercises addObject:[_exercises objectAtIndex:i]];
+            // Save to persistent data
+            [BFWorkoutList addExercise: [_exercises objectAtIndex:i] toWorkoutAtIndex: _wIndex];
+        }
+    }
+    // Dismiss
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 @end

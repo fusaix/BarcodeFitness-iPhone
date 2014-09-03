@@ -10,15 +10,20 @@
 #import "BFWorkoutViewController.h"
 #import "BFWorkoutList.h"
 #import "BFExercise.h"
+#import "BFExerciseList.h"
 
 
 @interface BFScanViewController ()
 @property (strong, nonatomic) IBOutlet UIView *viewPreview;
+@property (strong, nonatomic) IBOutlet UIImageView *failSignImage;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @property (nonatomic, strong) NSDictionary* parsedExerciseData;
 @property (nonatomic) BOOL success;
+@property (nonatomic) BOOL failure;
+@property (nonatomic, strong) NSArray* exercises;
+
 
 @end
 
@@ -47,9 +52,15 @@
     // Load sound
     [self loadBeepSound];
     
-    // configure button colors
-//    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
-//    self.tabBarController.tabBar.tintColor = [UIColor orangeColor];
+    // data table
+    if (!_exercises) {
+        _exercises = [[NSArray alloc] initWithArray:[BFExerciseList getAllExercises]];
+        
+    }
+    
+    // Image updater
+    [_failSignImage setAlpha:0.0];
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(imageUpdater) userInfo:nil repeats:YES];
 
 }
 
@@ -61,6 +72,7 @@
         self.title = @"Can't scan :(";
     }
     _success = NO;
+    _failure = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -125,6 +137,9 @@
     // run
     [_captureSession startRunning];
     
+    // make sound
+    AudioServicesPlaySystemSound(1117); // see http://iphonedevwiki.net/index.php/AudioServices
+    
 //    NSLog(@"scanning started");
     
     return YES;
@@ -135,121 +150,72 @@
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             NSString * detectionString = [metadataObj stringValue];
-            NSLog(@"Hey! The data is: %@",[metadataObj stringValue]);
-            
-            // Fake
-            // **************
-            [_captureSession stopRunning];
-
-            // Sucess !!!
-            _success = YES;
-            
-            // Save
-            BFExercise *newExercise = [[BFExercise alloc] initWithName:[metadataObj stringValue]];
-            [self.exerciseListViewController.exercises addObject:newExercise];
-            // Save to persistent data
-            [BFWorkoutList addExercise: newExercise toWorkoutAtIndex: _wIndex];
-//            NSLog(@"row: %d", _wIndex);
-            
-            // play success sound and vibrate !!!
-            if (_audioPlayer) {
-                [_audioPlayer play];
-            }
-            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-            // stop and dismiss NB: [_captureSession stopRunning]; already done.
-            [self performSelectorOnMainThread:@selector(dismissAndStopReading) withObject:nil waitUntilDone:YES];
-            // **************
-        
+//            NSLog(@"Hey! The data is: %@",[metadataObj stringValue]);
             
             // When scanned, we should verify if the link is part of the list
             // if not : play failure sound and continue scanning
             
-            
-            
-//            if (detectionString != nil) {
-//                // Stop further capture, as soon as you get the first one
-//                [_captureSession stopRunning];
-//                
-//                // GETTING the data using the QR code
-//                NSString* url_data=@"http://dev.m.gatech.edu/d/msandt3/api/barcodefitness/search?q=";
-//                
-//                url_data=[url_data stringByAppendingString:detectionString];
-//                url_data=[url_data stringByAppendingString:@"&type=exercise"];
-//                
-//                NSURL* url_fetch= [[NSURL alloc]initWithString:url_data];
-//                
-//                // Prepare the request object
-//                NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_fetch
-//                                                            cachePolicy:NSURLRequestReturnCacheDataElseLoad
-//                                                        timeoutInterval:30];
-//                // Prepare the variables for the JSON response
-//                NSData *urlData;
-//                NSURLResponse *response;
-//                NSError *error;
-//                
-//                // Make synchronous request
-//                urlData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
-//                if (error) {
-//                    NSLog(@"Could not make synchronous request.");
-//                    NSLog(@"%@", [error localizedDescription]);
-//                    // play fail sound
-//                    if (_audioPlayer) {
-//                        [_audioPlayer play];
-//                    }
-//                    // show fail sign and wait 2s
-//                    
-//                    // run again
-//                    [_captureSession startRunning];
-//                }
-//                else{
-//                    // Parse data
-//                    self.parsedExerciseData = [NSJSONSerialization JSONObjectWithData:urlData options:0 error:&error];
-//                    if (error) {
-//                        NSLog(@"Could not parse data.");
-//                        NSLog(@"%@", [error localizedDescription]);
-//                        // play fail sound
-//                        if (_audioPlayer) {
-//                            [_audioPlayer play];
-//                        }
-//                        // show fail sign and wait 2s
-//                        
-//                        // run again
-//                        [_captureSession startRunning];
-//                    }
-//                    else{
-////                        _exercise.name = [self.parsedExerciseData valueForKey:@"name"];
-//                        
-//                        
-//                        
-//                        // save to exercises
-//                        BFExercise *newExercise = [[BFExercise alloc] initWithName:[self.parsedExerciseData valueForKey:@"name"]];
-//                        [self.exerciseListViewController.exercises addObject:newExercise];
-//                        
-//                        
-//                        NSLog(@"Perfect! The name is: %@",_exercise.name);
-//            
-//                        
-//                        // play success sound and vibrate !!!
-//                        if (_audioPlayer) {
-//                            [_audioPlayer play];
-//                        }
-//                        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
-//                        // stop and dismiss NB: [_captureSession stopRunning]; already done. 
-//                        [self performSelectorInBackground:@selector(stopReadingAndDismiss) withObject:nil];
-//                    }
-//             
-//             
-//                }
-//
-//        
-//
-//            } // if (detectionString != nil)
-            
-            
-            
-        } // if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode])
-    }    
+            if (detectionString != nil) {
+                // Stop further capture, as soon as you get the first one
+                [_captureSession stopRunning];
+                
+                // Verify
+                int i = 0;
+                for(BFExercise * exercise in _exercises) {
+//                    NSLog(@"%@",exercise.qrCode);
+                    if ([detectionString isEqualToString: exercise.qrCode]) {
+                        _success = YES; // Sucess !!!
+                        break;
+                    } else {
+                        _success = NO;
+                        i++;
+                    }
+                }
+                if(_success){
+                    // Save
+//                    BFExercise *newExercise = [[BFExercise alloc] initWithName:[metadataObj stringValue] andCompagny:@"Louis"];
+                    [self.exerciseListViewController.exercises addObject:_exercises[i]];
+                    // Save to persistent data
+                    [BFWorkoutList addExercise: _exercises[i] toWorkoutAtIndex: _wIndex];
+                    //            NSLog(@"row: %d", _wIndex);
+                    
+                    // play success sound and vibrate !!!
+                    if (_audioPlayer) {
+                        [_audioPlayer play];
+                    }
+                    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+                    // stop and dismiss NB: [_captureSession stopRunning]; already done.
+                    [self performSelectorOnMainThread:@selector(dismissAndStopReading) withObject:nil waitUntilDone:YES];
+                } else {
+                    // failure
+                    _failure = YES;
+                    // run again
+                    [_captureSession startRunning];
+                }
+            }
+        }
+    }
 }
+
+
+// timer action
+- (void) imageUpdater {
+    if (_failure){
+        _failure = NO;
+        // make sound
+        AudioServicesPlaySystemSound(1053); // see http://iphonedevwiki.net/index.php/AudioServices
+        // display fail sign
+        [_failSignImage setAlpha:1.0];
+        [UIView animateWithDuration:2.0
+                              delay:0.0
+                            options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+                         animations:^(void) {
+                             [_failSignImage setAlpha:0.0];
+                         }
+                         completion:nil];
+    }
+}
+
 
 -(void)stopReading{
     [_captureSession stopRunning];
@@ -270,7 +236,7 @@
 #pragma mark - Sound
 
 -(void)loadBeepSound{
-    NSString *beepFilePath = [[NSBundle mainBundle] pathForResource:@"PumpShotgun2x" ofType:@"mp3"];
+    NSString *beepFilePath = [[NSBundle mainBundle] pathForResource:@"PumpToLoad" ofType:@"mp3"];
     NSURL *beepURL = [NSURL URLWithString:beepFilePath];
     NSError *error;
     

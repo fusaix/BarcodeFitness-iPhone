@@ -15,7 +15,15 @@
 @property (strong, nonatomic) IBOutlet UIImageView *logoImage;
 @property (strong, nonatomic) IBOutlet UIImageView *performanceHistoryImage;
 @property (strong, nonatomic) IBOutlet UIImageView *scanImage;
-@property (strong, nonatomic) IBOutlet UIImageView *workoutImage;
+
+// Views
+@property (strong, nonatomic) IBOutlet UIView *titleView;
+@property (strong, nonatomic) IBOutlet UIView *toolView;
+@property (strong, nonatomic) IBOutlet UIView *arrowView;
+
+// Labels
+@property (strong, nonatomic) IBOutlet UILabel *selectorLabel;
+@property (nonatomic) int activeButtom;
 
 // buttons
 @property (strong, nonatomic) IBOutlet UIButton *scanButton;
@@ -42,12 +50,17 @@
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"metalBackground"]];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"Fonte"] forBarMetrics: UIBarMetricsDefault];
     self.navigationController.navigationBar.translucent = NO;
+    _titleView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Fonte"]];
+    _toolView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Fonte"]];
     
     // title color 
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     // Configure button colors
-    self.navigationController.navigationBar.tintColor = [UIColor orangeColor]; 
+    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+    _shareButton.tintColor = [UIColor orangeColor];
+    _rateButton.tintColor = [UIColor orangeColor];
+    _moreButton.tintColor = [UIColor orangeColor];
     
     // disable swipe back
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -57,6 +70,7 @@
     // Register to a notification UIApplicationWillEnterForegroundNotification to force animation to restart
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fadeButtonImages)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
+    _activeButtom = 0;
     
     // Touch
     [_workoutButton addTarget:self action:@selector(workoutButtonTouched) forControlEvents:UIControlEventTouchDown];
@@ -65,8 +79,8 @@
     [_logoButton addTarget:self action:@selector(logoButtonTouched) forControlEvents:UIControlEventTouchDown];
     [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpOutside];
     [_logoButton addTarget:self action:@selector(logoButtonTouchedUpOutside) forControlEvents:UIControlEventTouchUpInside];
-    [_scanButton addTarget:self action:@selector(fadeLabelImages2) forControlEvents:UIControlEventTouchDown];
-    [_performanceHistoryButton addTarget:self action:@selector(fadeLabelImages3) forControlEvents:UIControlEventTouchDown];
+//    [_scanButton addTarget:self action:@selector(fadeLabelImages2) forControlEvents:UIControlEventTouchDown];
+//    [_performanceHistoryButton addTarget:self action:@selector(fadeLabelImages3) forControlEvents:UIControlEventTouchDown];
     // add gesture recognizers to title
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(whiteStatusBar)];
     longPress.delegate = self;
@@ -105,19 +119,28 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [self.navigationController setNavigationBarHidden: NO animated:YES];
-//}
 
 - (void) fadeButtonImages {
-    [UIView animateWithDuration:4.0
+    [UIView animateWithDuration:3.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-                         [_athleteImage setAlpha:0.2];
-                         [_workoutImage setAlpha:0.1];
-                         [_performanceHistoryImage setAlpha:0.1];
-                         [_scanImage setAlpha:0.1];
+                         switch (_activeButtom) {
+                             case 0:
+                                 [_athleteImage setAlpha:0.2];
+                                 _selectorLabel.text = @"Start workout";
+                                 break;
+                             case 1:
+                                 [_scanImage setAlpha:0.2];
+                                 _selectorLabel.text = @"Scan";
+                                 break;
+                             case 2:
+                                 [_performanceHistoryImage setAlpha:0.2];
+                                 _selectorLabel.text = @"Performance history";
+                                 break;
+                             default:
+                                 break;
+                         }
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -127,18 +150,40 @@
 }
 
 - (void) animateButtonImages {
-    [_athleteImage setAlpha:0.2];
-    [_workoutImage setAlpha:0.1];
-    [_performanceHistoryImage setAlpha:0.1];
-    [_scanImage setAlpha:0.1];
-    [UIView animateWithDuration:4.0
+    switch (_activeButtom) {
+        case 0:
+            [_athleteImage setAlpha:0.2];
+            break;
+        case 1:
+            [_scanImage setAlpha:0.2];
+            break;
+        case 2:
+            [_performanceHistoryImage setAlpha:0.2];
+            break;
+        default:
+            break;
+    }
+    [UIView animateWithDuration:3.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
                          [_athleteImage setAlpha:1.0];
-                         [_workoutImage setAlpha:1.0];
-                         [_performanceHistoryImage setAlpha:1.0];
-                         [_scanImage setAlpha:1.0];
+                         switch (_activeButtom) {
+                             case 0:
+                                 _selectorLabel.text = @"Start workout";
+                                 _activeButtom = 1;
+                                 break;
+                             case 1:
+                                 _selectorLabel.text = @"Scan";
+                                 _activeButtom = 2;
+                                 break;
+                             case 2:
+                                 _selectorLabel.text = @"Performance history";
+                                 _activeButtom = 0;
+                                 break;
+                             default:
+                                 break;
+                         }
                      }
                      completion:^(BOOL finished) {
 //                         if (finished) {
@@ -149,52 +194,52 @@
 }
 
 - (void) fadeLabelImages {
-    [_workoutImage setAlpha:1.0];
-    [_performanceHistoryImage setAlpha:1.0];
-    [_scanImage setAlpha:1.0];
-    [UIView animateWithDuration:4.0
+//    [_workoutLabelImage setAlpha:1.0];
+//    [_performanceHistoryLabelImage setAlpha:1.0];
+//    [_scanLabelImage setAlpha:1.0];
+    [UIView animateWithDuration:10.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-                         [_workoutImage setAlpha:0.0];
-                         [_performanceHistoryImage setAlpha:0.0];
-                         [_scanImage setAlpha:0.0];
+//                         [_workoutLabelImage setAlpha:0.0];
+//                         [_performanceHistoryLabelImage setAlpha:0.0];
+//                         [_scanLabelImage setAlpha:0.0];
                      }
                      completion:nil];
 }
 
-- (void) fadeLabelImages1 {
-    [_workoutImage setAlpha:1.0];
-    [UIView animateWithDuration:4.0
-                          delay:0.0
-                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-                     animations:^(void) {
-                         [_workoutImage setAlpha:0.0];
-                     }
-                     completion:nil];
-}
-
-- (void) fadeLabelImages2 {
-    [_scanImage setAlpha:1.0];
-    [UIView animateWithDuration:4.0
-                          delay:0.0
-                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-                     animations:^(void) {
-                         [_scanImage setAlpha:0.0];
-                     }
-                     completion:nil];
-}
-
-- (void) fadeLabelImages3 {
-    [_performanceHistoryImage setAlpha:1.0];
-    [UIView animateWithDuration:4.0
-                          delay:0.0
-                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-                     animations:^(void) {
-                         [_performanceHistoryImage setAlpha:0.0];
-                     }
-                     completion:nil];
-}
+//- (void) fadeLabelImages1 {
+//    [_workoutLabelImage setAlpha:1.0];
+//    [UIView animateWithDuration:4.0
+//                          delay:0.0
+//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+//                     animations:^(void) {
+//                         [_workoutLabelImage setAlpha:0.0];
+//                     }
+//                     completion:nil];
+//}
+//
+//- (void) fadeLabelImages2 {
+//    [_scanLabelImage setAlpha:1.0];
+//    [UIView animateWithDuration:4.0
+//                          delay:0.0
+//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+//                     animations:^(void) {
+//                         [_scanLabelImage setAlpha:0.0];
+//                     }
+//                     completion:nil];
+//}
+//
+//- (void) fadeLabelImages3 {
+//    [_performanceHistoryLabelImage setAlpha:1.0];
+//    [UIView animateWithDuration:4.0
+//                          delay:0.0
+//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+//                     animations:^(void) {
+//                         [_performanceHistoryLabelImage setAlpha:0.0];
+//                     }
+//                     completion:nil];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -224,12 +269,12 @@
 
 
 - (IBAction)performanceHistory:(UIButton *)sender {
-    
+    _performanceHistoryImage.highlighted = !_performanceHistoryImage.highlighted;
     
 }
 
 - (IBAction)scanButtonPressed:(UIButton *)sender {
-    
+    _scanImage.highlighted = !_scanImage.highlighted;
     
 }
 
@@ -241,7 +286,12 @@
 }
 
 - (IBAction)shareButtonPressed:(UIButton *)sender {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Coming soon:"
+                                                    message:@"You will be able to share this app and your performance on social media. Go to: \"More/Our Facebook page\" and tell us how you would like it to be! "
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (IBAction)rateButtonPressed:(UIButton *)sender {
@@ -258,7 +308,7 @@
 
 - (void) workoutButtonTouched {
     _athleteImage.highlighted = YES;
-    [self fadeLabelImages1];
+//    [self fadeLabelImages1];
     
 }
 

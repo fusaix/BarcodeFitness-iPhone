@@ -15,7 +15,7 @@
 
 
 @interface BFChooseViewController ()
-@property (nonatomic) int renameRow;
+@property (nonatomic) int selectedRow;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic, strong) NSMutableArray *filteredWorkoutTemplates;
@@ -51,6 +51,10 @@
     [self.tableView reloadData];
     // refresh search result table
     self.searchDisplayController.searchBar.text = self.searchDisplayController.searchBar.text;
+    // update workout.row
+    for (int i = 0; i < self.workoutTemplates.count; i++) {
+        ((BFWorkout*)[_workoutTemplates objectAtIndex:i]).row = i;
+    }
     // Magic Button
     _magicButton.enabled = YES;
 }
@@ -167,8 +171,6 @@
         currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
     } else { // else default mode
         currentWorkout = [self.workoutTemplates objectAtIndex:indexPath.row];
-        // Update workout.row for research mode
-        currentWorkout.row = (int) indexPath.row;
     }
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
@@ -179,20 +181,12 @@
     // description
     float totalWeight = [currentWorkout.totalWeight floatValue];
     
-    NSString * lastDateText;
+
 //    NSDateFormatter *df = [[NSDateFormatter alloc] init];
 //    [df setDateFormat:@"yyyy-MM-dd hh:mm:ss a"];
 //    NSDate *lastDate = [df dateFromString: @"2014-08-29 1:11:11 am"];
-    NSDate * lastDate = currentWorkout.lastDate;
-    if ([self daysBetweenDate:lastDate andDate:[NSDate date]] == 0) { // today
-        lastDateText = @"Today";
-    } else if ([self daysBetweenDate:lastDate andDate:[NSDate date]] == 1) { // yesterday
-        lastDateText = @"Yesterday";
-    } else {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM/dd/yy"];
-        lastDateText = [dateFormatter stringFromDate:lastDate];
-    }
+    NSString * lastDateText = [self lastDateTextDependingOnLastDate:currentWorkout.lastDate];
+    
     
     if (_noteMode) {     // if in note mode
         cell.detailTextLabel.text = currentWorkout.note;
@@ -221,16 +215,47 @@
 }
 
 // compute days between two NSDate
-- (NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime {
-    NSDate *fromDate;
-    NSDate *toDate;
+// issues in http://stackoverflow.com/questions/4739483/number-of-days-between-two-nsdates So, this is my solution
+- (NSString*)lastDateTextDependingOnLastDate:(NSDate*)lastDate {
+//    NSDate *now = [NSDate date];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"EST"];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    [dateFormatter setTimeZone:timeZone];
+//    NSString *newDate = [dateFormatter stringFromDate:now];
+//    NSDateFormatter *newDateFormatter = [[NSDateFormatter alloc] init];
+//    [newDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *todayInAtlanta = [newDateFormatter dateFromString:newDate];
+//    NSLog(@"%@", todayInAtlanta);
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&fromDate interval:NULL forDate:fromDateTime];
-    [calendar rangeOfUnit:NSDayCalendarUnit startDate:&toDate interval:NULL forDate:toDateTime];
-    NSDateComponents *difference = [calendar components:NSDayCalendarUnit fromDate:fromDate toDate:toDate options:0];
-    return [difference day];
+    NSDateComponents* c1 = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+               fromDate:lastDate];
+    NSDateComponents* c2 = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+               fromDate:[NSDate date]];
+    NSDateComponents* c3 = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
+                                       fromDate:[self yesterdayDate]];
+    
+    if ([c1 day] == [c2 day] && [c1 month] == [c2 month] && [c1 year] == [c2 year]) {
+        return @"Today";
+    } else if ([c1 day] == [c3 day] && [c1 month] == [c3 month] && [c1 year] == [c3 year]){
+        return @"Yesterday";
+    } else {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM/dd/yy"];
+        return [dateFormatter stringFromDate:lastDate];
+    }
+
 }
 
+- (NSDate*) yesterdayDate {
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    [dateComponents setDay:-1];
+    NSDate *yesterdayDate = [[NSCalendar currentCalendar] dateByAddingComponents:dateComponents toDate:[NSDate date] options:0];
+//    NSLog(@"%@", yesterdayDate);
+
+    return yesterdayDate;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -276,7 +301,10 @@
 #pragma mark - Content Filtering
 
 -(void)filterContentForSearchText:(NSString*)searchText {
-    
+    // update workout.row
+    for (int i = 0; i < self.workoutTemplates.count; i++) {
+        ((BFWorkout*)[_workoutTemplates objectAtIndex:i]).row = i;
+    }
     // Update the filtered array based on the search text and scope.
     // Remove all objects from the filtered search array
     [self.filteredWorkoutTemplates removeAllObjects];
@@ -383,9 +411,9 @@
     if (self.searchDisplayController.active) { // research mode
         // Get the currentWorkout to find the original row through workout.row
         BFWorkout *currentWorkout = [self.filteredWorkoutTemplates objectAtIndex:indexPath.row];
-        self.renameRow = currentWorkout.row;
+        self.selectedRow = currentWorkout.row;
     } else {
-        self.renameRow = (int) indexPath.row;
+        self.selectedRow = (int) indexPath.row;
     }
     [self performSegueWithIdentifier:@"editWorkout" sender:tableView];
     
@@ -394,6 +422,8 @@
 #pragma mark - Navigation
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Store selected index
+    _selectedRow = (int) indexPath.row;
     // Perform segue to detail
     [self startWorkout];
 }
@@ -420,8 +450,8 @@
     } else if ([segue.identifier isEqualToString:@"editWorkout"]) { // BFAddWorkoutViewController is also used for editing an workout (rename or change image)
         UINavigationController * navCon = (UINavigationController *)[segue destinationViewController];
         BFAddWorkoutViewController * addWorkoutViewController = (BFAddWorkoutViewController *)navCon.childViewControllers.firstObject; // IMPORTANT cast and childViewController method.
-        addWorkoutViewController.workout = [_workoutTemplates objectAtIndex:self.renameRow]; // self.tableView.indexPathForSelectedRow.row does not apply
-        addWorkoutViewController.renameRow = self.renameRow; // for the automatic name suggestion
+        addWorkoutViewController.workout = [_workoutTemplates objectAtIndex:self.selectedRow]; // self.tableView.indexPathForSelectedRow.row does not apply
+        addWorkoutViewController.renameRow = self.selectedRow; // for the automatic name suggestion
         addWorkoutViewController.segueIdentifier = @"editWorkout";
     } else if ([segue.identifier isEqualToString:@"startWorkout"]) {
         // updated true all workout.row by a capture of workoutTemplates
@@ -431,13 +461,13 @@
 //        for(BFWorkout* w in _workoutTemplates) {
 //            NSLog(@"> %@ Row: %d",w, w.row);
 //        }
+        
         // process the information to pass
-        NSIndexPath *indexPath = [sender indexPathForSelectedRow];
-        BFWorkout *workout = nil;
+        BFWorkout *workout;
         if (self.searchDisplayController.active) {
-            workout = [_filteredWorkoutTemplates objectAtIndex:indexPath.row];
+            workout = [_filteredWorkoutTemplates objectAtIndex:_selectedRow]; // self.tableView.indexPathForSelectedRow.row does not apply
         } else {
-            workout = [_workoutTemplates objectAtIndex:indexPath.row];
+            workout = [_workoutTemplates objectAtIndex:_selectedRow]; // NSIndexPath *indexPath = [sender indexPathForSelectedRow]; could be used for him
         }
         BFWorkoutViewController *destViewController = segue.destinationViewController;
         destViewController.workoutListViewController = self; // to refresh templates
@@ -481,6 +511,7 @@
     int i = arc4random() % _workoutTemplates.count;
     [_tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionTop];
     _magicButton.enabled = NO;
+    _selectedRow = i;
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(startWorkout) userInfo:nil repeats:NO];
 }
 

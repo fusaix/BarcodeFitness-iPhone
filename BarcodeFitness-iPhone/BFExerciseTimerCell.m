@@ -119,25 +119,51 @@
 
 - (void) updateTimerLabels {
     if ([BFWorkoutViewController resting]) {
+        // Time
         _timeCount = [[NSDate date] timeIntervalSinceDate:_exerciseListViewController.timerBeginTime];
+        // Text
+        if (_timeCount > [BFWorkoutViewController currentRestTime] && [BFWorkoutViewController mode] != 2) {
+            self.textLabel.textColor = [UIColor redColor];
+        } else {
+            self.textLabel.textColor = [UIColor whiteColor];
+        }
+        self.textLabel.text = [BFWorkoutViewController timeFormatted2:_timeCount];
+        // Detail
         if ([BFWorkoutViewController restTime] == [BFWorkoutViewController currentRestTime]) {
             self.detailTextLabel.text = [BFWorkoutViewController timeFormatted2: [BFWorkoutViewController restTime]];
         } else {
             self.detailTextLabel.text = [NSString stringWithFormat:@"%@ (currently: %@)", [BFWorkoutViewController timeFormatted2: [BFWorkoutViewController restTime]], [BFWorkoutViewController timeFormatted2: [BFWorkoutViewController currentRestTime]]];
         }
-        self.textLabel.textColor = [UIColor whiteColor];
-    } else {
+
+    } else { // if NOT at rest
+        // Time
         _timeCount = 0;
-        [BFWorkoutViewController setCurrentRestTime:[BFWorkoutViewController restTime]]; // tranfert restTime
-        self.detailTextLabel.text = [BFWorkoutViewController timeFormatted2: [BFWorkoutViewController currentRestTime]];
-        self.textLabel.textColor = [UIColor blackColor];
+        [BFWorkoutViewController setCurrentRestTime:[BFWorkoutViewController restTime]]; // tranfert restTime (when the timer is running, we can set restTime, but it will become currentRestTime only at the end of rest period)
+        // Text
+        self.textLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+        switch ([BFWorkoutViewController mode]) { // Display mode
+            case 0:
+                self.textLabel.text = @"Automatic timer";
+                break;
+            case 1:
+                self.textLabel.text = @"Manual timer";
+                break;
+            case 2:
+                self.textLabel.text = @"Alarm off";
+                break;
+            default:
+                self.textLabel.text = @"00:00"; // safty 
+        }
+        // Detail
+        self.detailTextLabel.text = [BFWorkoutViewController timeFormatted2: [BFWorkoutViewController restTime]];
     }
     
-    if (_timeCount > [BFWorkoutViewController currentRestTime]) {
-        self.textLabel.textColor = [UIColor redColor];
+    // Mode influence in detail color
+    if ([BFWorkoutViewController mode] == 2) { // Off
+        self.detailTextLabel.textColor = [UIColor blackColor];
+    } else {
+        self.detailTextLabel.textColor = [UIColor whiteColor];
     }
-    
-    self.textLabel.text = [BFWorkoutViewController timeFormatted2:_timeCount];
     
     // the other side
     NSString * accessory = [BFWorkoutViewController resting] ? @"accessoryStop" : @"accessoryRest";
@@ -172,7 +198,7 @@
     [_pickerView reloadComponent:0];
     [_pickerView selectRow:([BFWorkoutViewController restTime]%60)/5 inComponent:1 animated:YES];
     [_pickerView reloadComponent:1];
-    [_pickerView selectRow:1 inComponent:2 animated:NO];
+    [_pickerView selectRow:[BFWorkoutViewController mode] inComponent:2 animated:NO];
     [_pickerView reloadComponent:2];
     [_pickerView selectRow:1 inComponent:3 animated:NO];
     [_pickerView reloadComponent:3];
@@ -237,9 +263,6 @@
     NSString * newmin;
     NSString * newsec;
     NSString * ok;
-//    NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-//    [f setNumberStyle:NSNumberFormatterDecimalStyle];
-//    NSNumber * myNumber;
     
     switch(component) {
         case 0:
@@ -249,8 +272,7 @@
             self.textLabel.text = [NSString stringWithFormat:@"%@:%02d", newmin, sec];
             [BFWorkoutViewController setRestTime:[newmin intValue] * 60 + sec];
             // update in persistent data
-//            myNumber = [f numberFromString:newmin];
-//            [BFWorkoutList setmin:myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];
+            [BFWorkoutViewController saveRestTime];
             break;
         case 1:
             min = ([BFWorkoutViewController restTime] / 60) % 60;
@@ -259,14 +281,12 @@
             self.textLabel.text = [NSString stringWithFormat:@"%02d:%@", min, newsec];
             [BFWorkoutViewController setRestTime: min * 60 + [newsec intValue]];
             // update in persistent data
-//            myNumber = [f numberFromString:newsec];
-//            [BFWorkoutList setsec: myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];
+            [BFWorkoutViewController saveRestTime];
             break;
         case 2:
-            
+            [BFWorkoutViewController setMode:(int)row]; // 0 = Auto, 1 = Manu, 2 = Off
             // update in persistent data
-//            myNumber = [f numberFromString:newsec];
-//            [BFWorkoutList setsec: myNumber atIndex:_sIndex toExerciseAtIndex:_eIndex inWorkoutAtIndex:_wIndex];
+            [BFWorkoutViewController saveMode];
             break;
         case 3:
             ok = [_okArray objectAtIndex:row];

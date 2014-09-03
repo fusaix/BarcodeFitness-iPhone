@@ -66,13 +66,19 @@
         self.name = name;
 
         // choose a random image
-        int i = arc4random() % [BFWorkout workoutImages].count;
+//        int i = arc4random() % [BFWorkout workoutImages].count;
+        
+        // choose the image of the day
+        NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+        int weekday = [comps weekday];
+        int i = weekday - 1;
+        if (i == 0) i = 7;
         
         self.image = [UIImage imageNamed:[BFWorkout workoutImages][i]];
         self.imageIndex = [NSNumber numberWithInteger:i];
         self.lastDate = [NSDate date];
         self.duration = [NSNumber numberWithInteger:0];
-        self.note = @"~";
+        self.note = @"No notes";
         self.totalWeight = [NSNumber numberWithInteger:0];
         
         self.exercises = [[NSMutableArray alloc] init]; // nothing at creation

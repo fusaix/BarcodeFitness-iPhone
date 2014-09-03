@@ -65,7 +65,7 @@ static NSString *baseUrlString = @"http://dev.m.gatech.edu/d/bedmonds3/api/barco
 }
 
 +(BFExercise *)loadBaseExerciseFromJSON:(NSDictionary *)jsonExercise {
-    return [BFExercise exerciseWithName:[jsonExercise objectForKey:@"name"] exerciseId:[jsonExercise objectForKey:@"id"] qrCode:[jsonExercise objectForKey:@"qr_code"]];
+    return [BFExercise exerciseWithName:[jsonExercise objectForKey:@"name"] exerciseId:[jsonExercise objectForKey:@"id"] qrCode:[jsonExercise objectForKey:@"qr_code"] andCompany:[jsonExercise objectForKey:@"company"]];
 }
 
 +(NSArray *)getWorkoutHistory {
@@ -104,7 +104,7 @@ static NSString *baseUrlString = @"http://dev.m.gatech.edu/d/bedmonds3/api/barco
 +(BFWorkout *)loadWorkoutFromJSON:(NSDictionary *)jsonWorkout {
     BFWorkout *workout = [BFWorkout workoutWithID:[jsonWorkout objectForKey:@"workout_id"] andDate:[jsonWorkout objectForKey:@"start_time"]];
     for (NSDictionary *jsonExercise in [jsonWorkout objectForKey:@"data"]) {
-        BFExercise *exercise = [[BFExercise alloc] initWithName:[jsonExercise objectForKey:@"exercise_name"]];
+        BFExercise *exercise = [[BFExercise alloc] initWithName:[jsonExercise objectForKey:@"exercise_name"] andCompagny:@"company"];
         exercise.exerciseId = [jsonExercise objectForKey:@"exercise_id"];
         //TODO: add loading of exercise data.
     }
