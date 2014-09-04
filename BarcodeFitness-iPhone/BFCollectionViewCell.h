@@ -10,5 +10,6 @@
 
 @interface BFCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) UILabel *rectangleLabel;
 
 @end

@@ -10,11 +10,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 @class BFWorkoutViewController;
-//@class BFExercise;
 
 @interface BFScanViewController : UIViewController  <AVCaptureMetadataOutputObjectsDelegate>
 @property (nonatomic, strong) BFWorkoutViewController * exerciseListViewController;
-//@property (nonatomic, strong) BFExercise * exercise;
 @property (nonatomic) int wIndex;
 
 

@@ -15,6 +15,8 @@
 @interface BFAddWorkoutViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *nameField;
 @property (strong, nonatomic) NSMutableArray *workoutImages;
+@property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) int newImageIndex;
 
 @end
 
@@ -23,6 +25,7 @@
 @synthesize workout = _workout;
 @synthesize segueIdentifier = _segueIdentifier;
 @synthesize renameRow = _renameRow;
+
 
 #pragma mark - IBActions
 
@@ -35,7 +38,7 @@
     // save
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
         // save to workoutTemplates
-        BFWorkout *newWorkout = [[BFWorkout alloc] initWithName:self.nameField.text];
+        BFWorkout *newWorkout = [[BFWorkout alloc] initWithName:self.nameField.text andImage:_newImageIndex];
         [self.workoutListViewController.workoutTemplates addObject:newWorkout];
         // save to workoutTemplatesRepresentation
         [BFWorkoutList addObject:newWorkout];
@@ -44,12 +47,12 @@
     } else { // isEqualToString:@"editWorkout"
         // set changes to the workout in workoutTemplates
         _workout.name = self.nameField.text;
-        //_workout.image = ...
+        _workout.image = [UIImage imageNamed:_workoutImages[_newImageIndex]];
+        _workout.imageIndex = [NSNumber numberWithInt:_newImageIndex];
         
         // set changes to the workout in workoutTemplatesRepresentation
         [BFWorkoutList setWorkoutName: self.nameField.text atIndex: _renameRow];
-        //[BFWorkoutList setWorkoutImage: self.... atIndex: _renameRow];
-        
+        [BFWorkoutList setWorkoutImage: [NSNumber numberWithInt:_newImageIndex] atIndex: _renameRow];
         
     }
     
@@ -101,8 +104,8 @@
     }
     
     // Gesture to hide keyboard
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
-    [self.tableView addGestureRecognizer:tapGestureRecognizer];
+//    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+//    [self.tableView addGestureRecognizer:tapGestureRecognizer];
     
     // Load Names of Images
     _workoutImages = [@[@"BarcodeFitnessIconRounded.png",
@@ -114,10 +117,28 @@
                         @"Saturday_sf.png",
                         @"Sunday_sf.png",
                         @"Everyday_sf.png"] mutableCopy];
+
+    // Image
+    if ([_segueIdentifier isEqualToString:@"addWorkout"]) {
+        // automatically choose the image of the day
+        NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
+        int weekday = (int)[comps weekday];
+        _newImageIndex= weekday - 1;
+        if (_newImageIndex == 0) _newImageIndex = 7;
+    } else {
+        _newImageIndex = [_workout.imageIndex intValue];
+    }
+    
+    // auto center
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:_newImageIndex inSection:0];
+    [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    
+    // collection view background
+//    self.collectionView.backgroundColor = [UIColor blackColor];
     
     // configure button colors
 //    self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
-    
+
 }
 
 - (void) hideKeyboard {
@@ -150,8 +171,7 @@
 
 #pragma mark - UICollectionViewDataSource
 
--(NSInteger)numberOfSectionsInCollectionView:
-(UICollectionView *)collectionView
+-(NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
 {
     return 1;
 }
@@ -161,18 +181,34 @@
     return _workoutImages.count;
 }
 
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+-(BFCollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    BFCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
+    BFCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"imageCell" forIndexPath:indexPath];
     UIImage *image;
     long row = [indexPath row];
     image = [UIImage imageNamed:_workoutImages[row]];
-    myCell.imageView.image = image;
+    cell.imageView.image = image;
     
-    myCell.backgroundColor = [UIColor whiteColor];
+    if (row == _newImageIndex) {
+        cell.rectangleLabel.hidden = NO;
+    } else {
+        cell.rectangleLabel.hidden = YES;
+    }
     
-    return myCell;
+    return cell;
 }
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    _newImageIndex = indexPath.row;
+    [collectionView reloadData];
+    // make sound
+    AudioServicesPlaySystemSound(1057); // see http://iphonedevwiki.net/index.php/AudioServices
+    // hide keyboard
+    [self hideKeyboard];
+}
+
 
 
 @end

@@ -70,9 +70,8 @@
     }
     
     // Register to a notification UIApplicationWillEnterForegroundNotification to force animation to restart
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(animateButtonImages)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fadeButtonImages)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
-    _activeButtom = 0;
     
     // Touch
     [_workoutButton addTarget:self action:@selector(workoutButtonTouched) forControlEvents:UIControlEventTouchDown];
@@ -100,6 +99,9 @@
     _scanButton.highlighted = NO;
     _performanceHistoryButton.highlighted = NO;
     _logoImage.highlighted = NO;
+    [_athleteImage setAlpha:1.0];
+    [_scanImage setAlpha:1.0];
+    [_performanceHistoryImage setAlpha:1.0];
     [self.navigationController setNavigationBarHidden: YES animated:YES];
     // Status bar
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -107,7 +109,6 @@
 }
 
 -  (void) viewDidAppear:(BOOL)animated {
-    _activeButtom = 0;
     [self fadeButtonImages];
 }
 
@@ -128,15 +129,30 @@
 
 
 - (void) fadeButtonImages {
+    _athleteImage.highlighted = NO;
+    _scanButton.highlighted = NO;
+    _performanceHistoryButton.highlighted = NO;
+
     [_athleteImage setAlpha:1.0];
     [_scanImage setAlpha:1.0];
     [_performanceHistoryImage setAlpha:1.0];
+//    [_selectorLabel setAlpha:1.0];
     [UIView animateWithDuration:2.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
+//                         [_selectorLabel setAlpha:0.0];
+                         [_athleteImage setAlpha:0.2];
+                         _selectorLabel.text = @"Start workout";
                          [_selectorLabel setAlpha:0.0];
-                         [_athleteImage setAlpha:0.5];
+                         _activeButtom = 0;
+//                         [_scanImage setAlpha:0.0];
+//                         [_performanceHistoryImage setAlpha:0.0];
+                         // move arrow
+                         CGRect frame = _arrowView.frame;
+                         frame.origin.y = 465;
+                         frame.origin.x = 145;
+                         _arrowView.frame = frame;
                      }
                      completion:^(BOOL finished) {
                          if (finished) {
@@ -145,23 +161,52 @@
                      }];
 }
 
+//- (void) fadeButtonImages2 {
+//    [_selectorLabel setAlpha:0.0];
+//    _activeButtom = 0;
+//    _selectorLabel.text = @"Start workout";
+//    [_athleteImage setAlpha:0.2];
+//    [_scanImage setAlpha:0.0];
+//    [_performanceHistoryImage setAlpha:0.0];
+//    [UIView animateWithDuration:2.0
+//                          delay:0.0
+//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
+//                     animations:^(void) {
+//                         [_selectorLabel setAlpha:1.0];
+//                         [_athleteImage setAlpha:0.2];
+//                         [_scanImage setAlpha:1.0];
+//                         [_performanceHistoryImage setAlpha:1.0];
+//                     }
+//                     completion:^(BOOL finished) {
+//                         if (finished) {
+//                             [self animateButtonImages];
+//                         }
+//                     }];
+//}
+
 - (void) animateButtonImages {
+    _athleteImage.highlighted = NO;
+    _performanceHistoryImage.highlighted = NO;
+    _scanImage.highlighted = NO;
     [_selectorLabel setAlpha:0.0];
-    [UIView animateWithDuration:0.1
+    [UIView animateWithDuration:2.0
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
                          switch (_activeButtom) {
                              case 0:
-                                 _athleteImage.highlighted = YES;
+//                                 _athleteImage.highlighted = YES;
+                                 [_athleteImage setAlpha:1.0];
                                  _selectorLabel.text = @"Start workout";
                                  break;
                              case 1:
-                                 _scanImage.highlighted = YES;
+//                                 _scanImage.highlighted = YES;
+                                 [_scanImage setAlpha:1.0];
                                  _selectorLabel.text = @"Scan";
                                  break;
                              case 2:
-                                 _performanceHistoryImage.highlighted = YES;
+//                                 _performanceHistoryImage.highlighted = YES;
+                                 [_performanceHistoryImage setAlpha:1.0];
                                  _selectorLabel.text = @"Performance history";
                                  break;
                              default:
@@ -183,7 +228,7 @@
     [_athleteImage setAlpha:1.0];
     [_scanImage setAlpha:1.0];
     [_performanceHistoryImage setAlpha:1.0];
-
+    [_selectorLabel setAlpha:1.0];
 
     [UIView animateWithDuration:2.0
                           delay:2.0
@@ -195,23 +240,24 @@
                                  _selectorLabel.text = @"Start workout";
                                  y = 60;
                                  _activeButtom = 1;
-                                 [_scanImage setAlpha:0.5];
+                                 [_scanImage setAlpha:0.2];
                                  break;
                              case 1:
                                  _selectorLabel.text = @"Scan";
-                                 y = 230;
+                                 y = 235;
                                  _activeButtom = 2;
-                                 [_performanceHistoryImage setAlpha:0.5];
+                                 [_performanceHistoryImage setAlpha:0.2];
                                  break;
                              case 2:
                                  _selectorLabel.text = @"Performance history";
                                  y = 145;
                                  _activeButtom = 0;
-                                 [_athleteImage setAlpha:0.5];
+                                 [_athleteImage setAlpha:0.2];
                                  break;
                              default:
                                  break;
                          }
+                         [_selectorLabel setAlpha:0.0];
                          
                          // move arrow
                          CGRect frame = _arrowView.frame;

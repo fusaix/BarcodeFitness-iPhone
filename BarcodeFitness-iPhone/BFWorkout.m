@@ -70,15 +70,31 @@
         
         // choose the image of the day
         NSDateComponents *comps = [[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]];
-        int weekday = [comps weekday];
+        int weekday = (int)[comps weekday];
         int i = weekday - 1;
         if (i == 0) i = 7;
         
         self.image = [UIImage imageNamed:[BFWorkout workoutImages][i]];
-        self.imageIndex = [NSNumber numberWithInteger:i];
+        self.imageIndex = [NSNumber numberWithInt:i];
         self.lastDate = [NSDate date];
         self.duration = [NSNumber numberWithInteger:0];
-        self.note = @"No notes";
+        self.note = @"";
+        self.totalWeight = [NSNumber numberWithInteger:0];
+        
+        self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name andImage: (int) imageIndex {
+    self = [super init];
+    if (self) {
+        self.name = name;
+        self.image = [UIImage imageNamed:[BFWorkout workoutImages][imageIndex]];
+        self.imageIndex = [NSNumber numberWithInt:imageIndex];
+        self.lastDate = [NSDate date];
+        self.duration = [NSNumber numberWithInteger:0];
+        self.note = @"";
         self.totalWeight = [NSNumber numberWithInteger:0];
         
         self.exercises = [[NSMutableArray alloc] init]; // nothing at creation
@@ -91,6 +107,7 @@
     if (self) {
         self.name = name;
         self.image = [UIImage imageNamed:[BFWorkout workoutImages][[imageIndex intValue]]];
+        self.imageIndex = imageIndex;
         self.lastDate = lastDate;
         self.duration = duration;
         self.note = note;

@@ -23,7 +23,7 @@
 // 1
 +(NSMutableArray *)getWorkoutTemplates; 
 +(void)setWorkoutName: (NSString *) name atIndex: (int) index;
-// + (void)setWorkoutImage: (UIImage *) image atIndex: (int) index;
++ (void)setWorkoutImage: (NSNumber*) imageIndex atIndex: (int) index;
 +(void)setWorkoutNote: (NSString *) note atIndex: (int) index;
 +(void)addObject:(BFWorkout *)workout;
 +(void)insertObject:(BFWorkout *)workout atIndex:(int)index;

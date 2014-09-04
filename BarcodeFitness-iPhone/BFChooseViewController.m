@@ -45,8 +45,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // show navigation bar
-    [self.navigationController setNavigationBarHidden: NO animated:YES];
     // reload table 
     [self.tableView reloadData];
     // refresh search result table
@@ -121,6 +119,9 @@
     
     // Note Mode or Detail Mode
     _noteMode = NO; // Detail Mode
+    
+    // show navigation bar
+    [self.navigationController setNavigationBarHidden: NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,7 +190,11 @@
     
     
     if (_noteMode) {     // if in note mode
-        cell.detailTextLabel.text = currentWorkout.note;
+        if ([currentWorkout.note isEqualToString:@""]) {
+            cell.detailTextLabel.text = @"No notes"; 
+        } else {
+            cell.detailTextLabel.text = currentWorkout.note;
+        }
     } else {
         if ((int)totalWeight  == totalWeight) {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, Last: %@, Total: %.f lb", lastDateText, [BFWorkoutViewController timeFormatted3:[currentWorkout.duration intValue]], totalWeight];

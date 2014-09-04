@@ -116,7 +116,10 @@ static NSMutableArray * workoutTemplatesRepresentation = nil;
     [self saveToStandardUserDefaults];
 }
 
-// + (void)setWorkoutImage: (UIImage *) image atIndex: (int) index { 
++ (void)setWorkoutImage: (NSNumber*) imageIndex atIndex: (int) index {
+    [[workoutTemplatesRepresentation objectAtIndex: index] setObject:imageIndex forKey:@"imageIndex"];
+    [self saveToStandardUserDefaults];
+}
 
 +(void)setWorkoutNote: (NSString *) note atIndex: (int) index {
     [[workoutTemplatesRepresentation objectAtIndex: index] setObject:note forKey:@"note"];

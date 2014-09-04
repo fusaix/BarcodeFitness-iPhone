@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (nonatomic) int duration;
 @property (nonatomic) BOOL takingNote;
+@property (nonatomic) BOOL shouldAddInfoCell;
 
 @property (nonatomic) int timeSpentInWorkout;
 
@@ -151,6 +152,13 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
     [BFWorkoutViewController setResting:NO];
     _finishFlag = NO;
     
+    // Notification listeners for scroll to visible
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // Info cell
+    _shouldAddInfoCell = NO;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -253,9 +261,10 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return nil;
-    } else {
         return _workout.name;
+    } else {
+//        return @"Your notes";
+        return nil;
     }
 }
 
@@ -263,9 +272,17 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 1;
+        if (self.exercises.count == 0) {
+            if (_shouldAddInfoCell){
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+            return 1;
+        } else {
+            return self.exercises.count;
+        }
     } else {
-        return self.exercises.count;
+        return 1;
     }
 }
 
@@ -273,70 +290,83 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        BFWorkoutNoteCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"noteCell" forIndexPath:indexPath];
-        cell.wIndex = (int)_workout.row;
-        cell.workout = _workout; 
-        cell.textView.text = _workout.note;
-        cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"paperBackground"]];
-        
-        return cell;
-        
-    } else {
-        
         UITableViewCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"exerciseCell" forIndexPath:indexPath];
         
-        // Configure the cell...
-        BFExercise * currentExercise;
-        currentExercise = [self.exercises objectAtIndex:indexPath.row];
-        
-        cell.textLabel.text = currentExercise.name;
         cell.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"Black"]];
-        
         //    cell.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.1];
         cell.textLabel.backgroundColor = [UIColor clearColor];
         cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
-        UIView *orangeView = [[UIView alloc] init];
-        orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
-        [cell setSelectedBackgroundView:orangeView];
         
-        // cell image
-        float numberOfSetsDone = 0;
-        float totalWeight = 0;
-        float numberOfSets = currentExercise.sets.count;
-        for (BFSet* set in currentExercise.sets) {
-            if (set.isDone) {
-                numberOfSetsDone++;
+        if (_exercises.count == 0) { // Info cell
+            cell.textLabel.text = @"No exercises yet.";
+            cell.detailTextLabel.text = @"Use \"Add exercise\" to create new exercises.";
+            cell.textLabel.textColor = [UIColor redColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.imageView.image = nil;
+        } else {
+            // Configure the cell...
+            BFExercise * currentExercise;
+            currentExercise = [self.exercises objectAtIndex:indexPath.row];
+            
+            cell.textLabel.text = currentExercise.name;
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.7 alpha:1.0];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            UIView *orangeView = [[UIView alloc] init];
+            orangeView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:148.0/255.0f blue:30.0f/255.0f alpha:1.0f]; //orange BeeHive -> UIColor
+            [cell setSelectedBackgroundView:orangeView];
+            
+            // cell image
+            float numberOfSetsDone = 0;
+            float totalWeight = 0;
+            float numberOfSets = currentExercise.sets.count;
+            for (BFSet* set in currentExercise.sets) {
+                if (set.isDone) {
+                    numberOfSetsDone++;
+                }
+                totalWeight = totalWeight + [set.weight floatValue];
             }
-            totalWeight = totalWeight + [set.weight floatValue];
+            float pourcent = 0;
+            if (currentExercise.sets.count != 0) {
+                pourcent = numberOfSetsDone/numberOfSets;
+                cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"pie%.f.png", 60*pourcent]];
+            } else {
+                cell.imageView.image = [UIImage imageNamed:@"pieV.png"];
+            }
+            // subtitle
+            NSString* setWord;
+            if (numberOfSets > 1) {
+                setWord = @"sets";
+            } else {
+                setWord = @"set";
+            }
+            if ((int)totalWeight == totalWeight) {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
+            } else {
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.1f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
+            }
+            
+            //    NSLog(@"%@", currentExercise.name);
+            //    NSLog(@"1- %@", _exercises);
         }
-        float pourcent = 0;
-        if (currentExercise.sets.count != 0) {
-            pourcent = numberOfSetsDone/numberOfSets;
-            cell.imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"pie%.f.png", 60*pourcent]];
-        } else {
-            cell.imageView.image = [UIImage imageNamed:@"pieV.png"];
-        }
-        // subtitle
-        NSString* setWord;
-        if (numberOfSets > 1) {
-            setWord = @"sets";
-        } else {
-            setWord = @"set";
-        }
-        if ((int)totalWeight == totalWeight) {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
-        } else {
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %.f%% of %.f %@, Total: %.1f lb", currentExercise.company, 100*pourcent,numberOfSets, setWord, totalWeight];
-        }
+        return cell;
         
-        
-        //    NSLog(@"%@", currentExercise.name);
-        //    NSLog(@"1- %@", _exercises);
+    } else {
+        // Note cell
+        BFWorkoutNoteCell * cell = [self.tableView dequeueReusableCellWithIdentifier:@"noteCell" forIndexPath:indexPath];
+        cell.wIndex = (int)_workout.row;
+        cell.workout = _workout;
+        if ([_workout.note isEqualToString:@""]) {
+            cell.textView.text = @"Your notes...";
+        } else {
+            cell.textView.text = _workout.note;
+        }
         
         return cell;
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -355,24 +385,30 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 
 #pragma mark - Edit modes
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
+
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    if (indexPath.section == 0 && _exercises.count != 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Info cell
+        _shouldAddInfoCell = YES;
         // Delete the row from the data source workoutTemplates
         [_exercises removeObjectAtIndex:indexPath.row];
         [UIView animateWithDuration:1.2
                               delay:0.0
-                            options:(UIViewAnimationOptionTransitionCurlDown | UIViewAnimationOptionAllowUserInteraction)
+                            options:(UIViewAnimationOptionTransitionCurlDown)
                          animations:^(void) {
                              [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                          }
@@ -383,6 +419,7 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
         [BFWorkoutList computeWeightForWorkoutAtIndex:(int)_workout.row];
         // refresh the templates
         [self refreshTemplates];
+
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
@@ -392,15 +429,19 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    // exchange in _exercises
-    BFExercise * movedExercise = [_exercises objectAtIndex:fromIndexPath.row];
-    [_exercises removeObjectAtIndex:fromIndexPath.row];
-    [_exercises insertObject:movedExercise atIndex:toIndexPath.row];
-    // exchange in workoutTemplatesRepresentation
-    [BFWorkoutList removeExerciseAtIndex:(int)fromIndexPath.row fromWorkoutAtIndex:_workout.row];
-    [BFWorkoutList insertExercise:movedExercise atIndex:(int)toIndexPath.row inWorkoutAtIndex:(int)_workout.row];
-    // refresh the templates
-    [self refreshTemplates];
+    if(toIndexPath.section == 0) {
+        // exchange in _exercises
+        BFExercise * movedExercise = [_exercises objectAtIndex:fromIndexPath.row];
+        [_exercises removeObjectAtIndex:fromIndexPath.row];
+        [_exercises insertObject:movedExercise atIndex:toIndexPath.row];
+        // exchange in workoutTemplatesRepresentation
+        [BFWorkoutList removeExerciseAtIndex:(int)fromIndexPath.row fromWorkoutAtIndex:_workout.row];
+        [BFWorkoutList insertExercise:movedExercise atIndex:(int)toIndexPath.row inWorkoutAtIndex:(int)_workout.row];
+        // refresh the templates
+        [self refreshTemplates];
+    } else {
+        [_tableView reloadData];
+    }
 }
 
 
@@ -412,13 +453,41 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 }
 
 
+#pragma mark - Edit content & auto scoll
+
+- (void)keyboardWillShow:(NSNotification *)sender
+{
+    CGSize kbSize = [[[sender userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, 0, kbSize.height - 44, 0);
+    [_tableView setContentInset:edgeInsets];
+    [_tableView setScrollIndicatorInsets:edgeInsets];
+    // force to scroll
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+- (void)keyboardWillHide:(NSNotification *)sender
+{
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [UIView animateWithDuration:duration animations:^{
+        UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
+        [_tableView setContentInset:edgeInsets];
+        [_tableView setScrollIndicatorInsets:edgeInsets];
+    }];
+}
+
 
 #pragma mark - Navigation
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Perform segue to detail
-    [self performSegueWithIdentifier:@"startExercise" sender:tableView];
-    
+    if (indexPath.section == 0 && _exercises.count != 0) {
+        [self performSegueWithIdentifier:@"startExercise" sender:tableView];
+    } else {
+        // Deselect
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -496,9 +565,13 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
 
 - (IBAction)noteButtonPressed:(UIBarButtonItem *)sender {
     // Select all in note
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [((BFWorkoutNoteCell*)[_tableView cellForRowAtIndexPath:indexPath]).textView selectAll:self];
-    [((BFWorkoutNoteCell*)[_tableView cellForRowAtIndexPath:indexPath]).textView becomeFirstResponder];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    UITextView * textView = ((BFWorkoutNoteCell*)[_tableView cellForRowAtIndexPath:indexPath]).textView;
+    [textView selectAll:self];
+    if ([textView.text isEqualToString: @"Your notes..."]) {
+        textView.text = @"";
+    }
+    [textView becomeFirstResponder];
     
 }
 

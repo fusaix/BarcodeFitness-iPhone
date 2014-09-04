@@ -133,7 +133,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         eIndex = currentExercise.row;
     } else {
-        eIndex = indexPath.row;
+        eIndex = (int)indexPath.row;
     }
     if ([[_wishList objectAtIndex:eIndex] isEqualToString:@"YES"]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

@@ -28,6 +28,7 @@
 @property NSArray *previousExercises;//The list of exercises that the user performed
 
 - (id) initWithName: (NSString*) name;
+- (id)initWithName:(NSString *)name andImage: (int) imageIndex; 
 - (id)initWithName:(NSString *)name andImage: (NSNumber *) imageIndex andLastDate: (NSDate *) lastDate andDuration: (NSNumber *) duration andNote: (NSString*) note andTotalWeight: (NSNumber *) totalWeight; 
 +(id)workoutWithID:(NSString *)workoutId andDate:(NSString *)date;
 

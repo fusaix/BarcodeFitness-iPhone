@@ -10,12 +10,28 @@
 
 @implementation BFCollectionViewCell
 
+@synthesize rectangleLabel = _rectangleLabel;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
     }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    if ( !(self = [super initWithCoder:aDecoder]) ) return nil;
+//    self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.1]; // 0.1
+    
+    // add the rectangle label
+    _rectangleLabel = [[UILabel alloc] initWithFrame:self.frame];
+    _rectangleLabel.layer.borderColor = [UIColor orangeColor].CGColor;
+    _rectangleLabel.layer.borderWidth = 5.0;
+    _rectangleLabel.layer.hidden = YES;
+    [self addSubview:_rectangleLabel];
+        
     return self;
 }
 

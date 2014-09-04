@@ -268,6 +268,13 @@
         case 0:
             newmin = [_minArray objectAtIndex:row];
             sec = [BFWorkoutViewController restTime] % 60;
+            // Anti O s rest time
+            if (row == 0 && sec == 0) {
+                [_pickerView selectRow:1 inComponent:1 animated:YES];
+                [_pickerView reloadComponent:1];
+                sec = 5;
+            }
+            
             // update restTime
             self.textLabel.text = [NSString stringWithFormat:@"%@:%02d", newmin, sec];
             [BFWorkoutViewController setRestTime:[newmin intValue] * 60 + sec];
@@ -276,6 +283,14 @@
             break;
         case 1:
             min = ([BFWorkoutViewController restTime] / 60) % 60;
+
+            // Anti O s rest time
+            if (min < 1 && row == 0) {
+                [_pickerView selectRow:1 inComponent:1 animated:YES];
+                [_pickerView reloadComponent:1];
+                row = 1;
+            }
+            
             newsec = [_secArray objectAtIndex:row];
             // update restTime
             self.textLabel.text = [NSString stringWithFormat:@"%02d:%@", min, newsec];
