@@ -16,7 +16,7 @@
 @class BFChooseViewController;
 
 
-@interface BFWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface BFWorkoutViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 @property (nonatomic, strong) BFWorkout * workout;
 @property (nonatomic, strong) NSMutableArray * exercises;
 @property (nonatomic, strong) BFChooseViewController * workoutListViewController;

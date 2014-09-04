@@ -602,7 +602,7 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
             } else {
                 title = [NSString stringWithFormat:@"You have finished your workout! Total lifted: %.1f lb. Duration: %@", totalWeight, [BFWorkoutViewController timeFormatted3:_duration]];
             }
-            message = @"Your performance will be saved in history.";
+            message = @"Press \"Finish\" to save your performance in history.";
         } else {
             if ((int)totalWeight == totalWeight && (int)totalDoneWeight == totalDoneWeight) {
                 title = [NSString stringWithFormat:@"You have only lifted %.f lb over %.f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
@@ -613,14 +613,14 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
             } else {
                 title = [NSString stringWithFormat:@"You have only lifted %.1f lb over %.1f lb. (%.1f%%) Duration: %@", totalDoneWeight, totalWeight, totalDoneWeight/totalWeight*100, [BFWorkoutViewController timeFormatted3:_duration]];
             }
-            message = @"Your performance will be saved in history.";
+            message = @"Press \"Finish\" to save your performance in history.";
         }
         // Confirmation
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
                                                         message:message
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Finish",nil];
+                                              otherButtonTitles:@"Finish", @"Take notes",nil];
         alert.tag = 2;
         [alert show];
     }
@@ -675,6 +675,8 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
             // back to home screen
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
+    } else if (buttonIndex == 2) {
+        [self performSelector: @selector(noteButtonPressed:) withObject:self afterDelay: 0.0];
     }
 }
 

@@ -71,7 +71,7 @@
 
 - (void)cancelWeb
 {
-    NSLog(@"didn't finish loading within 5 sec");
+    NSLog(@"didn't finish loading within 15 sec");
     // do anything error
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Can't load this page :("
                                                     message:@"You must be connected to the internet to load this page."
@@ -91,7 +91,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     // webView connected
-    _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(cancelWeb) userInfo:nil repeats:NO];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(cancelWeb) userInfo:nil repeats:NO];
 }
 
 - (void)didReceiveMemoryWarning
