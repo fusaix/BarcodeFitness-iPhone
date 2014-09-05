@@ -48,7 +48,9 @@
                     @"Friday_sf.png",
                     @"Saturday_sf.png",
                     @"Sunday_sf.png",
-                    @"Everyday_sf.png"];
+                    @"Everyday_sf.png",
+                    @"Buzz_rounded.png"
+                           ];
     });
     return _workoutImages;
 }

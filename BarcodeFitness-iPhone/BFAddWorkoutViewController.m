@@ -116,7 +116,8 @@
                         @"Friday_sf.png",
                         @"Saturday_sf.png",
                         @"Sunday_sf.png",
-                        @"Everyday_sf.png"] mutableCopy];
+                        @"Everyday_sf.png",
+                        @"Buzz_rounded.png"] mutableCopy];
 
     // Image
     if ([_segueIdentifier isEqualToString:@"addWorkout"]) {

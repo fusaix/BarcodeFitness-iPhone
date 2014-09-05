@@ -80,6 +80,8 @@
 		A914445F19B27F2F004D85F1 /* Code_sf1HDR.png in Resources */ = {isa = PBXBuildFile; fileRef = A914445E19B27F2F004D85F1 /* Code_sf1HDR.png */; };
 		A914446119B27F4F004D85F1 /* Code_sf1HD.png in Resources */ = {isa = PBXBuildFile; fileRef = A914446019B27F4F004D85F1 /* Code_sf1HD.png */; };
 		A914446319B27F56004D85F1 /* Code_sf2HD.png in Resources */ = {isa = PBXBuildFile; fileRef = A914446219B27F56004D85F1 /* Code_sf2HD.png */; };
+		A91A3AED19BA604C00188307 /* BarcodeFitnessIconRounded.png in Resources */ = {isa = PBXBuildFile; fileRef = A91A3AEB19BA604C00188307 /* BarcodeFitnessIconRounded.png */; };
+		A91A3AEE19BA604C00188307 /* Buzz_rounded.png in Resources */ = {isa = PBXBuildFile; fileRef = A91A3AEC19BA604C00188307 /* Buzz_rounded.png */; };
 		A929E5C319A3FCAD003FC4B5 /* BFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A929E5C219A3FCAD003FC4B5 /* BFWebViewController.m */; };
 		A929E5CA19A563F7003FC4B5 /* BFExerciseTimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A929E5C919A563F7003FC4B5 /* BFExerciseTimerCell.m */; };
 		A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E80198C07F100174C5E /* BFExerciseList.m */; };
@@ -117,7 +119,6 @@
 		A9AD3188198FEB9A008A0A32 /* BFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD3187198FEB9A008A0A32 /* BFCollectionViewCell.m */; };
 		A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */; };
 		A9B0E82519A2DA9A0026FF2E /* pie60.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B0E82419A2DA9A0026FF2E /* pie60.png */; };
-		A9B0E82C19A3177F0026FF2E /* BarcodeFitnessIconRounded.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B0E82B19A3177F0026FF2E /* BarcodeFitnessIconRounded.png */; };
 		A9E6C30419B675FE00614FE0 /* LogoB.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30019B675FE00614FE0 /* LogoB.png */; };
 		A9E6C30519B675FE00614FE0 /* LogoN.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30119B675FE00614FE0 /* LogoN.png */; };
 		A9E6C30719B675FE00614FE0 /* LogoOB.png in Resources */ = {isa = PBXBuildFile; fileRef = A9E6C30319B675FE00614FE0 /* LogoOB.png */; };
@@ -204,6 +205,8 @@
 		A914445E19B27F2F004D85F1 /* Code_sf1HDR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Code_sf1HDR.png; sourceTree = "<group>"; };
 		A914446019B27F4F004D85F1 /* Code_sf1HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Code_sf1HD.png; sourceTree = "<group>"; };
 		A914446219B27F56004D85F1 /* Code_sf2HD.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Code_sf2HD.png; sourceTree = "<group>"; };
+		A91A3AEB19BA604C00188307 /* BarcodeFitnessIconRounded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BarcodeFitnessIconRounded.png; sourceTree = "<group>"; };
+		A91A3AEC19BA604C00188307 /* Buzz_rounded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Buzz_rounded.png; sourceTree = "<group>"; };
 		A929E5C119A3FCAD003FC4B5 /* BFWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWebViewController.h; sourceTree = "<group>"; };
 		A929E5C219A3FCAD003FC4B5 /* BFWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWebViewController.m; sourceTree = "<group>"; };
 		A929E5C819A563F7003FC4B5 /* BFExerciseTimerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseTimerCell.h; sourceTree = "<group>"; };
@@ -268,7 +271,6 @@
 		A9AD31A2199006AA008A0A32 /* BFChooseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFChooseViewControllerCell.h; sourceTree = "<group>"; };
 		A9AD31A3199006AA008A0A32 /* BFChooseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFChooseViewControllerCell.m; sourceTree = "<group>"; };
 		A9B0E82419A2DA9A0026FF2E /* pie60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pie60.png; sourceTree = "<group>"; };
-		A9B0E82B19A3177F0026FF2E /* BarcodeFitnessIconRounded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BarcodeFitnessIconRounded.png; sourceTree = "<group>"; };
 		A9E6C30019B675FE00614FE0 /* LogoB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoB.png; sourceTree = "<group>"; };
 		A9E6C30119B675FE00614FE0 /* LogoN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoN.png; sourceTree = "<group>"; };
 		A9E6C30319B675FE00614FE0 /* LogoOB.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoOB.png; sourceTree = "<group>"; };
@@ -429,8 +431,9 @@
 			isa = PBXGroup;
 			children = (
 				A914445619B1E211004D85F1 /* cancel512.png */,
-				A9B0E82B19A3177F0026FF2E /* BarcodeFitnessIconRounded.png */,
 				A93B25BF19954FB8002189A0 /* BarcodeFitnessIcon120_sf.png */,
+				A91A3AEB19BA604C00188307 /* BarcodeFitnessIconRounded.png */,
+				A91A3AEC19BA604C00188307 /* Buzz_rounded.png */,
 				A93B25AF19954FAB002189A0 /* Everyday_sf.png */,
 				A93B25B019954FAB002189A0 /* Friday_sf.png */,
 				A93B25B119954FAB002189A0 /* Monday_sf.png */,
@@ -628,9 +631,10 @@
 				A906461019A2CCAE0085C21A /* pie20.png in Resources */,
 				A906461219A2CCAE0085C21A /* pie22.png in Resources */,
 				A93B25BB19954FAB002189A0 /* Sunday_sf.png in Resources */,
+				A91A3AEE19BA604C00188307 /* Buzz_rounded.png in Resources */,
 				A914445519B15859004D85F1 /* Main.storyboard in Resources */,
-				A9B0E82C19A3177F0026FF2E /* BarcodeFitnessIconRounded.png in Resources */,
 				A906461619A2CCAE0085C21A /* pie26.png in Resources */,
+				A91A3AED19BA604C00188307 /* BarcodeFitnessIconRounded.png in Resources */,
 				A906462419A2CCAE0085C21A /* pie40.png in Resources */,
 				A906463319A2CCAE0085C21A /* pie55.png in Resources */,
 				A9729408197DDB4300495470 /* InfoPlist.strings in Resources */,
