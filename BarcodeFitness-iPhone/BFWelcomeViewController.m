@@ -141,7 +141,6 @@
                           delay:0.0
                         options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
                      animations:^(void) {
-//                         [_selectorLabel setAlpha:0.0];
                          [_athleteImage setAlpha:0.2];
                          _selectorLabel.text = @"Start workout";
                          [_selectorLabel setAlpha:0.0];
@@ -161,29 +160,6 @@
                      }];
 }
 
-//- (void) fadeButtonImages2 {
-//    [_selectorLabel setAlpha:0.0];
-//    _activeButtom = 0;
-//    _selectorLabel.text = @"Start workout";
-//    [_athleteImage setAlpha:0.2];
-//    [_scanImage setAlpha:0.0];
-//    [_performanceHistoryImage setAlpha:0.0];
-//    [UIView animateWithDuration:2.0
-//                          delay:0.0
-//                        options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction)
-//                     animations:^(void) {
-//                         [_selectorLabel setAlpha:1.0];
-//                         [_athleteImage setAlpha:0.2];
-//                         [_scanImage setAlpha:1.0];
-//                         [_performanceHistoryImage setAlpha:1.0];
-//                     }
-//                     completion:^(BOOL finished) {
-//                         if (finished) {
-//                             [self animateButtonImages];
-//                         }
-//                     }];
-//}
-
 - (void) animateButtonImages {
     _athleteImage.highlighted = NO;
     _performanceHistoryImage.highlighted = NO;
@@ -195,17 +171,14 @@
                      animations:^(void) {
                          switch (_activeButtom) {
                              case 0:
-//                                 _athleteImage.highlighted = YES;
                                  [_athleteImage setAlpha:1.0];
                                  _selectorLabel.text = @"Start workout";
                                  break;
                              case 1:
-//                                 _scanImage.highlighted = YES;
                                  [_scanImage setAlpha:1.0];
                                  _selectorLabel.text = @"Scan";
                                  break;
                              case 2:
-//                                 _performanceHistoryImage.highlighted = YES;
                                  [_performanceHistoryImage setAlpha:1.0];
                                  _selectorLabel.text = @"Performance history";
                                  break;
@@ -238,13 +211,13 @@
                          switch (_activeButtom) {
                              case 0:
                                  _selectorLabel.text = @"Start workout";
-                                 y = 60;
+                                 y = 62;
                                  _activeButtom = 1;
                                  [_scanImage setAlpha:0.2];
                                  break;
                              case 1:
                                  _selectorLabel.text = @"Scan";
-                                 y = 235;
+                                 y = 229;
                                  _activeButtom = 2;
                                  [_performanceHistoryImage setAlpha:0.2];
                                  break;

@@ -158,8 +158,9 @@ static int mode; // 0 = Auto, 1 = Manu, 2 = Off
     
     // Info cell
     _shouldAddInfoCell = NO;
-
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {

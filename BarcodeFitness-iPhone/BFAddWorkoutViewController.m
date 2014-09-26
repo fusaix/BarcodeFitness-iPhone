@@ -134,6 +134,9 @@
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:_newImageIndex inSection:0];
     [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     
+    // Keyboard
+    [_nameField setReturnKeyType:UIReturnKeyDone];
+    
     // collection view background
 //    self.collectionView.backgroundColor = [UIColor blackColor];
     
@@ -202,7 +205,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    _newImageIndex = indexPath.row;
+    _newImageIndex = (int)indexPath.row;
     [collectionView reloadData];
     // make sound
     AudioServicesPlaySystemSound(1057); // see http://iphonedevwiki.net/index.php/AudioServices
