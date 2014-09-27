@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		574EA6E919D732B7000B11E1 /* BFExerciseList.m in Sources */ = {isa = PBXBuildFile; fileRef = 574EA6E819D732B7000B11E1 /* BFExerciseList.m */; };
 		A901468F1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */; };
 		A906453E19A2B08D0085C21A /* BFWorkoutViewControllerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A906453D19A2B08D0085C21A /* BFWorkoutViewControllerCell.m */; };
 		A90645FC19A2CCAE0085C21A /* pie0.png in Resources */ = {isa = PBXBuildFile; fileRef = A90645BE19A2CCAE0085C21A /* pie0.png */; };
@@ -83,7 +84,6 @@
 		A91A3AED19BA604C00188307 /* BarcodeFitnessIconRounded.png in Resources */ = {isa = PBXBuildFile; fileRef = A91A3AEB19BA604C00188307 /* BarcodeFitnessIconRounded.png */; };
 		A929E5C319A3FCAD003FC4B5 /* BFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A929E5C219A3FCAD003FC4B5 /* BFWebViewController.m */; };
 		A929E5CA19A563F7003FC4B5 /* BFExerciseTimerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A929E5C919A563F7003FC4B5 /* BFExerciseTimerCell.m */; };
-		A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E80198C07F100174C5E /* BFExerciseList.m */; };
 		A9374E84198C08CE00174C5E /* BFNetworkExercises.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E83198C08CE00174C5E /* BFNetworkExercises.m */; };
 		A9374E8A198C090800174C5E /* BFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9374E89198C090800174C5E /* BFUser.m */; };
 		A93B25B719954FAB002189A0 /* Everyday_sf.png in Resources */ = {isa = PBXBuildFile; fileRef = A93B25AF19954FAB002189A0 /* Everyday_sf.png */; };
@@ -128,6 +128,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		574EA6E719D732B7000B11E1 /* BFExerciseList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseList.h; sourceTree = "<group>"; };
+		574EA6E819D732B7000B11E1 /* BFExerciseList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseList.m; sourceTree = "<group>"; };
 		A901468D1991E1D600D8F2A3 /* BFExerciseViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseViewControllerCell.h; sourceTree = "<group>"; };
 		A901468E1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseViewControllerCell.m; sourceTree = "<group>"; };
 		A906453C19A2B08D0085C21A /* BFWorkoutViewControllerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFWorkoutViewControllerCell.h; sourceTree = "<group>"; };
@@ -210,8 +212,6 @@
 		A929E5C219A3FCAD003FC4B5 /* BFWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFWebViewController.m; sourceTree = "<group>"; };
 		A929E5C819A563F7003FC4B5 /* BFExerciseTimerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFExerciseTimerCell.h; sourceTree = "<group>"; };
 		A929E5C919A563F7003FC4B5 /* BFExerciseTimerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFExerciseTimerCell.m; sourceTree = "<group>"; };
-		A9374E7F198C07F100174C5E /* BFExerciseList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BFExerciseList.h; path = "../../ios-barcodefitness/BarcodeFitness-iPhone/BFExerciseList.h"; sourceTree = "<group>"; };
-		A9374E80198C07F100174C5E /* BFExerciseList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BFExerciseList.m; path = "../../ios-barcodefitness/BarcodeFitness-iPhone/BFExerciseList.m"; sourceTree = "<group>"; };
 		A9374E82198C08CE00174C5E /* BFNetworkExercises.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFNetworkExercises.h; sourceTree = "<group>"; };
 		A9374E83198C08CE00174C5E /* BFNetworkExercises.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFNetworkExercises.m; sourceTree = "<group>"; };
 		A9374E88198C090800174C5E /* BFUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFUser.h; sourceTree = "<group>"; };
@@ -542,8 +542,8 @@
 				A972DC491981BE0800156ED8 /* BFWorkoutList.m */,
 				A972DC3A197F397000156ED8 /* BFWorkout.h */,
 				A972DC3B197F397000156ED8 /* BFWorkout.m */,
-				A9374E7F198C07F100174C5E /* BFExerciseList.h */,
-				A9374E80198C07F100174C5E /* BFExerciseList.m */,
+				574EA6E719D732B7000B11E1 /* BFExerciseList.h */,
+				574EA6E819D732B7000B11E1 /* BFExerciseList.m */,
 				A972DC4C1981C10800156ED8 /* BFExercise.h */,
 				A972DC4D1981C10800156ED8 /* BFExercise.m */,
 				A972DC4F1981C12500156ED8 /* BFSet.h */,
@@ -719,6 +719,7 @@
 				A972DC6619885BD400156ED8 /* BFScanViewController.m in Sources */,
 				A9729414197DDB4300495470 /* BFWelcomeViewController.m in Sources */,
 				A901468F1991E1D600D8F2A3 /* BFExerciseViewControllerCell.m in Sources */,
+				574EA6E919D732B7000B11E1 /* BFExerciseList.m in Sources */,
 				A9F83DE619B03A1B00183D56 /* BFWorkoutNoteCell.m in Sources */,
 				A972940E197DDB4300495470 /* BFAppDelegate.m in Sources */,
 				A972DC34197F2C3000156ED8 /* BFChooseViewController.m in Sources */,
@@ -737,7 +738,6 @@
 				A9F83DE019AFF62B00183D56 /* BFBodyExercisesViewController.m in Sources */,
 				A9100A6319A3CE420006583F /* BFMoreViewController.m in Sources */,
 				A9AD31A4199006AA008A0A32 /* BFChooseViewControllerCell.m in Sources */,
-				A9374E81198C07F100174C5E /* BFExerciseList.m in Sources */,
 				A972DC3C197F397000156ED8 /* BFWorkout.m in Sources */,
 				A929E5CA19A563F7003FC4B5 /* BFExerciseTimerCell.m in Sources */,
 				A9374E8A198C090800174C5E /* BFUser.m in Sources */,
