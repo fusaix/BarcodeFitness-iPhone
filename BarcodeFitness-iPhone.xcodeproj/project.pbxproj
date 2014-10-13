@@ -595,6 +595,11 @@
 				CLASSPREFIX = BF;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = FrienchFriesApps;
+				TargetAttributes = {
+					A97293F9197DDB4300495470 = {
+						DevelopmentTeam = 89JRG4TE28;
+					};
+				};
 			};
 			buildConfigurationList = A97293F5197DDB4300495470 /* Build configuration list for PBXProject "BarcodeFitness-iPhone" */;
 			compatibilityVersion = "Xcode 3.2";
